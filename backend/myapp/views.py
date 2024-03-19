@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .serializers import UserSerializer
+from .serializers import UserSerializer, MyTokenObtainPairSerializer
 from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password
 from .models import CustomUser, CustomUserManager
@@ -10,6 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import AccessToken
+
 
 # Create your views here.
 
@@ -33,26 +34,6 @@ class Register(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class Login(APIView):
-    def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
-
-        user = authenticate(email=email, password=password)
-
-        if user:
-            refresh = RefreshToken.for_user(user)
-            return Response({'access_token': str(refresh.access_token)}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Authentication failed'}, status=status.HTTP_403_FORBIDDEN)
-
-# class TokenRefresh(APIView):
-#     def post(self, request):
-#         serializer = CustomTokenObtainPairSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         refresh = serializer.validated_data.get('refresh')
-#         token = RefreshToken(refresh)
-#         return Response({'access_token': str(token.access_token)}, status=status.HTTP_200_OK)
 
 class UserView(APIView):
     authentication_classes = [JWTAuthentication]
@@ -71,15 +52,11 @@ class UserView(APIView):
 
         
 class Logout(APIView):
-    """
-    Logout user by blacklisting refresh token.
-    """
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
         try:
-            print(type(request.headers.get('Authorization').split(' ')[1]))
-            refresh_token = request.headers.get('Authorization').split(' ')[1]
+            refresh_token = request.data.get('refresh_token')
             if not refresh_token:
                 return Response({"error": "Refresh token is required."}, status=status.HTTP_400_BAD_REQUEST)
             
