@@ -7,7 +7,9 @@ from .models import CustomUser, CustomUserManager
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import AccessToken
 
 # Create your views here.
 
@@ -44,11 +46,46 @@ class Login(APIView):
         else:
             return Response({'error': 'Authentication failed'}, status=status.HTTP_403_FORBIDDEN)
 
-class Test(APIView):
+# class TokenRefresh(APIView):
+#     def post(self, request):
+#         serializer = CustomTokenObtainPairSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         refresh = serializer.validated_data.get('refresh')
+#         token = RefreshToken(refresh)
+#         return Response({'access_token': str(token.access_token)}, status=status.HTTP_200_OK)
+
+class UserView(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        return Response({'message': 'Authenticated!'}, status=status.HTTP_200_OK)
+        user = request.user
+        token = AccessToken.for_user(user)
+        response_data ={
+            'id': user.id,
+            'email': user.email,
+            'token': str(token)
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
 
 
         
+class Logout(APIView):
+    """
+    Logout user by blacklisting refresh token.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            print(type(request.headers.get('Authorization').split(' ')[1]))
+            refresh_token = request.headers.get('Authorization').split(' ')[1]
+            if not refresh_token:
+                return Response({"error": "Refresh token is required."}, status=status.HTTP_400_BAD_REQUEST)
+            
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response({"success": "User logged out successfully."}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
