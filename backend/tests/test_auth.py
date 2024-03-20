@@ -98,3 +98,18 @@ def test_incorect_login(email, password, status_code):
     response = client.post(url, data)
 
     assert response.status_code == status_code
+
+
+@pytest.mark.django_db(transaction=True)
+def test_user_view(test_user):
+    client = APIClient()
+
+    login_url = reverse('login')  
+    data = {'email': test_user['email'], 'password': test_user['password']}
+    login_response = client.post(login_url, data)
+    client.credentials(HTTP_AUTHORIZATION=f'Bearer {login_response.data.get("access")}')
+
+    userview_url = reverse('userview')
+    response = client.get(userview_url)
+
+    assert response.status_code == 200
