@@ -1,16 +1,15 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .serializers import UserSerializer, MyTokenObtainPairSerializer
+from .serializers import UserSerializer
 from rest_framework.response import Response
-from django.contrib.auth.hashers import make_password
-from .models import CustomUser, CustomUserManager
+from .models import CustomUser
 from rest_framework import status
-from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import AccessToken
-
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 
 # Create your views here.
 
@@ -19,6 +18,8 @@ def api_home(request, *args, **kwargs):
 
 
 class Register(APIView):
+
+    @swagger_auto_schema(tags=['Auth'])
     def post(self, request):
         serializer = UserSerializer(data = request.data)
         if serializer.is_valid():
@@ -39,6 +40,7 @@ class UserView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(tags=['Auth'])
     def get(self, request):
         user = request.user
         token = AccessToken.for_user(user)
@@ -54,6 +56,7 @@ class UserView(APIView):
 class Logout(APIView):
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(tags=['Auth'])
     def post(self, request):
         try:
             refresh_token = request.data.get('refresh_token')
