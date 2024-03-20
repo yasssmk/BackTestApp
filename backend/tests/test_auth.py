@@ -112,4 +112,7 @@ def test_user_view(test_user):
     userview_url = reverse('userview')
     response = client.get(userview_url)
 
+    user = CustomUser.objects.filter(email=test_user['email']).first()
+
     assert response.status_code == 200
+    assert user.id == response.data['id']
