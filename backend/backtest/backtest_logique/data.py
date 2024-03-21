@@ -36,8 +36,8 @@ class StockData:
         except Stock.DoesNotExist:
             return None
 
-    def get_data(self, symbol):
-        stock_data = yf.download(symbol, start=DATA_START_DATE, end=DATA_END_DATE, interval='1wk')
+    def get_data(self):
+        stock_data = yf.download(self.symbol, start=DATA_START_DATE, end=DATA_END_DATE, interval='1wk')
 
         # Save the data to a CSV file
         # csv_file_name = f"{symbol}.csv"
@@ -45,8 +45,8 @@ class StockData:
 
         return stock_data
 
-    def get_monthly_data(self, symbol):
-        stock_data = yf.download(symbol, start=DATA_START_DATE, end=DATA_END_DATE, interval='1mo')
+    def get_monthly_data(self):
+        stock_data = yf.download(self.symbol, start=DATA_START_DATE, end=DATA_END_DATE, interval='1mo')
 
         # Save the data to a CSV file
         # csv_file_name = f"{symbol}_monthly.csv"
@@ -59,7 +59,7 @@ class StockData:
 
         return stock_data
 
-stock = StockData('AAPL')
-stock_info = stock.get_stock_info()
+# stock = StockData('AAPL')
+# stock_info = stock.get_stock_info()
 
-print(stock_info['id'])
+# print(stock_info['id'])
