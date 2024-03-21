@@ -1,15 +1,18 @@
 from divergences import Divergences
+from indicators import Indicators
+from trends import Trends
 import pandas as pd
-from datetime import date
 
-class Signals(Divergences):
+class Signals():
 
-    def __init__(self, symbol):
-        super().__init__(symbol)
-        self.divergences = self.find_divergences()
+    def __init__(self, stock_data, monthly_stock_data):
+        self.stock_data = stock_data
+        self.monthly_stock_data = monthly_stock_data
+        self.div = Divergences(self.stock_data, self.monthly_stock_data)
+        self.divergences = self.div.find_divergences()
+        self.ind = Indicators()
+        self.trends = Trends()
     
-
-
     def buy_signal(self):
 
         bb_low = self.ind.bb_low_indicator(self.stock_data)

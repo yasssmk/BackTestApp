@@ -1,15 +1,12 @@
 from indicators import Indicators
-from data import StockData
 from trends import Trends
-from datetime import date
 import pandas as pd
 
-class Divergences(StockData):
+class Divergences():
 
-    def __init__(self, symbol):
-        super().__init__(symbol)
-        self.stock_data = self.get_data()
-        self.monthly_stock_data = self.get_monthly_data()
+    def __init__(self, stock_data, monthly_stock_data):
+        self.stock_data = stock_data
+        self.monthly_stock_data = monthly_stock_data
         self.ind = Indicators()
         self.ind.calculate_moving_averages(self.stock_data)
         self.ind.calculate_moving_averages(self.monthly_stock_data)
@@ -28,14 +25,11 @@ class Divergences(StockData):
 
         def add_divergence(divergence_type, signal, date):
             divergence = (
-                self.symbol,
                 divergence_type,
                 signal,
                 date
             )
             divergences.add(divergence)
-
-        #Set up signal
 
         bearish_divergence_spotted = False
         bullish_divergence_spotted = False
@@ -82,7 +76,7 @@ class Divergences(StockData):
                         previous_lowest_macd = current_lowest_macd
 
                     else:
-                        # Track changes in trend
+
                         if period['Trend Type'] != current_trend:
                             current_trend = period['Trend Type']
 
@@ -157,7 +151,7 @@ class Divergences(StockData):
 
 
                 else:
-                    # Track changes in trend
+
                     if period_m['Trend Type'] != current_monthly_trend:
                         current_monthly_trend = period_m['Trend Type']
 
@@ -199,7 +193,7 @@ class Divergences(StockData):
 
 
         divergences_list = list(divergences)
-        divergences_df = pd.DataFrame(divergences_list, columns=['Symbol', 'Divergence Type', 'Signal', 'Date'])
+        divergences_df = pd.DataFrame(divergences_list, columns=['Divergence Type', 'Signal', 'Date'])
         return divergences_df
 
 

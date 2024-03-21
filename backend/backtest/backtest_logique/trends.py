@@ -1,4 +1,3 @@
-from data import StockData
 from indicators import Indicators
 from datetime import date
 import pandas as pd

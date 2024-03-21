@@ -1,5 +1,4 @@
 import ta
-from data import StockData
 
 class Indicators():
         
