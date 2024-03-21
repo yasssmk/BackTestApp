@@ -203,5 +203,5 @@ class Divergences(StockData):
         return divergences_df
 
 
-stock = Divergences('AAPL')
-print(stock.find_divergences())
+# stock = Divergences('AAPL')
+# print(stock.find_divergences())
