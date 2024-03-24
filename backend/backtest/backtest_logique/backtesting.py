@@ -216,9 +216,9 @@ def calculate_and_print_statistics(df):
         total = total_held + total_cash
 
         stat = {
-            "Number of months with investment": f"{(num_months_with_investment/num_months)}",
-            "Average monthly investment": f"{average_monthly_investment:.2f}$",
-            "Monthly average Asset growth": f"{monthly_avg_asset_growth:.2f}%",
+            "Number of months with investment": f"{(num_months_with_investment/num_months)}", #Change to Number of transactions
+            "Average monthly investment": f"{average_monthly_investment:.2f}$", #Change to Highest and lowest price purchase/Sell
+            "Monthly average Asset growth": f"{monthly_avg_asset_growth:.2f}%", #Add highest and lowest return.
             "Total money invested": f"{total_money:.2f}$",
             "Total cash": f"{total_cash:.2f}$",
             "Total held": f"{total_held:.2f}$",
