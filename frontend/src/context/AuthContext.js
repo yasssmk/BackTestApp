@@ -9,8 +9,9 @@ export default AuthContext;
 export const AuthProvider = ({children}) => {
 
     
-    let [authTokens, setAuthToken] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
-    let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null)
+    let [authTokens, setAuthToken] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
+    let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null);
+    let [loading, setLoading] = useState(true)
 
     const navigate = useNavigate()
 
@@ -21,34 +22,14 @@ export const AuthProvider = ({children}) => {
         
         if (currentLocalStorage) {
 
-            const authTokens = JSON.parse(currentLocalStorage);
-            const accessToken = authTokens.access;
-            const refreshToken = authTokens.refresh;
+            const currentTokens = JSON.parse(currentLocalStorage);
+            const refreshToken = currentTokens.refresh;
 
-            const interval = setInterval( async ()=>{
+            if (loading){
+                updateToken(refreshToken)
+            }
 
-                let response = await fetch('http://localhost:8000/auth/token/refresh/', {
-                    method: 'POST',
-                    headers:{
-                       'Content-Type': 'application/json'
-                    },
-                    body:JSON.stringify({ refresh: refreshToken })
-                })
-                   
-
-                if (response.status === 200) {
-                    let data = await response.json()
-                    localStorage.setItem('authTokens', JSON.stringify(data))
-                    setAuthToken(data)
-                    setUser(jwtDecode(data.access))                        
-                        
-                } else {
-                    logoutUser()
-                    // throw new Error('Failed to refresh token')
-                    
-                }
-        
-            }, 2000 );
+            const interval = setInterval( () => {updateToken(refreshToken)}, minutes * 4);
 
             return () => clearInterval(interval);
 
@@ -58,7 +39,7 @@ export const AuthProvider = ({children}) => {
         }
 
 
-    }, [authTokens, navigate]);
+    }, [authTokens, loading, navigate]);
 
 
     const loginUser = async (e )=>{
@@ -83,6 +64,7 @@ export const AuthProvider = ({children}) => {
     }
 
     const logoutUser = async ()=>{
+
         let response = await fetch('http://localhost:8000/auth/logout', {
             method: 'POST',
             headers: {
@@ -101,8 +83,40 @@ export const AuthProvider = ({children}) => {
         }else{
             console.log('Wrong LogOut')
         }
+
+       
     }
-         
+
+    const updateToken = async (refreshToken) => {
+
+        try {
+            let response = await fetch('http://localhost:8000/auth/token/refresh/', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ refresh: refreshToken })
+            });
+
+            if (response.status === 200) {
+                let data = await response.json();
+                localStorage.setItem('authTokens', JSON.stringify(data));
+                setAuthToken(data);
+                setUser(jwtDecode(data.access));
+            } else {
+                logoutUser();
+                // throw new Error('Failed to refresh token');
+            }
+
+            if (loading){
+                setLoading(false)
+            }
+
+        } catch (error) {
+            logoutUser();
+    }
+};
+
        
     let contextData = {
         user: user,
