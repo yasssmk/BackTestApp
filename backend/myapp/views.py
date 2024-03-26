@@ -54,12 +54,12 @@ class UserView(APIView):
 
         
 class Logout(APIView):
-    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(tags=['Auth'])
     def post(self, request):
         try:
             refresh_token = request.data.get('refresh_token')
+
             if not refresh_token:
                 return Response({"error": "Refresh token is required."}, status=status.HTTP_400_BAD_REQUEST)
             
@@ -68,4 +68,5 @@ class Logout(APIView):
 
             return Response({"success": "User logged out successfully."}, status=status.HTTP_200_OK)
         except Exception as e:
+            print(request.data)
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
