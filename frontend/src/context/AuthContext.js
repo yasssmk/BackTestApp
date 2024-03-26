@@ -11,11 +11,8 @@ export const AuthProvider = ({children}) => {
     
     let [authTokens, setAuthToken] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
     let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null)
-    let [loading, setLoading] = useState(true)
 
     const navigate = useNavigate()
-
-    console.log("START")
 
     useEffect(() => {
 
@@ -24,84 +21,44 @@ export const AuthProvider = ({children}) => {
         
         if (currentLocalStorage) {
 
-            setLoading(true);
-
             const authTokens = JSON.parse(currentLocalStorage);
             const accessToken = authTokens.access;
             const refreshToken = authTokens.refresh;
 
             const interval = setInterval( async ()=>{
 
-                    let response = await fetch('http://localhost:8000/auth/token/refresh/', {
-                        method: 'POST',
-                        headers:{
-                            'Content-Type': 'application/json'
-                        },
-                        body:JSON.stringify({ refresh: refreshToken })
-                    })
+                let response = await fetch('http://localhost:8000/auth/token/refresh/', {
+                    method: 'POST',
+                    headers:{
+                       'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({ refresh: refreshToken })
+                })
                    
 
-                    if (response.status === 200){
-                        let data = await response.json()
-                        localStorage.setItem('authTokens', JSON.stringify(data))
-                        setAuthToken(data)
-                        setUser(jwtDecode(data.access))                        
+                if (response.status === 200) {
+                    let data = await response.json()
+                    localStorage.setItem('authTokens', JSON.stringify(data))
+                    setAuthToken(data)
+                    setUser(jwtDecode(data.access))                        
                         
-                    } else{
-
-                        throw new Error('Failed to refresh token')
-                        logoutUser()
-                    }
+                } else {
+                    logoutUser()
+                    // throw new Error('Failed to refresh token')
+                    
+                }
         
-                    if(loading){
-                        setLoading(false)
-                    }
-                },2000);
+            }, 2000 );
 
-                return () => clearInterval(interval);
+            return () => clearInterval(interval);
 
         } else {
             navigate("/login");
             return;
         }
+
+
     }, [authTokens, navigate]);
-
-    
- 
-// useEffect(() => {
-    
-//     console.log(1)
-//     const storedTokens = localStorage.getItem("authTokens");
-
-//     if (storedTokens) {
-//         setAuthToken(JSON.parse(storedTokens));
-//         setUser(jwtDecode(storedTokens));
-
-//     } else {
-//         navigate("/login");
-//         return; 
-//     }
-
-//     if (loading) {
-//         console.log("Interval - Loading call updateToken")
-//         updateToken();
-//     }
-
-//     let fourMinutes = 1000 * 60 * 1;
-//     let interval = setInterval(() => {
-//         console.log("Interval - storedTokens " + storedTokens)
-//         if (localStorage.getItem("authTokens")) {
-//             updateToken();
-//         } else {
-//             navigate("/login");
-//             return; 
-//         }
-
-//     }, 2000);
-    
-//     return () => clearInterval(interval);
-
-// }, [loading]);
 
 
     const loginUser = async (e )=>{
@@ -126,7 +83,6 @@ export const AuthProvider = ({children}) => {
     }
 
     const logoutUser = async ()=>{
-        let curent_refresh = JSON.parse(localStorage.getItem("authTokens"))
         let response = await fetch('http://localhost:8000/auth/logout', {
             method: 'POST',
             headers: {
@@ -135,7 +91,6 @@ export const AuthProvider = ({children}) => {
             },
             
             body: JSON.stringify({refresh_token: authTokens.refresh })
-            // body: JSON.stringify({refresh_token: curent_refresh.refresh })
         });
 
         if (response.status === 200){
@@ -147,53 +102,8 @@ export const AuthProvider = ({children}) => {
             console.log('Wrong LogOut')
         }
     }
-
-    // let updateToken = async ()=>{
-        
-    //     if (!authTokens) return;
-    //     console.log("Update called")
-    //     console.log("current authToken refresh: "+ authTokens.refresh)
-    //     let curent_refresh = JSON.parse(localStorage.getItem("authTokens"))
-    //     try{
-    //         let response = await fetch('http://localhost:8000/auth/token/refresh/', {
-    //             method: 'POST',
-    //             headers:{
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body:JSON.stringify({ refresh: authTokens?.refresh })
-    //             // body: JSON.stringify({refresh_token: curent_refresh.refresh })
-    //         })
-
-    //         let data = await response.json()
-    //         console.log("New Data refresh: "+ data.refresh)
-
-    //         if (response.status === 200){
-    //             console.log("UPDATE TOKEN with :" + JSON.stringify(data))
-
-    //             localStorage.setItem('authTokens', JSON.stringify(data))
-    //             setAuthToken(data)
-    //             setUser(jwtDecode(data.access))
-
-    //             console.log("AuthToken after update = " + authTokens.refresh)
-    //             console.log("USER after update" + user.access)
-    //             console.log("Current Local Storage: " + (localStorage.getItem("authTokens")))
-
-    //         } else{
-    //             throw new Error('Failed to refresh token')
-    //         }
-
-    //         if(loading){
-    //             setLoading(false)
-    //         }
-
-    //     }catch (error) {
-    //         console.error('Error refreshing token:', error);
-    //         logoutUser();
-    //     } 
-    // }
-
-    console.log("END AuthTokens: " + (authTokens?.refresh ? authTokens.refresh : "Null"))
-    
+         
+       
     let contextData = {
         user: user,
         loginUser:loginUser,
