@@ -34,7 +34,7 @@ export const AuthProvider = ({children}) => {
             return () => clearInterval(interval);
 
         } else {
-            navigate("/login");
+            // navigate("/login");
             return;
         }
 
@@ -117,11 +117,36 @@ export const AuthProvider = ({children}) => {
     }
 };
 
+    const signInUser = async (e) =>{
+        try {
+            let response = await fetch('http://localhost:8000/auth/register', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'email': e.target.email.value, 'password': e.target.password.value})
+            });
+
+            // let data = await response.json()
+
+            if (response.status === 201){
+                alert('User created')
+            }else{
+                alert('Wrong LogIn')
+            }
+
+            } catch (error) {
+                console.log(error);
+    }
+    };
+
+
        
     let contextData = {
         user: user,
         loginUser:loginUser,
         logoutUser: logoutUser,
+        signInUser: signInUser,
         AuthContext: AuthContext
     }
 

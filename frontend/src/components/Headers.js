@@ -18,7 +18,9 @@ const Header = () => {
             <span> | </span>
             { user ? (
                 <Link onClick={handleLogout}>Logout</Link>) : (<Link to='/login'>Login</Link>)}
-
+            <span> | </span>
+            { user ?  null : (<Link to='/signup'>Sign In</Link>)} 
+            
             {user && <p>Hello {user.email} </p>}
             
         </div>
