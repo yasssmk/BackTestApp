@@ -21,7 +21,7 @@ const Header = () => {
             <span> | </span>
             { user ?  null : (<Link to='/signup'>Sign In</Link>)} 
             
-            {user && <p>Hello {user.email} </p>}
+            {user && (<p>Hello {user.given_name? user.given_name : user.email} </p>)}
             
         </div>
     )

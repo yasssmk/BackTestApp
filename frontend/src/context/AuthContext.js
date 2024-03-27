@@ -2,6 +2,7 @@ import { createContext, useState, useEffect} from "react";
 import { jwtDecode } from "jwt-decode"
 import {useNavigate} from "react-router-dom"
 
+
 const AuthContext = createContext()
 
 export default AuthContext;
@@ -12,6 +13,7 @@ export const AuthProvider = ({children}) => {
     let [authTokens, setAuthToken] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
     let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null);
     let [loading, setLoading] = useState(true)
+    let [authType, setAuthType] = useState(null)
 
     const navigate = useNavigate()
 
@@ -20,7 +22,7 @@ export const AuthProvider = ({children}) => {
         let minutes = 1000 * 60 
         let currentLocalStorage = localStorage.getItem('authTokens');
         
-        if (currentLocalStorage) {
+        if (currentLocalStorage && authType==="Manual") {
 
             const currentTokens = JSON.parse(currentLocalStorage);
             const refreshToken = currentTokens.refresh;
@@ -57,6 +59,7 @@ export const AuthProvider = ({children}) => {
             setAuthToken(data)
             setUser(jwtDecode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
+            setAuthType("Manual")
             navigate("/")
         }else{
             alert('Wrong LogIn')
@@ -65,26 +68,37 @@ export const AuthProvider = ({children}) => {
 
     const logoutUser = async ()=>{
 
-        let response = await fetch('http://localhost:8000/auth/logout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${authTokens.access}`
-            },
-            
-            body: JSON.stringify({refresh_token: authTokens.refresh })
-        });
-
-        if (response.status === 200){
+        let resetUser = () =>{
             setAuthToken(null);
             setUser(null);
             localStorage.removeItem("authTokens");
             navigate("/login");
-        }else{
-            console.log('Wrong LogOut')
         }
 
-       
+        if (authType==="Manual"){
+
+            let response = await fetch('http://localhost:8000/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${authTokens.access}`
+                },
+                
+                body: JSON.stringify({refresh_token: authTokens.refresh })
+            });
+        
+            if (response.status === 200){
+                resetUser()
+                // setAuthToken(null);
+                // setUser(null);
+                // localStorage.removeItem("authTokens");
+                // navigate("/login");
+            }else{
+                console.log('Wrong LogOut')
+            }
+        }else if (authType==="Google"){
+            resetUser()
+        }     
     }
 
     const updateToken = async (refreshToken) => {
@@ -140,6 +154,17 @@ export const AuthProvider = ({children}) => {
     }
     };
 
+    const googleLogin = (googleToken) =>{
+        setAuthToken(googleToken.credential)
+        setUser(jwtDecode(googleToken));
+        localStorage.setItem('authTokens', JSON.stringify(googleToken))
+        setAuthType("Google")
+        navigate("/")
+        console.log(user)
+    }
+
+
+
 
        
     let contextData = {
@@ -147,6 +172,7 @@ export const AuthProvider = ({children}) => {
         loginUser:loginUser,
         logoutUser: logoutUser,
         signInUser: signInUser,
+        googleLogin: googleLogin,
         AuthContext: AuthContext
     }
 
