@@ -155,16 +155,35 @@ export const AuthProvider = ({children}) => {
     };
 
     const googleLogin = (googleToken) =>{
+     
         setAuthToken(googleToken.credential)
-        setUser(jwtDecode(googleToken));
+        let googleUser = jwtDecode(googleToken)
+        setUser(googleUser);
         localStorage.setItem('authTokens', JSON.stringify(googleToken))
         setAuthType("Google")
         navigate("/")
-        console.log(user)
-    }
+        console.log(googleUser.email)
 
+        let e = {
+            "email": googleUser.email,
+            "password": googleUser.sub+googleUser.given_name
+        }
 
+        try{
 
+            fetch('http://localhost:8000/auth/register', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'email': e.email, 'password': e.password})
+            });
+
+        }catch (error){
+
+            console.log(error);
+        }   
+       }
 
        
     let contextData = {
@@ -181,5 +200,5 @@ export const AuthProvider = ({children}) => {
             {children}
         </AuthContext.Provider>
     )
-    }
-
+    
+}
