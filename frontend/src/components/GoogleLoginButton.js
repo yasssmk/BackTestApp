@@ -1,6 +1,8 @@
 import React, {useEffect, useContext }  from "react";
 import AuthContext from "../context/AuthContext"
 
+
+
 const GoogleLogin = () => {
 
     const {googleLogin} = useContext(AuthContext);
@@ -15,14 +17,14 @@ const GoogleLogin = () => {
         google.accounts.id.initialize({
             client_id: process.env.REACT_APP_OATH_CLIENT_ID,
             callback: handleCallbackresponse
-        }, []);
+        });
 
-        google.accounts.id.renderButton(
+        window.onload = google.accounts.id.renderButton(
             document.getElementById("signInDiv"),
-            {theme: "outline", size: "medium"}
+            {theme: "filled_blue", size: "medium"}
         )
 
-    })
+    }, [])
 
     return (
         <div id="signInDiv" ></div>

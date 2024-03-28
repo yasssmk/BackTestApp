@@ -1,4 +1,4 @@
-from indicators import Indicators
+from .indicators import Indicators
 from datetime import date
 import pandas as pd
 

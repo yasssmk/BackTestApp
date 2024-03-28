@@ -1,5 +1,5 @@
-from signals import Signals
-from data import StockData
+from .signals import Signals
+from .data import StockData
 import pandas as pd
 from datetime import datetime, date
 import numpy as np
@@ -228,8 +228,8 @@ def calculate_and_print_statistics(df):
         return stat
 
 
-test = BackTest("AAPL")
-df_test = test.back_test()
-df_return = test.calculate_money_invested()
-print(df_return)
-print(calculate_and_print_statistics(df_return))
+# test = BackTest("AAPL")
+# df_test = test.back_test()
+# df_return = test.calculate_money_invested()
+# print(df_return)
+# print(calculate_and_print_statistics(df_return))

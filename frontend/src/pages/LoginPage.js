@@ -1,16 +1,23 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
+import {useNavigate} from "react-router-dom"
 import AuthContext from "../context/AuthContext"
 import GoogleLogin from "../components/GoogleLoginButton";
 
 const LoginPage = () =>{
     
-    const {loginUser} = useContext(AuthContext);
+    const {user, loginUser} = useContext(AuthContext);
+    const navigate = useNavigate()
     
     const handleSubmit = (e) => {
         e.preventDefault();
         loginUser(e);
     };
 
+    useEffect(() => {
+        if (user) {
+            navigate("/dashboard");
+        }
+    }, [user]);
 
     return (
         <div>

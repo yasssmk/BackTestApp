@@ -1,6 +1,6 @@
-from divergences import Divergences
-from indicators import Indicators
-from trends import Trends
+from .divergences import Divergences
+from .indicators import Indicators
+from .trends import Trends
 import pandas as pd
 
 class Signals():

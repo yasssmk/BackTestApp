@@ -1,5 +1,5 @@
-from indicators import Indicators
-from trends import Trends
+from .indicators import Indicators
+from .trends import Trends
 import pandas as pd
 
 class Divergences():
