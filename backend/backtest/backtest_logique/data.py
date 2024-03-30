@@ -59,7 +59,7 @@ class StockData:
 
         return stock_data
 
-# stock = StockData('AAPL')
-# stock_info = stock.get_stock_info()
+# stock = StockData('CRM')
+# stock_info = stock.get_monthly_data()
 
-# print(stock_info['id'])
+# print(stock_info)

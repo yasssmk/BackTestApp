@@ -1,15 +1,19 @@
 from .indicators import Indicators
 from .trends import Trends
+from .data import StockData
 import pandas as pd
 
 class Divergences():
 
     def __init__(self, stock_data, monthly_stock_data):
+         
+        self.ind = Indicators()
+        self.ind.calculate_moving_averages(stock_data)
+        self.ind.calculate_moving_averages(monthly_stock_data)
+
         self.stock_data = stock_data
         self.monthly_stock_data = monthly_stock_data
-        self.ind = Indicators()
-        self.ind.calculate_moving_averages(self.stock_data)
-        self.ind.calculate_moving_averages(self.monthly_stock_data)
+
         self.trends = Trends()
     
     
@@ -120,8 +124,7 @@ class Divergences():
 
             if bullish_divergence_spotted:
                 for i in range(1, len(self.monthly_stock_data)):
-
-                    if self.monthly_stock_data.index[i] > period['Start Date'] and self.monthly_stock_data.index[i] <= period['End Date']:
+                    if self.monthly_stock_data.index[i] > pd.Timestamp(period['Start Date']) and self.monthly_stock_data.index[i] <= pd.Timestamp(period['End Date']):
                         if self.monthly_stock_data['Close'][i] < period['Lowest Price']:
                             print(f" the {self.monthly_stock_data.index[i]} month cloe  = {self.monthly_stock_data['Close'][i]} and period lowest {period['Lowest Price']} ")
                             bullish_divergence_spotted = False
@@ -196,6 +199,8 @@ class Divergences():
         divergences_df = pd.DataFrame(divergences_list, columns=['Divergence Type', 'Signal', 'Date'])
         return divergences_df
 
-
-# stock = Divergences('AAPL')
-# print(stock.find_divergences())
+# data = StockData('CRM')
+# weekly_data = data.get_data()
+# monthly_data = data.get_monthly_data
+# stock = Divergences(weekly_data, monthly_stock_data=monthly_data)
+# print(stock.monthly_stock_data)

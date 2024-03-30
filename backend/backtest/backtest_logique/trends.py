@@ -1,4 +1,5 @@
 from .indicators import Indicators
+from .data import StockData
 from datetime import date
 import pandas as pd
 
@@ -232,8 +233,8 @@ class Trends():
 
         return {'Trend Type': 'Trend not found'}
 
-# stock = StockData('AAPL')
+# stock = StockData('CRM')
 # data = stock.get_data()
 # trend  = Trends()
 
-# print(trend.get_trend_type_on_date("2023-11-06", data))
+# print(trend.create_macd_trend_periods(data))

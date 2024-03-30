@@ -1,4 +1,5 @@
 import ta
+from .data import StockData
 
 class Indicators():
         
@@ -32,8 +33,9 @@ class Indicators():
     
 
 
-# stock = StockData('AAPL')
+# stock = StockData('CRM')
 # data = stock.get_data()
+# print(type(data))
 # ind = Indicators()
-# print(ind.calculate_macd(data, 26,12,9))
+# print(ind.calculate_macd(data, 26, 3, 7 ))
 

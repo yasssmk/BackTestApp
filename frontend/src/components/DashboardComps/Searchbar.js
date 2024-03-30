@@ -1,57 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import DashboardContext from "../../context/DashboardContext"
 
 const SearchBar = () => {
-    const [query, setQuery] = useState('');
-    const [recommendations, setRecommendations] = useState([]);
-  
-    
-    const handleSearch = async (searchQuery) => {
-        try {
-            const response = await fetch('http://localhost:8000/dashboard/reco', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ search_query: searchQuery })
-            });
-    
-            const data = await response.json();
 
-            if (response.status === 200) {
-                const firstFiveRecommendations = data.slice(0, 5);
-                setRecommendations(firstFiveRecommendations);
-
-            } else {
-                setRecommendations([]);
-
-            }
-
-        } catch (error) {
-            setRecommendations([])
-            // console.error('Error fetching recommendations:', error);
-        }
-        };
-  
-    const handleChange = (e) => {
-        const newQuery = e.target.value;
-        setQuery(newQuery);
-        if (newQuery.trim() !== '') {
-            handleSearch(newQuery);
-        } else {
-            setRecommendations([]);
-        }
-    };
-
-    // useEffect(() => {
-    //     console.log(recommendations); // Log recommendations state
-    // }, [recommendations]);
-
+    const {isLoading, handleKeyDown, setLoading, query, recommendations, handleChange,setQuery} = useContext(DashboardContext);
 
     return (
 
+        isLoading ? (
+            <p>loading...</p> 
+        ) : (
         <Autocomplete
             id="search-bar"
             sx={{ width: 300 }}
@@ -59,7 +20,7 @@ const SearchBar = () => {
             disableClearable
             options={recommendations}
             autoHighlight
-            getOptionLabel={(option) => `${option.Company_Name} (${option.Symbol})`} // Combine Company_Name and Symbol
+            getOptionLabel={(option) => `${option.Company_Name}`}
             filterOptions={(options, { inputValue }) =>
                 options.filter(
                     (option) =>
@@ -79,6 +40,9 @@ const SearchBar = () => {
                     {...params}
                     label="Search..."
                     onChange={handleChange}
+                    onKeyDown={(event) => {
+                        handleKeyDown(event);
+                    }}
                 />
             )}
             renderOption={(props, option) => (
@@ -87,7 +51,9 @@ const SearchBar = () => {
                 </Box>
             )}
         />
+    )
+
     );
-  };
+}
   
   export default SearchBar;

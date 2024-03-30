@@ -1,5 +1,5 @@
-from .signals import Signals
 from .data import StockData
+from backtest.backtest_logique.signals import Signals
 import pandas as pd
 from datetime import datetime, date
 import numpy as np
@@ -33,7 +33,7 @@ class BackTest(StockData):
                 profit_or_loss = (last_close_price - buying_price)
 
                 # Get today's date and format it in the same format as other dates
-                today_date = datetime.datetime.now().strftime('%Y-%m-%d')
+                today_date = datetime.datetime.now().strftime("%Y-%m-%d")
 
                 trades.append([self.symbol, buy_date, buying_price, buying_signal, today_date, last_close_price, yield_percent, profit_or_loss])
         else:
@@ -64,7 +64,7 @@ class BackTest(StockData):
 
                     # Get the last close date and price from stock_data
                     last_close_date = self.stock_data.index[-1].strftime('%Y-%m-%d')
-                    last_close_price = self.stock_data[self.stock_data.index[-1], 'Close']
+                    last_close_price = self.stock_data.loc[self.stock_data.index[-1], 'Close']
 
                     sell_date = last_close_date
                     selling_price = last_close_price
@@ -187,7 +187,10 @@ class BackTest(StockData):
             # Calculate the return for the current month
             return_percentage = (((value_increased + sold_asset) / (total_money_invested)) -1) * 100
 
-            monthly_data.loc[f"{month:02d}-{year}"] = [money_invested, total_money_invested, value_increased, sold_asset, return_percentage]
+            columns = ['Date','Money Added', 'Total Money Invested', 'Added value', 'Asset Sold', 'Return']
+            monthly_data.loc[f"{month:02d}-{year}", 'Date'] = f"{month:02d}-{year}"
+
+            monthly_data.loc[f"{month:02d}-{year}", columns[1:]] = [money_invested, total_money_invested, value_increased, sold_asset, return_percentage]
 
         return monthly_data
     
@@ -228,7 +231,7 @@ def calculate_and_print_statistics(df):
         return stat
 
 
-# test = BackTest("AAPL")
+# test = BackTest("CRM")
 # df_test = test.back_test()
 # df_return = test.calculate_money_invested()
 # print(df_return)

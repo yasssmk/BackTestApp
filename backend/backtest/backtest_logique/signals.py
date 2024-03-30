@@ -1,5 +1,6 @@
 from .divergences import Divergences
 from .indicators import Indicators
+from .data import StockData
 from .trends import Trends
 import pandas as pd
 
@@ -172,5 +173,8 @@ class Signals():
         sell_signals_df = sell_signals_df.sort_values(by='Date', ascending=True)
         return sell_signals_df
 
-# stock = Signals("AAPL")
+# stock_data = StockData('CRM')
+# data = stock_data.get_data()
+# monthly_data = stock_data.get_monthly_data()
+# stock = Signals(data,monthly_data )
 # print(stock.sell_signal())

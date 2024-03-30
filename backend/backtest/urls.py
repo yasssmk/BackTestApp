@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import Recomendation
+from .views import Test, Recomendation
 
 urlpatterns = [
-    # path("backtest", Test.as_view(), name='backtest'),
+    path("rundashboard", Test.as_view(), name='rundashboard'),
     path("reco", Recomendation.as_view(), name='recomendation'),
 ]
