@@ -31,11 +31,12 @@ class BackTest(StockData):
                 buying_signal = buy_row['Signal']
                 yield_percent = ((last_close_price / buying_price) - 1) * 100
                 profit_or_loss = (last_close_price - buying_price)
+                selling_signal = None
 
                 # Get today's date and format it in the same format as other dates
-                today_date = datetime.datetime.now().strftime("%Y-%m-%d")
+                today_date = datetime.now().strftime("%Y-%m-%d")
 
-                trades.append([self.symbol, buy_date, buying_price, buying_signal, today_date, last_close_price, yield_percent, profit_or_loss])
+                trades.append([self.symbol, buy_date, buying_price, buying_signal, today_date, last_close_price, selling_signal, yield_percent, profit_or_loss])
         else:
             for index, buy_row in self.buys.iterrows():
                 buy_date = buy_row['Date']
