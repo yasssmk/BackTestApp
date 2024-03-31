@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import SearchBar from '../components/DashboardComps/Searchbar';
 import ReturnCharts from '../components/DashboardComps/ReturnsChart';
 import StockCard from '../components/DashboardComps/StockInfoCard';
-
+import SignalsCard from '../components/DashboardComps/SignalsCard';
 
 
 const Dashboard = () => {
@@ -14,6 +14,7 @@ const Dashboard = () => {
         <SearchBar />
         <StockCard />
         <ReturnCharts />
+        <SignalsCard />
         </div> 
     )
 
