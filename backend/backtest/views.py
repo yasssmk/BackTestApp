@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .backtest_logique.backtesting import BackTest
+from .backtest_logique.backtesting import BackTest, calculate_and_print_statistics
 from .backtest_logique.data import StockData
 from .serializers import StocksSerializer
 from .models import Stock
@@ -15,8 +15,9 @@ class Test(APIView):
         test = BackTest(symbol)
         df_test = test.back_test()
         df_return = test.calculate_money_invested()
+        test_stat = calculate_and_print_statistics(df_return)
 
-        return Response([df_test, df_return], status=status.HTTP_200_OK)
+        return Response([df_test, df_return, test_stat], status=status.HTTP_200_OK)
         # stock.calculate_money_invested()
 
 class Recomendation(APIView):

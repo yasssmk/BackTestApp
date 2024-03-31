@@ -9,7 +9,8 @@ export const DataProvider = ({children}) => {
     const [isLoading, setLoading] = useState(true);
     const [dashboardData, setDashboardData] = useState([]);
     const [query, setQuery] = useState('');
-    const [recommendations, setRecommendations] = useState([]);   
+    const [recommendations, setRecommendations] = useState([]);
+    const [selectedOption, setSelectedOption] = useState("")  
 
     useEffect(() => {
         setLoading(false);
@@ -77,7 +78,7 @@ export const DataProvider = ({children}) => {
         if (e.key === 'Enter') {
 
             if (recommendations.length > 0 && query.trim() !== '') {
-                const selectedOption = recommendations.find(option => option.Company_Name.toLowerCase() === query.toLowerCase());
+                setSelectedOption(recommendations.find(option => option.Company_Name.toLowerCase() === query.toLowerCase()));
                 if (selectedOption) {
                     setLoading(true) 
                     runBacktest(selectedOption.Symbol);
@@ -96,6 +97,7 @@ export const DataProvider = ({children}) => {
         setQuery:setQuery,
         query: query,
         recommendations: recommendations,
+        selectedOption: selectedOption,
         handleChange: handleChange
 
     }

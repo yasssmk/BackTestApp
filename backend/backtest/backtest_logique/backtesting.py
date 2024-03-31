@@ -218,6 +218,7 @@ def calculate_and_print_statistics(df):
 
 
         total = total_held + total_cash
+        total_net = total - total_money
 
         stat = {
             "Number of months with investment": f"{(num_months_with_investment/num_months)}", #Change to Number of transactions
@@ -226,7 +227,8 @@ def calculate_and_print_statistics(df):
             "Total money invested": f"{total_money:.2f}$",
             "Total cash": f"{total_cash:.2f}$",
             "Total held": f"{total_held:.2f}$",
-            "Total": f"{total:.2f}$"
+            "Total": f"{total:.2f}$",
+            "Total net": f"{total_net:.2f}$"
         }
 
         return stat
