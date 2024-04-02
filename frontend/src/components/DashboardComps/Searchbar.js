@@ -1,59 +1,73 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import DashboardContext from "../../context/DashboardContext"
+import './Dashboard.css';
+import { ErrorBoundary } from 'react-error-boundary';
 
-const SearchBar = () => {
+  const SearchBar = () => {
 
-    const {isLoading, handleKeyDown, setLoading, query, recommendations, handleChange,setQuery} = useContext(DashboardContext);
+    const { handleChange, recommendations, runBacktest } = useContext(DashboardContext);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [inputValue, setInputValue] = useState('');
+    const [selectedOption, setSelectedOption] = useState(null);
+    const searchBarRef = useRef(null);
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
+    const handleClickOutside = (event) => {
+        if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
+            setShowDropdown(false);
+        }
+    };
+  
+    const handleInputChange = (event) => {
+      setInputValue(event.target.value);
+      handleChange(event);
+      setShowDropdown(true);
+    };
+  
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && selectedOption) {
+          runBacktest(selectedOption.Symbol); 
+        }
+      };
+    
+    const handleSelectOption = (option) => {
+        setInputValue(option.Company_Name);
+        setSelectedOption(option)
+        setShowDropdown(false);
+        }
 
     return (
 
-        isLoading ? (
-            <p>loading...</p> 
-        ) : (
-        <Autocomplete
-            id="search-bar"
-            sx={{ width: 300 }}
-            freeSolo
-            disableClearable
-            options={recommendations}
-            autoHighlight
-            getOptionLabel={(option) => `${option.Company_Name}`}
-            filterOptions={(options, { inputValue }) =>
-                options.filter(
-                    (option) =>
-                        option.Company_Name.toLowerCase().includes(inputValue.toLowerCase()) ||
-                        option.Symbol.toLowerCase().includes(inputValue.toLowerCase())
-                )
-            }
-            onChange={(event, newValue) => {
-                setQuery(newValue ? newValue.Company_Name : '');
-            }}
-            inputValue={query}
-            onInputChange={(event, newInputValue) => {
-                setQuery(newInputValue);
-            }}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label="Search..."
-                    onChange={handleChange}
-                    onKeyDown={(event) => {
-                        handleKeyDown(event);
-                    }}
-                />
-            )}
-            renderOption={(props, option) => (
-                <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                    {option.Company_Name} ({option.Symbol})
-                </Box>
-            )}
+      <div className="autocomplete" ref={searchBarRef} style={{ width: 300 }}>
+        <TextField
+          id="search-bar"
+          label="Search..."
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown} 
+          variant="outlined"
         />
-    )
-
+        {showDropdown && recommendations.length > 0 && (
+          <div className="autocomplete-items">
+            {recommendations.map((option) => (
+              <div key={option.id} onClick={() => handleSelectOption(option)}>
+                {option.Company_Name} ({option.Symbol})
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     );
-}
+  };
+ 
   
   export default SearchBar;

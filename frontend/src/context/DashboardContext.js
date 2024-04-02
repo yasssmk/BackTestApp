@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect} from "react";
 
+
 const DashboardContext = createContext()
 
 export default DashboardContext
@@ -10,17 +11,22 @@ export const DataProvider = ({children}) => {
     const [dashboardData, setDashboardData] = useState([]);
     const [query, setQuery] = useState('');
     const [recommendations, setRecommendations] = useState([]);
-    const [selectedOption, setSelectedOption] = useState("")  
+    const [selectedOption, setSelectedOption] = useState("")
+    const [hasError, setError] = useState(false)  
 
     useEffect(() => {
         setLoading(false);
+        setError(false)
       }, []);
+
 
     const handleChange = async (event) => {
         const newQuery = event.target.value;
         setQuery(newQuery);
+
         if (newQuery.trim() !== '') {
             try {
+
                 const response = await fetch('http://localhost:8000/dashboard/reco', {
                     method: 'POST',
                     headers: {
@@ -28,16 +34,20 @@ export const DataProvider = ({children}) => {
                     },
                     body: JSON.stringify({ search_query: newQuery })
                 });
+
                 const data = await response.json();
+
                 if (response.status === 200) {
                     const firstFiveRecommendations = data.slice(0, 5);
                     setRecommendations(firstFiveRecommendations);
                 } else {
                     setRecommendations([]);
                 }
+
             } catch (error) {
+                setError(true)
                 setRecommendations([]);
-                console.error('Error fetching recommendations:', error);
+                console.error('123Error fetching recommendations:', error);
             }
         }
     };
@@ -63,36 +73,66 @@ export const DataProvider = ({children}) => {
             });
 
             const data = await response.json();
-            localStorage.setItem(symbol, JSON.stringify(data))
-            setDashboardData(data)
-            setLoading(false)
+
+            if (data.response === 200){
+                localStorage.setItem(symbol, JSON.stringify(data))
+                setDashboardData(data)
+
+            } else {
+                setError(true)
+                setDashboardData([])
+
+            }
         }
 
         } catch (error) {
+            setError(true)
             setLoading(false)
+            setDashboardData([])
             console.error('Error running backtest:', error);
+        } finally{
+            setLoading(false)
         }
     };
 
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
+    // const handleKeyDown = (e) => {
+    //    try{
+    //         console.log(recommendations)
+    //         if (e.key === 'Enter') {
+    //             console.log("Enter PRESSED")
 
-            if (recommendations.length > 0 && query.trim() !== '') {
-                setSelectedOption(recommendations.find(option => option.Company_Name.toLowerCase() === query.toLowerCase()));
-                if (selectedOption) {
-                    setLoading(true) 
-                    runBacktest(selectedOption.Symbol);
-                }
-            }
-        }
-    };
+    //             if (recommendations && recommendations.length  > 0 && query.trim() !== '') {
+    //                 console.log("recommendations.length  > 0")
+    //                 setSelectedOption(recommendations.find(option => option.Company_Name.toLowerCase() === query.toLowerCase()));
+    //                 if (selectedOption) {
+    //                     console.log("Option selected")
+    //                     setLoading(true) 
+    //                     runBacktest(selectedOption.Symbol);
+    //                 } else{
+    //                     console.log("Option NOT selected")
+    //                 }
+
+    //             } else{
+    //                 console.log("recommendations.length  est pas 0")
+    //                 setRecommendations()
+    //                 setQuery('')
+    //                 }
+    //         }
+    //     } catch (error) {
+    //         console.log("Ya draaaa")
+    //         setLoading(false)
+    //         setDashboardData([])
+    //         setRecommendations([])
+    //         setQuery('')
+    //     }
+    // };
 
 
     let contextData = {
         isLoading: isLoading,
         setLoading: setLoading,
         dashboardData: dashboardData,
-        handleKeyDown: handleKeyDown,
+        // handleKeyDown: handleKeyDown,
         runBacktest: runBacktest,
         setQuery:setQuery,
         query: query,
@@ -103,8 +143,10 @@ export const DataProvider = ({children}) => {
     }
 
     return (
-        <DashboardContext.Provider value={contextData}>
-            {children}
-        </DashboardContext.Provider>
+
+            <DashboardContext.Provider value={contextData}>
+                {children}
+            </DashboardContext.Provider>
+
     )
 }

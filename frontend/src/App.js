@@ -9,6 +9,7 @@ import {AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DashboardContext';
 import Dashboard from './pages/dashboard';
 
+
 function App() {
   return (
     <div className="App">
@@ -19,9 +20,7 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes />} >
               <Route element={<HomePage />} path="/" exact />
-              
-                <Route element={<Dashboard/>} path="/dashboard" />
-              
+              <Route element={<Dashboard/>} path="/dashboard" />
             </Route>
             <Route element={<LoginPage />} path="/login"  />
             <Route element={<SigninPage />} path="/signup"  />

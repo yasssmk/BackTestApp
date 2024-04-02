@@ -11,13 +11,14 @@ from rest_framework import status
 # Create your views here.
 class Test(APIView):
     def post(self, request):
-        symbol = request.data.get('Symbol')
-        test = BackTest(symbol)
-        df_test = test.back_test()
-        df_return = test.calculate_money_invested()
-        test_stat = calculate_and_print_statistics(df_return)
+        # symbol = request.data.get('Symbol')
+        # test = BackTest(symbol)
+        # df_test = test.back_test()
+        # df_return = test.calculate_money_invested()
+        # test_stat = calculate_and_print_statistics(df_return)
 
-        return Response([df_test, df_return, test_stat], status=status.HTTP_200_OK)
+        # return Response([df_test, df_return, test_stat], status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         # stock.calculate_money_invested()
 
 class Recomendation(APIView):
@@ -35,3 +36,4 @@ class Recomendation(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             return Response("",status=status.HTTP_303_SEE_OTHER)
+        # return Response(status=status.HTTP_401_UNAUTHORIZED)

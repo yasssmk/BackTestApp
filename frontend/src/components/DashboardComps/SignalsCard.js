@@ -1,4 +1,4 @@
-import { useContext  } from 'react';
+import { useContext, useEffect  } from 'react';
 import DashboardContext from "../../context/DashboardContext";
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -6,16 +6,13 @@ const SignalsCard = () => {
 
     const {isLoading, dashboardData} = useContext(DashboardContext);
 
-
     if (isLoading) {
         
-        return <p></p>;
+        return <p></p>
     
     } else if (dashboardData.length > 0) {
 
         let data = dashboardData[0]
-        console.log(data);
-
 
         const columns = [
             { field: 'id', headerName: 'ID', width: 70 },
