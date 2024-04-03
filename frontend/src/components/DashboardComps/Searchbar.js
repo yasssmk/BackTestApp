@@ -8,10 +8,10 @@ import { ErrorBoundary } from 'react-error-boundary';
 
   const SearchBar = () => {
 
-    const { handleChange, recommendations, runBacktest } = useContext(DashboardContext);
+    const { handleChange, recommendations, runBacktest, setSelectedOption, selectedOption } = useContext(DashboardContext);
     const [showDropdown, setShowDropdown] = useState(false);
     const [inputValue, setInputValue] = useState('');
-    const [selectedOption, setSelectedOption] = useState(null);
+    // const [selectedOption, setSelectedOption] = useState(null);
     const searchBarRef = useRef(null);
 
     useEffect(() => {
@@ -28,14 +28,22 @@ import { ErrorBoundary } from 'react-error-boundary';
     };
   
     const handleInputChange = (event) => {
-      setInputValue(event.target.value);
-      handleChange(event);
-      setShowDropdown(true);
+
+        setInputValue(event.target.value);
+        handleChange(event);
+        if (event.target.value.length === 0){
+            setSelectedOption("")
+            setShowDropdown(false);
+        } else {
+            setShowDropdown(true);
+        }
+
     };
   
     const handleKeyDown = (event) => {
+        console.log(selectedOption)
         if (event.key === 'Enter' && selectedOption) {
-          runBacktest(selectedOption.Symbol); 
+            runBacktest(selectedOption.Symbol); 
         }
       };
     
@@ -53,7 +61,7 @@ import { ErrorBoundary } from 'react-error-boundary';
           label="Search..."
           value={inputValue}
           onChange={handleInputChange}
-          onKeyDown={handleKeyDown} 
+          onKeyUp={handleKeyDown} 
           variant="outlined"
         />
         {showDropdown && recommendations.length > 0 && (

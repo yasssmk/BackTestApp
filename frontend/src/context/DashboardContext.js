@@ -16,13 +16,17 @@ export const DataProvider = ({children}) => {
 
     useEffect(() => {
         setLoading(false);
-        setError(false)
       }, []);
+
+    useEffect(() => {
+        setError(false);
+      }, [selectedOption]);
 
 
     const handleChange = async (event) => {
         const newQuery = event.target.value;
-        setQuery(newQuery);
+       
+        // setQuery(newQuery)
 
         if (newQuery.trim() !== '') {
             try {
@@ -45,9 +49,7 @@ export const DataProvider = ({children}) => {
                 }
 
             } catch (error) {
-                setError(true)
-                setRecommendations([]);
-                console.error('123Error fetching recommendations:', error);
+                setRecommendations([]);;
             }
         }
     };
@@ -95,38 +97,6 @@ export const DataProvider = ({children}) => {
         }
     };
 
-    // const handleKeyDown = (e) => {
-    //    try{
-    //         console.log(recommendations)
-    //         if (e.key === 'Enter') {
-    //             console.log("Enter PRESSED")
-
-    //             if (recommendations && recommendations.length  > 0 && query.trim() !== '') {
-    //                 console.log("recommendations.length  > 0")
-    //                 setSelectedOption(recommendations.find(option => option.Company_Name.toLowerCase() === query.toLowerCase()));
-    //                 if (selectedOption) {
-    //                     console.log("Option selected")
-    //                     setLoading(true) 
-    //                     runBacktest(selectedOption.Symbol);
-    //                 } else{
-    //                     console.log("Option NOT selected")
-    //                 }
-
-    //             } else{
-    //                 console.log("recommendations.length  est pas 0")
-    //                 setRecommendations()
-    //                 setQuery('')
-    //                 }
-    //         }
-    //     } catch (error) {
-    //         console.log("Ya draaaa")
-    //         setLoading(false)
-    //         setDashboardData([])
-    //         setRecommendations([])
-    //         setQuery('')
-    //     }
-    // };
-
 
     let contextData = {
         isLoading: isLoading,
@@ -134,12 +104,13 @@ export const DataProvider = ({children}) => {
         dashboardData: dashboardData,
         // handleKeyDown: handleKeyDown,
         runBacktest: runBacktest,
-        setQuery:setQuery,
-        query: query,
+        // setQuery:setQuery,
+        // query: query,
         recommendations: recommendations,
         selectedOption: selectedOption,
-        handleChange: handleChange
-
+        setSelectedOption: setSelectedOption,
+        handleChange: handleChange,
+        hasError: hasError
     }
 
     return (
