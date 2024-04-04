@@ -11,14 +11,20 @@ from rest_framework import status
 # Create your views here.
 class Test(APIView):
     def post(self, request):
-        # symbol = request.data.get('Symbol')
-        # test = BackTest(symbol)
-        # df_test = test.back_test()
-        # df_return = test.calculate_money_invested()
-        # test_stat = calculate_and_print_statistics(df_return)
+        symbol = request.data.get('Symbol')
+        test = BackTest(symbol)
+        stock_info = test.get_stock_info()
+        df_test = test.back_test()
+        df_return = test.calculate_money_invested()
+        test_stat = calculate_and_print_statistics(df_return)
 
-        # return Response([df_test, df_return, test_stat], status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({
+            "Stock info": stock_info, 
+            "Investissement data":df_test,
+            "Cash data": df_return, 
+            "Stats": test_stat}
+            , status=status.HTTP_200_OK)
+        # return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         # stock.calculate_money_invested()
 
 class Recomendation(APIView):
@@ -27,7 +33,7 @@ class Recomendation(APIView):
         search_query = request.data.get('search_query', '')
 
         matching_stocks = Stock.objects.filter(
-            Q(Symbol__icontains=search_query.upper()) | Q(Company_Name__icontains=search_query.capitalize())
+            Q(Symbol__istartswith=search_query.upper()) | Q(Company_Name__istartswith=search_query.capitalize())
         )
 
         if matching_stocks:

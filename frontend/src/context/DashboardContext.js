@@ -9,24 +9,20 @@ export const DataProvider = ({children}) => {
 
     const [isLoading, setLoading] = useState(true);
     const [dashboardData, setDashboardData] = useState([]);
-    const [query, setQuery] = useState('');
     const [recommendations, setRecommendations] = useState([]);
     const [selectedOption, setSelectedOption] = useState("")
-    const [hasError, setError] = useState(false)  
+    const [hasError, setError] = useState(false)
+    const [history, setHistory] = useState([])
 
     useEffect(() => {
         setLoading(false);
       }, []);
 
-    useEffect(() => {
-        setError(false);
-      }, [selectedOption]);
-
-
     const handleChange = async (event) => {
         const newQuery = event.target.value;
-       
-        // setQuery(newQuery)
+
+        setError(false);
+        setSelectedOption("")
 
         if (newQuery.trim() !== '') {
             try {
@@ -54,7 +50,30 @@ export const DataProvider = ({children}) => {
         }
     };
 
+    const addHistory = (selectedOption) =>{
+        const item =  selectedOption
+
+        setHistory(prevHistory =>{
+            const isDuplicate = prevHistory.some(option => option.id === selectedOption.id);
+        
+            if (!isDuplicate) {
+                const newHistory = [...prevHistory,item];
+                if (newHistory.length > 5) {
+                    newHistory.shift()
+                }
+                return newHistory
+            } else{
+                    return history
+                }
+        })
+                  
+    }
+
     const runBacktest = async (symbol) => {
+
+        setError(false);
+        setLoading(true)
+
         try {
 
             let data;
@@ -75,8 +94,10 @@ export const DataProvider = ({children}) => {
             });
 
             const data = await response.json();
+            console.log(data)
+            console.log(response.status)
 
-            if (data.response === 200){
+            if (response.status === 200){
                 localStorage.setItem(symbol, JSON.stringify(data))
                 setDashboardData(data)
 
@@ -102,15 +123,15 @@ export const DataProvider = ({children}) => {
         isLoading: isLoading,
         setLoading: setLoading,
         dashboardData: dashboardData,
-        // handleKeyDown: handleKeyDown,
         runBacktest: runBacktest,
-        // setQuery:setQuery,
-        // query: query,
         recommendations: recommendations,
         selectedOption: selectedOption,
         setSelectedOption: setSelectedOption,
         handleChange: handleChange,
-        hasError: hasError
+        hasError: hasError,
+        setError: setError,
+        addHistory : addHistory,
+        history: history 
     }
 
     return (

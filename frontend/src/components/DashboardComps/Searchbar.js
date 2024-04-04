@@ -8,10 +8,9 @@ import { ErrorBoundary } from 'react-error-boundary';
 
   const SearchBar = () => {
 
-    const { handleChange, recommendations, runBacktest, setSelectedOption, selectedOption } = useContext(DashboardContext);
+    const { handleChange, recommendations, runBacktest, setSelectedOption, selectedOption, addHistory, history  } = useContext(DashboardContext);
     const [showDropdown, setShowDropdown] = useState(false);
     const [inputValue, setInputValue] = useState('');
-    // const [selectedOption, setSelectedOption] = useState(null);
     const searchBarRef = useRef(null);
 
     useEffect(() => {
@@ -20,6 +19,10 @@ import { ErrorBoundary } from 'react-error-boundary';
             document.removeEventListener('click', handleClickOutside);
         };
     }, []);
+
+    const handleClick = (event) =>{
+        setShowDropdown(true);
+    }
 
     const handleClickOutside = (event) => {
         if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
@@ -41,8 +44,9 @@ import { ErrorBoundary } from 'react-error-boundary';
     };
   
     const handleKeyDown = (event) => {
-        console.log(selectedOption)
+
         if (event.key === 'Enter' && selectedOption) {
+            setShowDropdown(false)
             runBacktest(selectedOption.Symbol); 
         }
       };
@@ -50,6 +54,7 @@ import { ErrorBoundary } from 'react-error-boundary';
     const handleSelectOption = (option) => {
         setInputValue(option.Company_Name);
         setSelectedOption(option)
+        addHistory(option) 
         setShowDropdown(false);
         }
 
@@ -62,9 +67,10 @@ import { ErrorBoundary } from 'react-error-boundary';
           value={inputValue}
           onChange={handleInputChange}
           onKeyUp={handleKeyDown} 
+          onClick = {handleClick}
           variant="outlined"
         />
-        {showDropdown && recommendations.length > 0 && (
+        {/* {showDropdown && recommendations.length > 0 && (
           <div className="autocomplete-items">
             {recommendations.map((option) => (
               <div key={option.id} onClick={() => handleSelectOption(option)}>
@@ -72,7 +78,22 @@ import { ErrorBoundary } from 'react-error-boundary';
               </div>
             ))}
           </div>
-        )}
+        )} */}
+        {(showDropdown && recommendations.length > 0) || showDropdown &&  inputValue === "" ? (
+        <div className="autocomplete-items">
+            {inputValue === ""
+                ? history.map((option) => (
+                    <div key={option.id} onClick={() => handleSelectOption(option)}>
+                        {option.Company_Name} ({option.Symbol})
+                    </div>
+                ))
+                : recommendations.map((option) => (
+                    <div key={option.id} onClick={() => handleSelectOption(option)}>
+                        {option.Company_Name} ({option.Symbol})
+                    </div>
+                ))}
+        </div>
+    ) : null}
       </div>
     );
   };

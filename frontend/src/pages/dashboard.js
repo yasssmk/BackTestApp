@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { useContext } from 'react';
 import SearchBar from '../components/DashboardComps/Searchbar';
 import ReturnCharts from '../components/DashboardComps/ReturnsChart';
 import StockCard from '../components/DashboardComps/StockInfoCard';
@@ -10,36 +9,30 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 
 
-
-const ErrorFallback = ({ error, resetErrorBoundary }) => (
-    <div role="alert">
-      <p>Oops! Something went wrong:</p>
-      <pre>{error.message}</pre>
-      <button onClick={resetErrorBoundary}>Try again</button>
-    </div>
-  );
-
 const Dashboard = () => {
-    const { hasError} = useContext(DashboardContext);
-    return ( 
-            <div> 
-                <h3>It will all be there</h3>
-                <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => console.log('Resetting')}>
-                    <SearchBar />
-                    <StockCard />
-                    <ReturnCharts />
-                    <SignalsCard />
-                </ErrorBoundary>
-                {hasError && (
-                <Stack sx={{ width: '100%' }} spacing={2} alignItems="center" justifyContent="center" mt={8}>
-                    <Alert severity="error" variant="outlined">
-                        <AlertTitle>Error</AlertTitle>
-                        Something went wrong!
-                    </Alert>
-                </Stack>
-            )}
-            </div> 
+    const { hasError } = useContext(DashboardContext);
+    
+    const DashboardComponent = hasError ? (
+        <Stack sx={{ width: '100%' }} spacing={2} alignItems="center" justifyContent="center" mt={4}>
+            <Alert severity="error" variant="outlined">
+                <AlertTitle>Error</AlertTitle>
+                Something went wrong!
+            </Alert>
+        </Stack>
+    ) : (
+        <>
+            <StockCard />
+            <ReturnCharts />
+            <SignalsCard />
+        </>
+    );
 
+    return (
+        <div>
+            <h3>It will all be there</h3>
+            <SearchBar />
+            {DashboardComponent}
+        </div>
     );
 };
 

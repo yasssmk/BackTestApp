@@ -139,6 +139,7 @@ export const AuthProvider = ({children}) => {
 
             if (response.status === 201){
                 alert('User created')
+                navigate("/login")
             }else{
                 alert('Wrong LogIn')
             }

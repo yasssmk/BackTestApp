@@ -162,12 +162,12 @@ class Signals():
             date = self.stock_data.index[i].date()
             trend_type = self.trends.get_trend_type_on_date(date, self.monthly_stock_data)['Trend Type']
 
-        if trend_type != 'Bullish':
-            if bb_high.iloc[i] == 1 or bb_high.iloc[i-1] == 1 :
-                signal = 'BB High'
-                close_price = self.stock_data['Close'][i]
-                new_row = pd.DataFrame({'Date': date, 'Signal': div_type, 'Close': close_price}, index=[0])
-                sell_signals_df = pd.concat([sell_signals_df, new_row], ignore_index=True)
+            if trend_type != 'Bullish':
+                if bb_high.iloc[i] == 1 or bb_high.iloc[i-1] == 1 :
+                    signal = 'BB High'
+                    close_price = self.stock_data['Close'][i]
+                    new_row = pd.DataFrame({'Date': date, 'Signal': div_type, 'Close': close_price}, index=[0])
+                    sell_signals_df = pd.concat([sell_signals_df, new_row], ignore_index=True)
 
         sell_signals_df['Date'] = pd.to_datetime(sell_signals_df['Date'])
         sell_signals_df = sell_signals_df.sort_values(by='Date', ascending=True)

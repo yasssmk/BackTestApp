@@ -3,24 +3,38 @@ import DashboardContext from "../../context/DashboardContext";
 
 const StockCard = () => {
 
-    const {isLoading, selectedOption, dashboardData} = useContext(DashboardContext);
+    const {isLoading, dashboardData} = useContext(DashboardContext);
 
-
+    // console.log(dashboardData)
+    
     if (isLoading) {
         
-        return <p></p>;
+        return <p>Loading</p>;
     
-    } else if (dashboardData.length > 0) {
+    } else if (dashboardData) {
         
         return(
             <div>
-            <p>Company: {selectedOption.Company_Name} ({selectedOption.Symbol})</p>
-            <p>Industry: {selectedOption.Industry}</p>
-            <p>Country: {selectedOption.Country}</p>
-            <p>Monthly av. growth: {dashboardData[2]["Monthly average Asset growth"]}</p>
-            <p>Total money invested: {dashboardData[2]["Total money invested"]}</p>
-            <p>Total money made: {dashboardData[2]["Total"]}</p>
-            <p>Total net: {dashboardData[2]["Total net"]} </p>
+                {dashboardData["Stock info"] ? (
+                    <div>
+                        <h4>Company Info</h4>
+                        <p>Company: {dashboardData["Stock info"]["Company_Name"]} ({dashboardData["Stock info"]["Symbol"]})</p>
+                        <p>Industry: {dashboardData["Stock info"]["Industry"]}</p>
+                        <p>Country: {dashboardData["Stock info"]["Country"]}</p>
+                    </div>) :(
+                        <p>No Company Data</p>
+                    )}
+                {dashboardData["Stats"] ? (
+                    <div>
+                        <h4>Investment Stats</h4>
+                        <p>Monthly av. growth: {dashboardData["Stats"]["Monthly average Asset growth"]}</p>
+                        <p>Total money invested: {dashboardData["Stats"]["Total money invested"]}</p>
+                        <p>Total money made: {dashboardData["Stats"]["Total"]}</p>
+                        <p>Total net: {dashboardData["Stats"]["Total net"]} </p>
+                    </div>) : (
+                        <p>No Data</p>
+                    )
+                    }
             </div>)
 }
 
