@@ -4,13 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const SignalsCard = () => {
 
-    const {isLoading, dashboardData, setError} = useContext(DashboardContext);
-
-    // if (isLoading) {
-        
-    //     return <p></p>
-    
-    // } else 
+    const {dashboardData, setError} = useContext(DashboardContext);
     
     if (dashboardData["Investissement data"]) {
 
@@ -42,7 +36,7 @@ const SignalsCard = () => {
 
             
             return(
-                <div style={{ height: 400, width: '100%' }}>
+                <div style={{ height: 400}}>
                     <DataGrid rows={rows} columns={columns} pageSize={5} />
                 </div>
             )

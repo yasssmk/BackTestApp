@@ -7,15 +7,8 @@ import Chart from 'react-apexcharts';
 
 const ReturnCharts = () => {
 
-    const {isLoading,dashboardData, setError} = useContext(DashboardContext);
+    const {dashboardData, setError} = useContext(DashboardContext);
 
-
-    // if (isLoading) {
-
-    //     return <p>Loading...</p>;
-
-    // } else if 
-    
     if (dashboardData["Cash data"]) {
 
         try{

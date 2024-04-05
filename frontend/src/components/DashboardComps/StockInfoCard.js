@@ -3,10 +3,12 @@ import DashboardContext from "../../context/DashboardContext";
 
 const StockCard = () => {
 
-    const {dashboardData} = useContext(DashboardContext);
+    const {dashboardData, setError} = useContext(DashboardContext);
 
     
     if (dashboardData) {
+
+        try{
         
         return(
             <div>
@@ -16,6 +18,7 @@ const StockCard = () => {
                         <p>Company: {dashboardData["Stock info"]["Company_Name"]} ({dashboardData["Stock info"]["Symbol"]})</p>
                         <p>Industry: {dashboardData["Stock info"]["Industry"]}</p>
                         <p>Country: {dashboardData["Stock info"]["Country"]}</p>
+                       {/* <p>{Yacine}</p> errro to catch */}
                     </div>) :(
                         <p>No Company Data</p>
                     )}
@@ -30,7 +33,11 @@ const StockCard = () => {
                         <p>No Data</p>
                     )
                     }
-            </div>)
+            </div>);
+        
+        } catch (error){
+            setError(true)
+        }
 }
 
 }

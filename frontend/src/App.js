@@ -1,4 +1,5 @@
 import './App.css';
+import { lazy } from 'react'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import SigninPage from './pages/SignInPage';
@@ -7,7 +8,9 @@ import Header from './components/Headers';
 import PrivateRoutes from './utils/PrivateRoutes'
 import {AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DashboardContext';
-import Dashboard from './pages/dashboard';
+
+
+const Dashboard = lazy(() => import('./pages/dashboard'));
 
 
 function App() {
