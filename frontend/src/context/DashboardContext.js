@@ -94,8 +94,6 @@ export const DataProvider = ({children}) => {
             });
 
             const data = await response.json();
-            console.log(data)
-            console.log(response.status)
 
             if (response.status === 200){
                 localStorage.setItem(symbol, JSON.stringify(data))

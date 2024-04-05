@@ -3,15 +3,10 @@ import DashboardContext from "../../context/DashboardContext";
 
 const StockCard = () => {
 
-    const {isLoading, dashboardData} = useContext(DashboardContext);
+    const {dashboardData} = useContext(DashboardContext);
 
-    // console.log(dashboardData)
     
-    if (isLoading) {
-        
-        return <p>Loading</p>;
-    
-    } else if (dashboardData) {
+    if (dashboardData) {
         
         return(
             <div>

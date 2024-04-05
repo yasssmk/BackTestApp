@@ -1,16 +1,18 @@
-import { useContext } from 'react';
-import SearchBar from '../components/DashboardComps/Searchbar';
-import ReturnCharts from '../components/DashboardComps/ReturnsChart';
-import StockCard from '../components/DashboardComps/StockInfoCard';
-import SignalsCard from '../components/DashboardComps/SignalsCard';
+import { useContext, lazy, Suspense } from 'react';
+import SearchBar from '../components/Searchbar';
 import DashboardContext from "../context/DashboardContext";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 
 
+
+
+const DashboardCards = lazy(() => import('../components/DashboardComps'));
+
+
 const Dashboard = () => {
-    const { hasError } = useContext(DashboardContext);
+    const { hasError, isLoading } = useContext(DashboardContext);
     
     const DashboardComponent = hasError ? (
         <Stack sx={{ width: '100%' }} spacing={2} alignItems="center" justifyContent="center" mt={4}>
@@ -19,13 +21,12 @@ const Dashboard = () => {
                 Something went wrong!
             </Alert>
         </Stack>
-    ) : (
-        <>
-            <StockCard />
-            <ReturnCharts />
-            <SignalsCard />
-        </>
-    );
+    ) : ( <>
+            <Suspense fallback={<div><h2>CA CHARRRRGE</h2></div>}>
+                <DashboardCards />
+            </Suspense>
+        </>)
+    ;
 
     return (
         <div>

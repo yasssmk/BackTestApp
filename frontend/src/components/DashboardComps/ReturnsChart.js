@@ -10,11 +10,13 @@ const ReturnCharts = () => {
     const {isLoading,dashboardData, setError} = useContext(DashboardContext);
 
 
-    if (isLoading) {
+    // if (isLoading) {
 
-        return <p>Loading...</p>;
+    //     return <p>Loading...</p>;
 
-    } else if (dashboardData["Cash data"]) {
+    // } else if 
+    
+    if (dashboardData["Cash data"]) {
 
         try{
 

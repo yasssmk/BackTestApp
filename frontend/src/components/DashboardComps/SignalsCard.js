@@ -6,11 +6,13 @@ const SignalsCard = () => {
 
     const {isLoading, dashboardData, setError} = useContext(DashboardContext);
 
-    if (isLoading) {
+    // if (isLoading) {
         
-        return <p></p>
+    //     return <p></p>
     
-    } else if (dashboardData["Investissement data"]) {
+    // } else 
+    
+    if (dashboardData["Investissement data"]) {
 
         try{
 

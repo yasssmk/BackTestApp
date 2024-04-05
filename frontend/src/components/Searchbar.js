@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import DashboardContext from "../../context/DashboardContext"
-import './Dashboard.css';
+import DashboardContext from "../context/DashboardContext"
+import './DashboardComps/Dashboard.css';
 import { ErrorBoundary } from 'react-error-boundary';
 
   const SearchBar = () => {
