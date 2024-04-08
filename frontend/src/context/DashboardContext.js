@@ -1,7 +1,9 @@
 import { createContext, useState, useEffect} from "react";
+import { useNavigate,  useLocation  } from 'react-router-dom';
 
 
 const DashboardContext = createContext()
+
 
 export default DashboardContext
 
@@ -13,6 +15,10 @@ export const DataProvider = ({children}) => {
     const [selectedOption, setSelectedOption] = useState("")
     const [hasError, setError] = useState(false)
     const [history, setHistory] = useState([])
+
+    const navigate = useNavigate()
+    const location = useLocation()
+
 
     useEffect(() => {
         setLoading(false);
@@ -73,6 +79,10 @@ export const DataProvider = ({children}) => {
 
         setError(false);
         setLoading(true)
+
+        if (navigate && location !== '/dashboard') {
+            navigate('/dashboard');
+        }
 
         try {
 

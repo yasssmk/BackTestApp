@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import DashboardContext from "../context/DashboardContext"
 import './DashboardComps/Dashboard.css';
-import { ErrorBoundary } from 'react-error-boundary';
+
 
   const SearchBar = () => {
 
-    const { handleChange, recommendations, runBacktest, setSelectedOption, selectedOption, addHistory, history  } = useContext(DashboardContext);
+    const { handleChange, recommendations, runBacktest, setSelectedOption, selectedOption, addHistory, history, isLoading  } = useContext(DashboardContext);
     const [showDropdown, setShowDropdown] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const searchBarRef = useRef(null);
@@ -68,18 +66,11 @@ import { ErrorBoundary } from 'react-error-boundary';
           onChange={handleInputChange}
           onKeyUp={handleKeyDown} 
           onClick = {handleClick}
+          disabled={isLoading}
           variant="outlined"
         />
-        {/* {showDropdown && recommendations.length > 0 && (
-          <div className="autocomplete-items">
-            {recommendations.map((option) => (
-              <div key={option.id} onClick={() => handleSelectOption(option)}>
-                {option.Company_Name} ({option.Symbol})
-              </div>
-            ))}
-          </div>
-        )} */}
-        {(showDropdown && recommendations.length > 0) || showDropdown &&  inputValue === "" ? (
+
+        {(showDropdown && recommendations.length > 0) || (showDropdown &&  inputValue === "" )? (
         <div className="autocomplete-items">
             {inputValue === ""
                 ? history.map((option) => (

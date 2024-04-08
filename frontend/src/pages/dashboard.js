@@ -1,25 +1,19 @@
 import { useContext, lazy, Suspense } from 'react';
 import SearchBar from '../components/Searchbar';
 import DashboardContext from "../context/DashboardContext";
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Stack from '@mui/material/Stack';
+import FallbackDisplay from '../components/DashboardComps/FallbackDisplay';
 import { ErrorBoundary } from 'react-error-boundary';
 
 const DashboardCards = lazy(() => import('../components/DashboardComps'));
+const DashboardSkeleton = lazy(() => import("../components/DashboardComps/skeleton"));
 
 const Dashboard = () => {
     const { hasError } = useContext(DashboardContext);
     
     const DashboardComponent = hasError ? (
-        <Stack sx={{ width: '100%' }} spacing={2} alignItems="center" justifyContent="center" mt={4}>
-            <Alert severity="error" variant="outlined">
-                <AlertTitle>Error</AlertTitle>
-                Something went wrong!
-            </Alert>
-        </Stack>
+        <FallbackDisplay />
     ) : ( <>
-                <Suspense fallback={<div><h2>CA CHARRRRGE</h2></div>}>
+                <Suspense FallbackComponent={DashboardSkeleton}>
                     <DashboardCards />
                 </Suspense>
             
@@ -30,7 +24,8 @@ const Dashboard = () => {
         <div>
             <h3>It will all be there</h3>
             <SearchBar />
-            <ErrorBoundary fallback={<p> Ca a fucked up</p>}>
+            <ErrorBoundary FallbackComponent={FallbackDisplay}
+            onReset={() => window.location.reload()}>
                 {DashboardComponent}
             </ErrorBoundary>
         </div>
