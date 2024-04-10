@@ -1,6 +1,7 @@
-import { createContext, useState, useEffect} from "react";
+import { createContext, useState, useEffect, useContext} from "react";
 import { jwtDecode } from "jwt-decode"
 import {useNavigate} from "react-router-dom"
+import DashboardContext from "./DashboardContext";
 
 
 const AuthContext = createContext()
@@ -15,6 +16,8 @@ export const AuthProvider = ({children}) => {
     let [loading, setLoading] = useState(true)
 
     const navigate = useNavigate()
+
+    const {clearStates} = useContext(DashboardContext);
 
     useEffect(() => {
 
@@ -69,6 +72,7 @@ export const AuthProvider = ({children}) => {
         let resetUser = () =>{
             setAuthToken(null);
             setUser(null);
+            clearStates();
             localStorage.removeItem("authTokens");
             navigate("/login");
         }

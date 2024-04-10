@@ -15,7 +15,6 @@ export const DataProvider = ({children}) => {
     const [selectedOption, setSelectedOption] = useState("")
     const [hasError, setError] = useState(false)
     const [history, setHistory] = useState([])
-    const [stockListCache, setStockListCache] = useState(null)
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -24,6 +23,14 @@ export const DataProvider = ({children}) => {
     useEffect(() => {
         setLoading(false);
       }, []);
+
+    
+    const clearStates = () => {
+        setDashboardData([]);
+        setHistory([])
+        setRecommendations([])
+        setSelectedOption([])
+    }; 
 
     
     const getStockList = async() =>{
@@ -81,7 +88,6 @@ export const DataProvider = ({children}) => {
                 if (newHistory.length > 5) {
                     const symbolToRemove = newHistory[0].Symbol; 
                     newHistory.shift()
-                    localStorage.removeItem(symbolToRemove);
                 }
                 return newHistory
             } else{
@@ -155,7 +161,8 @@ export const DataProvider = ({children}) => {
         hasError: hasError,
         setError: setError,
         addHistory : addHistory,
-        history: history 
+        history: history,
+        clearStates: clearStates
     }
 
     return (

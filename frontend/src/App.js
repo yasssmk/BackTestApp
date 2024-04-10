@@ -17,8 +17,8 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <AuthProvider>
         <DataProvider>
+        <AuthProvider>
           <Header/>
           <Routes>
             <Route element={<PrivateRoutes />} >
@@ -28,8 +28,8 @@ function App() {
             <Route element={<LoginPage />} path="/login"  />
             <Route element={<SigninPage />} path="/signup"  />
           </Routes>
-        </DataProvider>
         </AuthProvider>
+        </DataProvider>
       </Router>
     </div>
   );
