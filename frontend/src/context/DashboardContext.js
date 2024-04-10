@@ -15,6 +15,7 @@ export const DataProvider = ({children}) => {
     const [selectedOption, setSelectedOption] = useState("")
     const [hasError, setError] = useState(false)
     const [history, setHistory] = useState([])
+    const [stockListCache, setStockListCache] = useState(null)
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -24,34 +25,47 @@ export const DataProvider = ({children}) => {
         setLoading(false);
       }, []);
 
+    
+    const getStockList = async() =>{
+
+        try{
+            const response = await fetch('http://localhost:8000/dashboard/reco', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        // body: JSON.stringify({ search_query: newQuery })
+                    });
+
+            const data = await response.json();
+
+            if (response.ok){
+                return data
+            } else {
+                setRecommendations([])
+            }
+        } catch {
+            setError(true)
+        }
+    }
+
     const handleChange = async (event) => {
         const newQuery = event.target.value;
-
+    
         setError(false);
-        setSelectedOption("")
-
+        setSelectedOption("");
+    
         if (newQuery.trim() !== '') {
             try {
-
-                const response = await fetch('http://localhost:8000/dashboard/reco', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ search_query: newQuery })
-                });
-
-                const data = await response.json();
-
-                if (response.status === 200) {
-                    const firstFiveRecommendations = data.slice(0, 5);
-                    setRecommendations(firstFiveRecommendations);
-                } else {
-                    setRecommendations([]);
-                }
-
+                const stockList = await getStockList()
+                const recommendations = stockList.filter(item =>
+                    item.Symbol.startsWith(newQuery.toUpperCase()) ||
+                    item.Company_Name.toLowerCase().startsWith(newQuery.toLowerCase())
+                ).slice(0, 5);
+                setRecommendations(recommendations);
             } catch (error) {
-                setRecommendations([]);;
+                setRecommendations([]);
+                setError(true);
             }
         }
     };
@@ -65,7 +79,9 @@ export const DataProvider = ({children}) => {
             if (!isDuplicate) {
                 const newHistory = [...prevHistory,item];
                 if (newHistory.length > 5) {
+                    const symbolToRemove = newHistory[0].Symbol; 
                     newHistory.shift()
+                    localStorage.removeItem(symbolToRemove);
                 }
                 return newHistory
             } else{
@@ -86,14 +102,14 @@ export const DataProvider = ({children}) => {
 
         try {
 
-            let data;
-            const localStorageData = localStorage.getItem(symbol)
+            // let data;
+            // const localStorageData = localStorage.getItem(symbol)
             
-            if (localStorageData){
-                data = JSON.parse(localStorageData);
-                setDashboardData(data)
-                setLoading(false)
-            } else {
+            // if (localStorageData){
+            //     data = JSON.parse(localStorageData);
+            //     setDashboardData(data)
+            //     setLoading(false)
+            // } else {
 
             const response = await fetch('http://localhost:8000/dashboard/rundashboard', {
                 method: 'POST',
@@ -106,7 +122,7 @@ export const DataProvider = ({children}) => {
             const data = await response.json();
 
             if (response.status === 200){
-                localStorage.setItem(symbol, JSON.stringify(data))
+                // localStorage.setItem(symbol, JSON.stringify(data))
                 setDashboardData(data)
 
             } else {
@@ -114,7 +130,7 @@ export const DataProvider = ({children}) => {
                 setDashboardData([])
 
             }
-        }
+        
 
         } catch (error) {
             setError(true)

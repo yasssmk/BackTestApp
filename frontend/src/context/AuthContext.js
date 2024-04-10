@@ -156,7 +156,6 @@ export const AuthProvider = ({children}) => {
         setUser(googleUser);
         localStorage.setItem('authTokens', JSON.stringify(googleToken))
         navigate("/dashboard")
-        console.log(googleUser.email)
 
         let e = {
             "email": googleUser.email,

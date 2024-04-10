@@ -3,9 +3,10 @@ import SearchBar from '../components/Searchbar';
 import DashboardContext from "../context/DashboardContext";
 import FallbackDisplay from '../components/DashboardComps/FallbackDisplay';
 import { ErrorBoundary } from 'react-error-boundary';
+import DashboardSkeleton from "../components/DashboardComps/skeleton"
 
 const DashboardCards = lazy(() => import('../components/DashboardComps'));
-const DashboardSkeleton = lazy(() => import("../components/DashboardComps/skeleton"));
+// const DashboardSkeleton = lazy(() => import("../components/DashboardComps/skeleton"));
 
 const Dashboard = () => {
     const { hasError } = useContext(DashboardContext);
@@ -13,7 +14,7 @@ const Dashboard = () => {
     const DashboardComponent = hasError ? (
         <FallbackDisplay />
     ) : ( <>
-                <Suspense FallbackComponent={DashboardSkeleton}>
+                <Suspense fallback={<DashboardSkeleton />}>
                     <DashboardCards />
                 </Suspense>
             
