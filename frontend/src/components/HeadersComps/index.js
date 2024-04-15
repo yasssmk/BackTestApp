@@ -6,6 +6,7 @@ import { Box} from '@mui/material';
 import LogoSection from './LogoSection';
 import LogOutButtons from './LogOut'
 import SearchSection from './SearchSection';
+import HomePageBreadCrumbs from './HomeGreadCrumbs';
 
 import { useNavigate, useLocation  } from 'react-router-dom';
 
@@ -33,7 +34,7 @@ const theme = useTheme();
       <LogoSection />
 
       <Box sx={{margin: '50px', padding:'16px', width: '320px'}} >
-        {location.pathname === '/dashboard' && <SearchSection />}
+        {location.pathname === '/dashboard' ? <SearchSection /> : <HomePageBreadCrumbs/>}
       </Box>
       <Box sx={{ flexGrow: 1 }} />
       <LogOutButtons />

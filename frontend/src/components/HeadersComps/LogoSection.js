@@ -1,8 +1,21 @@
+import { useNavigate } from 'react-router-dom';
 
 const LogoSection = () => {
 
+  const navigate = useNavigate()
+
+  const handleClick = () =>{
+    navigate('/')
+  }
+
   return (
-    <img src='/OwizerLogo.png' alt="Owizer logo" width={130}/>
+    <img 
+    src='/OwizerLogoLight.png' 
+    alt="Owizer logo" 
+    width={130} 
+    onClick={handleClick}
+    style={{ cursor: 'pointer' }}  
+    />
   );
 };
 
