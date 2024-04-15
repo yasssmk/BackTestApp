@@ -6,6 +6,9 @@ const HomePage = () =>{
         <div>
             <h1> Your journey starts here Babyy</h1>
             <SearchBar id={'homepage'}/>
+            <box>
+                
+            </box>
         </div>
     )
 }

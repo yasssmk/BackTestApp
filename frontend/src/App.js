@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 import SigninPage from './pages/SignInPage';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from './components/HeadersComps';
+import Footer from './components/Footer';
 import PrivateRoutes from './utils/PrivateRoutes'
 import {AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DashboardContext';
@@ -28,6 +29,9 @@ function App() {
             <Route element={<LoginPage />} path="/login"  />
             <Route element={<SigninPage />} path="/signup"  />
           </Routes>
+          <footer>
+            <Footer />
+          </footer>
         </AuthProvider>
         </DataProvider>
       </Router>
