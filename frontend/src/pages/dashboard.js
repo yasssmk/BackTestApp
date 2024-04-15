@@ -24,7 +24,6 @@ const Dashboard = () => {
     return (
         <div>
             <h3>It will all be there</h3>
-            <SearchBar />
             <ErrorBoundary FallbackComponent={FallbackDisplay}
             onReset={() => window.location.reload()}>
                 {DashboardComponent}

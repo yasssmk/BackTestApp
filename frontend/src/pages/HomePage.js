@@ -5,7 +5,7 @@ const HomePage = () =>{
     return (
         <div>
             <h1> Your journey starts here Babyy</h1>
-            <SearchBar />
+            <SearchBar id={'homepage'}/>
         </div>
     )
 }

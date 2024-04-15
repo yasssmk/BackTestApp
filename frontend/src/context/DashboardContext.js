@@ -61,7 +61,6 @@ export const DataProvider = ({children}) => {
     
         setError(false);
         setSelectedOption("");
-    
         if (newQuery.trim() !== '') {
             try {
                 const stockList = await getStockList()

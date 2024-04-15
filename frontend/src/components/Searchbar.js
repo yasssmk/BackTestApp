@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import TextField from '@mui/material/TextField';
 import DashboardContext from "../context/DashboardContext"
+import PropTypes from 'prop-types';
 import './DashboardComps/Dashboard.css';
+import { ButtonBase,InputAdornment } from '@mui/material';
+import { IconSearch } from '@tabler/icons-react';
 
 
-  const SearchBar = () => {
+  const SearchBar = ({id}) => {
 
     const { handleChange, recommendations, runBacktest, setSelectedOption, selectedOption, addHistory, history, isLoading  } = useContext(DashboardContext);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -23,9 +26,11 @@ import './DashboardComps/Dashboard.css';
     }
 
     const handleClickOutside = (event) => {
+        console.log(showDropdown)
         if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
             setShowDropdown(false);
         }
+
     };
   
     const handleInputChange = (event) => {
@@ -49,6 +54,14 @@ import './DashboardComps/Dashboard.css';
         }
       };
     
+    const searchClicked = (event) => {
+
+        if (selectedOption) {
+            setShowDropdown(false)
+            runBacktest(selectedOption.Symbol); 
+        }
+      }; 
+    
     const handleSelectOption = (option) => {
         setInputValue(option.Company_Name);
         setSelectedOption(option)
@@ -58,16 +71,27 @@ import './DashboardComps/Dashboard.css';
 
     return (
 
-      <div className="autocomplete" ref={searchBarRef} style={{ width: 300 }}>
+      <div className="autocomplete" ref={searchBarRef} id={id}>
         <TextField
           id="search-bar"
-          label="Search..."
+          label="Search"
           value={inputValue}
           onChange={handleInputChange}
           onKeyUp={handleKeyDown} 
           onClick = {handleClick}
           disabled={isLoading}
           variant="outlined"
+          style={{ width: '100%'}}
+
+          InputProps={{
+                startAdornment: (
+                <ButtonBase onClick = {searchClicked}>
+                <InputAdornment position="start">
+                    <IconSearch stroke={1.5} size="1rem"/>
+                </InputAdornment>
+                </ButtonBase>
+                ),
+            }}
         />
 
         {(showDropdown && recommendations.length > 0) || (showDropdown &&  inputValue === "" )? (
@@ -89,5 +113,8 @@ import './DashboardComps/Dashboard.css';
     );
   };
  
-  
+  SearchBar.propTypes = {
+    id: PropTypes.string,
+  };
+
   export default SearchBar;

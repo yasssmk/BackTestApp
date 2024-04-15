@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import SigninPage from './pages/SignInPage';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from './components/Headers';
+import Header from './components/HeadersComps';
 import PrivateRoutes from './utils/PrivateRoutes'
 import {AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DashboardContext';
