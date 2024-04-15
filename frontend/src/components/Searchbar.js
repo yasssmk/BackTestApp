@@ -7,6 +7,11 @@ import { ButtonBase,InputAdornment } from '@mui/material';
 import { IconSearch } from '@tabler/icons-react';
 
 
+// ==============================|| SEARCHBAR STYLE||============================== //
+
+// ==============================|| SEARCHBAR||============================== //
+
+
   const SearchBar = ({id}) => {
 
     const { handleChange, recommendations, runBacktest, setSelectedOption, selectedOption, addHistory, history, isLoading  } = useContext(DashboardContext);
@@ -22,11 +27,12 @@ import { IconSearch } from '@tabler/icons-react';
     }, []);
 
     const handleClick = (event) =>{
-        setShowDropdown(true);
+        if (recommendations.length > 0 && history.length>0){
+            setShowDropdown(true);
+    }
     }
 
     const handleClickOutside = (event) => {
-        console.log(showDropdown)
         if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
             setShowDropdown(false);
         }
