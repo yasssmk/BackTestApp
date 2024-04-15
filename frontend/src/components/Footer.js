@@ -8,6 +8,13 @@ const footerStyles = {
     margin: '20px'
   };
 
+  const copyrightStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center'
+  };
+
 // ==============================|| Footer ||============================== //
 
 const Footer = () => {
@@ -16,7 +23,8 @@ const Footer = () => {
   const footerCopyright = () =>{
     const currentYear = new Date().getFullYear()
     return (
-        <p><img src= '/logoVerde.png' width="30" height="24" style={{inlineMargin : "5px auto "}}/> ©{currentYear} Owizer. All rights reserved</p>
+        <p style={copyrightStyles}>
+        <img src= '/logoVerde.png' width="30" height="24" style={{ marginRight: '10px' }}/>  ©{currentYear} Owizer. All rights reserved</p>
     )
   }
 
