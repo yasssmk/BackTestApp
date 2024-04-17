@@ -21,15 +21,19 @@ class Register(APIView):
 
     @swagger_auto_schema(tags=['Auth'])
     def post(self, request):
-        serializer = UserSerializer(data = request.data)
-        if serializer.is_valid():
-            email = request.data.get('email')
-            password = request.data.get('password')
 
-            if CustomUser.objects.filter(email=email).exists():
-                return Response({'error': 'User already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        email = request.data.get('email')
+        password = request.data.get('password')
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
+
+        if CustomUser.objects.filter(email=email).exists():
+            return Response({'error': 'User already exists'}, status=status.HTTP_409_CONFLICT)
         
-            user = CustomUser.objects.create_user(email=email, password=password)
+        serializer = UserSerializer(data = request.data)
+        print(request.data)
+        if serializer.is_valid():
+            user = CustomUser.objects.create_user(email=email, password=password, last_name=last_name, first_name=first_name)
             serialized_user = UserSerializer(user)
             return Response(serialized_user.data, status=status.HTTP_201_CREATED)
         else:

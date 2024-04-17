@@ -46,14 +46,14 @@ export const AuthProvider = ({children}) => {
     }, [authTokens, loading, navigate]);
 
 
-    const loginUser = async (e )=>{
+    const loginUser = async (email, password )=>{
 
         let response = await fetch('http://localhost:8000/auth/login', {
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
             },
-            body:JSON.stringify({'email': e.target.email.value, 'password': e.target.password.value})
+            body:JSON.stringify({'email': email, 'password': password})
         })
         let data = await response.json()
 
@@ -129,27 +129,26 @@ export const AuthProvider = ({children}) => {
     }
 };
 
-    const signInUser = async (e) =>{
+    const signInUser = async (email, password, first_name, last_name ) =>{
+        console.log(first_name)
         try {
             let response = await fetch('http://localhost:8000/auth/register', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({'email': e.target.email.value, 'password': e.target.password.value})
+                body: JSON.stringify({'email': email, 'password': password, 'first_name': first_name, 'last_name': last_name })
             });
-
-            // let data = await response.json()
 
             if (response.status === 201){
                 alert('User created')
                 navigate("/login")
             }else{
-                alert('Wrong LogIn')
+                throw new Error(response.status);
             }
 
             } catch (error) {
-                console.log(error);
+                throw error;
     }
     };
 
@@ -185,11 +184,10 @@ export const AuthProvider = ({children}) => {
        
     let contextData = {
         user: user,
-        loginUser:loginUser,
+        loginUser: loginUser,
         logoutUser: logoutUser,
         signInUser: signInUser,
         googleLogin: googleLogin,
-        AuthContext: AuthContext
     }
 
     return (
