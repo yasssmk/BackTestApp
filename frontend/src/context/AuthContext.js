@@ -14,6 +14,8 @@ export const AuthProvider = ({children}) => {
     let [authTokens, setAuthToken] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
     let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null);
     let [loading, setLoading] = useState(true)
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertContent, setAlertContent] = useState('');
 
     const navigate = useNavigate()
 
@@ -130,7 +132,6 @@ export const AuthProvider = ({children}) => {
 };
 
     const signInUser = async (email, password, first_name, last_name ) =>{
-        console.log(first_name)
         try {
             let response = await fetch('http://localhost:8000/auth/register', {
                 method: 'POST',
@@ -141,8 +142,17 @@ export const AuthProvider = ({children}) => {
             });
 
             if (response.status === 201){
-                alert('User created')
-                navigate("/login")
+                console.log('User created')
+                setShowAlert(true);
+                setAlertContent('Your account has been created successfully.');
+                
+        
+                setTimeout(() => {
+                  setShowAlert(false);
+                  setAlertContent('');
+                }, 20000);
+
+
             }else{
                 throw new Error(response.status);
             }
@@ -188,6 +198,8 @@ export const AuthProvider = ({children}) => {
         logoutUser: logoutUser,
         signInUser: signInUser,
         googleLogin: googleLogin,
+        showAlert: showAlert,
+        alertContent: alertContent
     }
 
     return (

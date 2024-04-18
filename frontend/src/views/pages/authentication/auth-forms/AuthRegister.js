@@ -21,6 +21,8 @@ import {
   useMediaQuery
 } from '@mui/material';
 
+
+
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -54,17 +56,15 @@ const FirebaseRegister = ({ ...others }) => {
 
   const {signInUser} = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   changePassword('');
-  // }, []);
     
   const handleSubmit = async ({ email, password, lname, fname  }, { setErrors, setStatus, setSubmitting }) => {
-    console.log(lname)
     try {
       await signInUser(email, password, lname, fname );
       if (scriptedRef.current) {
         setStatus({ success: true });
         setSubmitting(false);
+
+
       }
     } catch (error) {
       if (error.message === '409') {
@@ -112,10 +112,14 @@ const FirebaseRegister = ({ ...others }) => {
     lname: Yup.string().max(128).required('This field is required')
   });
 
+
+
+
   return (
     <>
       <Grid container direction="column" justifyContent="center" spacing={2}>
         <Grid item xs={12}>
+        
           <AnimateButton>
             <Button
               variant="outlined"

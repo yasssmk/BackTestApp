@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, } from 'react-router-dom';
+import { useContext } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
 
 // project imports
 import AuthWrapper1 from '../AuthWrapper1';
@@ -10,6 +13,7 @@ import AuthCardWrapper from '../AuthCardWrapper';
 import Logo from '../../../../assets/images/logo/LogoVerde.png';
 import AuthRegister from '../auth-forms/AuthRegister';
 import AuthFooter from '../../../../ui-component/cards/AuthFooter';
+import AuthContext from '../../../../context/AuthContext';
 
 // assets
 
@@ -19,6 +23,8 @@ const Register = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
+  const {showAlert, alertContent} = useContext(AuthContext);
+
   return (
     <AuthWrapper1>
       <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
@@ -26,6 +32,15 @@ const Register = () => {
           <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
             <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
               <AuthCardWrapper>
+              {showAlert && (
+                <Alert
+                  icon={<CheckIcon fontSize="inherit" />}
+                  severity="success"
+                  sx={{ mt: 2 }}
+                >
+                  {alertContent}
+                </Alert> 
+                )}
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                   <Grid item sx={{ mb: 3 }}>
                     <Link to="#">
