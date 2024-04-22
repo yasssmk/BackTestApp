@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { lazy } from 'react';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
@@ -7,9 +7,12 @@ import { AppBar, Box, CssBaseline, Toolbar, useMediaQuery } from '@mui/material'
 // project imports
 import Breadcrumbs from '../../ui-component/extended/Breadcrumbs';
 import Header from './Header';
+import Loadable from '../../ui-component/Loadable';
 
 // assets
 import { IconChevronRight } from '@tabler/icons-react';
+
+const DashboardDefault = Loadable(lazy(() => import('../../views/dashboard/Default')))
 
 // styles
 const Main = styled('main')(({ theme }) => ({
@@ -46,7 +49,7 @@ const MainLayout = () => {
       <Main>
         {/* breadcrumb */}
         <Breadcrumbs separator={IconChevronRight} icon title rightAlign />
-        <Outlet />
+        <DashboardDefault />
       </Main>
 
       {/* footer */}

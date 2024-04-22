@@ -7,9 +7,9 @@ import { Avatar, Button, CardActions, CardContent, Divider, Grid, Menu, MenuItem
 
 // project imports
 import BajajAreaChartCard from './BajajAreaChartCard';
-import MainCard from 'ui-component/cards/MainCard';
-import SkeletonPopularCard from 'ui-component/cards/Skeleton/PopularCard';
-import { gridSpacing } from 'store/constant';
+import MainCard from '../../../ui-component/cards/MainCard';
+import SkeletonPopularCard from '../../../ui-component/cards/Skeleton/PopularCard';
+
 
 // assets
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
@@ -18,6 +18,8 @@ import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutl
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 
 // ==============================|| DASHBOARD DEFAULT - POPULAR CARD ||============================== //
+
+const gridSpacing = 2
 
 const PopularCard = ({ isLoading }) => {
   const theme = useTheme();

@@ -1,14 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainRoutes from './MainRoutes';
-import AuthenticationRoutes from './AuthenticationRoutes';
 import { useLocation } from 'react-router-dom';
 import { lazy } from 'react';
+import MainLayout from '../layout/MainLayout';
 
 // project imports
 import Loadable from '../ui-component/Loadable';
 
 const AuthLogin3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Login3')))
 const Register = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Register3')))
+const DashboardDefault = Loadable(lazy(() => import('../views/dashboard/Default')));
+
 
 // ==============================|| ROUTING RENDER ||============================== //
 
@@ -22,6 +23,7 @@ export default function ThemeRoutes() {
       <Routes>
         <Route path="/" element={<AuthLogin3 />} />
         <Route path="/pages/register/register3" element={<Register />} />
+        <Route path="/dashboard" element={<MainLayout><DashboardDefault /></MainLayout>} />
       </Routes>
 
   );

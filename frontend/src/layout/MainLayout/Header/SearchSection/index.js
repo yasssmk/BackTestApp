@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
-import { Avatar, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper } from '@mui/material';
+import { Avatar, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper, Popover, Typography } from '@mui/material';
 
 // third-party
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
 
 // project imports
 import Transitions from '../../../../ui-component/extended/Transitions';
+import DashboardContext from "../../../../context/DashboardContext"
 
 // assets
 import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons-react';
@@ -53,6 +54,24 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => (
   '&:hover': {
     background: theme.palette.secondary.dark,
     color: theme.palette.secondary.light
+  }
+}));
+
+const SuggestionBox = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+  borderRadius: theme.shape.borderRadius,
+  boxShadow: theme.shadows[4],
+  padding: theme.spacing(1),
+  zIndex: theme.zIndex.modal + 1,
+  position: 'absolute',
+  width: '100%',
+  marginTop: theme.spacing(1),
+  '& div': {
+    cursor: 'pointer',
+    padding: theme.spacing(1),
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover
+    }
   }
 }));
 
@@ -118,6 +137,52 @@ MobileSearch.propTypes = {
 const SearchSection = () => {
   const theme = useTheme();
   const [value, setValue] = useState('');
+  const { handleChange, recommendations, runBacktest, setSelectedOption, selectedOption, addHistory, history, isLoading  } = useContext(DashboardContext);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const searchBarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  const handleInputChange = (event) => {
+    const inputValue = event.target.value;
+    setInputValue(inputValue);
+    setValue(inputValue);
+    handleChange(event);
+    setShowDropdown(inputValue.length > 0);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' && selectedOption) {
+      setShowDropdown(false);
+      runBacktest(selectedOption.Symbol); 
+    }
+  };
+  
+  const searchClicked = () => {
+    if (selectedOption) {
+      setShowDropdown(false);
+      runBacktest(selectedOption.Symbol); 
+    }
+  }; 
+  
+  const handleSelectOption = (option) => {
+    setInputValue(option.Company_Name);
+    setSelectedOption(option);
+    addHistory(option); 
+    setShowDropdown(false);
+  };
 
   return (
     <>
@@ -161,29 +226,45 @@ const SearchSection = () => {
           )}
         </PopupState>
       </Box>
-      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+      <Box component="div" sx={{ display: { xs: 'none', md: 'block' }}} ref={searchBarRef}>
         <OutlineInputStyle
           id="input-search-header"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyUp={handleKeyDown}
           placeholder="Search"
           startAdornment={
             <InputAdornment position="start">
-              <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
-            </InputAdornment>
-          }
-          endAdornment={
-            <InputAdornment position="end">
-              <ButtonBase sx={{ borderRadius: '12px' }}>
+              <ButtonBase onClick={searchClicked} >
                 <HeaderAvatarStyle variant="rounded">
-                  <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
+                  <IconSearch stroke={1.5} size="1rem"/>
                 </HeaderAvatarStyle>
               </ButtonBase>
-            </InputAdornment>
+            </InputAdornment> 
           }
           aria-describedby="search-helper-text"
           inputProps={{ 'aria-label': 'weight' }}
         />
+      
+      {showDropdown && (
+        <SuggestionBox>
+          {value === ""
+            ? history.map((option) => (
+                <div key={option.id} onClick={() => handleSelectOption(option)}>
+                  <Typography>
+                    {option.Company_Name} ({option.Symbol})
+                  </Typography>
+                </div>
+              ))
+            : recommendations.map((option) => (
+                <div key={option.id} onClick={() => handleSelectOption(option)}>
+                  <Typography>
+                    {option.Company_Name} ({option.Symbol})
+                  </Typography>
+                </div>
+              ))}
+        </SuggestionBox>
+      )}
       </Box>
     </>
   );

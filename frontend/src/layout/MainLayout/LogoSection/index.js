@@ -1,10 +1,10 @@
 
 // material-ui
-import { ButtonBase } from '@mui/material';
+import { Box } from '@mui/material';
 
 // project imports
 
-import Logo from '../../../assets/images/logo/OwizerLogo.png';
+import Logo from '../../../assets/images/logo/OwizerLogoLight.png';
 
 
 // ==============================|| MAIN LOGO ||============================== //
@@ -12,9 +12,12 @@ import Logo from '../../../assets/images/logo/OwizerLogo.png';
 const LogoSection = () => {
 
   return (
-    <ButtonBase >
-      <Logo />
-    </ButtonBase>
+    <Box
+    display="flex"
+    alignItems="center"
+    >
+      <img src={Logo} alt="Logo" width='100%'  />
+    </Box>
   );
 };
 
