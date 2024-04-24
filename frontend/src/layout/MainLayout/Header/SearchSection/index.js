@@ -295,7 +295,7 @@ const SearchSection = () => {
           <PopupState variant="popper" popupId="demo-popup-popper">
             {(popupState) => (
               <>
-                <Box sx={{ ml: 2 }}>
+                <Box sx={{ ml: 1 }}>
                   <ButtonBase sx={{ borderRadius: '12px' }}>
                     <HeaderAvatarStyle variant="rounded" {...bindToggle(popupState)}>
                       <IconSearch stroke={1.5} size="1.2rem" />

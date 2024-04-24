@@ -5,6 +5,7 @@ import MainLayout from '../layout/MainLayout';
 
 // project imports
 import Loadable from '../ui-component/Loadable';
+import PrivateRoutes from '../utils/PrivateRoutes';
 
 const AuthLogin3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Login3')))
 const Register = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Register3')))
@@ -23,7 +24,9 @@ export default function ThemeRoutes() {
       <Routes>
         <Route path="/" element={<AuthLogin3 />} />
         <Route path="/pages/register/register3" element={<Register />} />
-        <Route path="/dashboard" element={<MainLayout><DashboardDefault /></MainLayout>} />
+        <Route element={<PrivateRoutes />} >
+          <Route path="/dashboard" element={<MainLayout><DashboardDefault /></MainLayout>} />
+        </Route>
       </Routes>
 
   );

@@ -76,7 +76,7 @@ export const AuthProvider = ({children}) => {
             setUser(null);
             clearStates();
             localStorage.removeItem("authTokens");
-            navigate("/login");
+            navigate("/");
         }
 
         if (!user.given_name){
@@ -150,9 +150,10 @@ export const AuthProvider = ({children}) => {
                 setTimeout(() => {
                   setShowAlert(false);
                   setAlertContent('');
-                }, 20000);
+                  navigate("/")
+                }, 2000);
 
-
+                
             }else{
                 throw new Error(response.status);
             }

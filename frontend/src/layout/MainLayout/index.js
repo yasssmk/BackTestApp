@@ -40,7 +40,12 @@ const MainLayout = () => {
           bgcolor: theme.palette.background.default,
         }}
       >
-        <Toolbar>
+        <Toolbar
+        sx={{
+          [theme.breakpoints.down('md')]: {
+            paddingInline: '24px'
+          }
+        }}>
           <Header />
         </Toolbar>
       </AppBar>

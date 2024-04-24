@@ -1,23 +1,31 @@
 
 // material-ui
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme,  } from '@mui/material';
 
 // project imports
 
-import Logo from '../../../assets/images/logo/OwizerLogoLight.png';
+import LogoFull from '../../../assets/images/logo/OwizerLogoLight.png';
+import LogoSmall from '../../../assets/images/logo/LogoVerde.png'
 
 
 // ==============================|| MAIN LOGO ||============================== //
 
 const LogoSection = () => {
+  const theme = useTheme(); // Import and use theme
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Box
-    display="flex"
-    alignItems="center"
-    >
-      <img src={Logo} alt="Logo" width='100%'  />
-    </Box>
+    <>
+      {isMobile ? (
+        <Box display="flex" alignItems="center">
+          <img src={LogoSmall} alt="Logo" width='100%' />
+        </Box>
+      ) : (
+        <Box display="flex" alignItems="center">
+          <img src={LogoFull} alt="Logo" width="100%" />
+        </Box>
+      )}
+    </>
   );
 };
 
