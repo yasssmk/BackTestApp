@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState,  useContext   } from 'react';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
@@ -11,6 +11,7 @@ import Chart from 'react-apexcharts';
 // project imports
 import MainCard from '../../../ui-component/cards/MainCard';
 import SkeletonTotalOrderCard from '../../../ui-component/cards/Skeleton/EarningCard';
+import DashboardContext from "../../../context/DashboardContext";
 
 import ChartDataMonth from './chart-data/total-order-month-line-chart';
 import ChartDataYear from './chart-data/total-order-year-line-chart';
@@ -71,6 +72,8 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
     setTimeValue(newValue);
   };
 
+  const {dashboardData, setError} = useContext(DashboardContext);
+
   return (
     <>
       {isLoading ? (
@@ -80,7 +83,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
           <Box sx={{ p: 2.25 }}>
             <Grid container direction="column">
               <Grid item>
-                <Grid container justifyContent="space-between">
+                <Grid container alignItems="center">
                   <Grid item>
                     <Avatar
                       variant="rounded"
@@ -96,6 +99,9 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                     </Avatar>
                   </Grid>
                   <Grid item>
+                    <Typography sx={{ fontSize: '2rem', fontWeight: 500, ml: 1, mt: 1.75, mb: 0.75, zIndex: 1}}>Investment Stats</Typography>
+                  </Grid>
+                  {/* <Grid item>
                     <Button
                       disableElevation
                       variant={timeValue ? 'contained' : 'text'}
@@ -114,47 +120,28 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                     >
                       Year
                     </Button>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Grid>
-              <Grid item sx={{ mb: 0.75 }}>
+              <Grid item>
                 <Grid container alignItems="center">
-                  <Grid item xs={6}>
-                    <Grid container alignItems="center">
-                      <Grid item>
-                        {timeValue ? (
-                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$108</Typography>
-                        ) : (
-                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$961</Typography>
-                        )}
-                      </Grid>
-                      <Grid item>
-                        <Avatar
-                          sx={{
-                            ...theme.typography.smallAvatar,
-                            cursor: 'pointer',
-                            backgroundColor: theme.palette.primary[200],
-                            color: theme.palette.primary.dark
-                          }}
-                        >
-                          <ArrowDownwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} />
-                        </Avatar>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography
-                          sx={{
-                            fontSize: '1rem',
-                            fontWeight: 500,
-                            color: theme.palette.primary[200]
-                          }}
-                        >
-                          Total Order
-                        </Typography>
-                      </Grid>
-                    </Grid>
+                  <Grid item>
+                  <Grid container  justifyContent="space-between" alignItems="center">
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mt: 1.75, mb: 0.4 }}>Monthly av. growth: </Typography>
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.success.light, mr: 1, mt: 1.75, mb: 0.4 }}>{dashboardData["Stats"] ? dashboardData["Stats"]["Monthly average Asset growth"]: null} </Typography>
                   </Grid>
-                  <Grid item xs={6}>
-                    {timeValue ? <Chart {...ChartDataMonth} /> : <Chart {...ChartDataYear} />}
+                  <Grid container  justifyContent="space-between"  alignItems="center">
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mb: 0.4 }}>Total money invested: </Typography>
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.success.light, mr: 1, mb: 0.4}}>{dashboardData["Stats"] ?  dashboardData["Stats"]["Total money invested"]: null} </Typography>
+                  </Grid>
+                  <Grid container  justifyContent="space-between"  alignItems="center">
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mb: 0.4}}>Total money made: </Typography>
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.success.light, mr: 1, mb: 0.4 }}>{dashboardData["Stats"] ? dashboardData["Stats"]["Total"]: null}</Typography>
+                  </Grid>
+                  <Grid container  justifyContent="space-between"  alignItems="center">
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mb: 0.75 }}>Total net: </Typography>
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.success.light, mr: 1, mb: 0.75 }}>{dashboardData["Stats"] ? dashboardData["Stats"]["Total net"]: null}</Typography>
+                  </Grid>
                   </Grid>
                 </Grid>
               </Grid>
