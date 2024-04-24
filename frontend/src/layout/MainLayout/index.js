@@ -8,6 +8,7 @@ import { AppBar, Box, CssBaseline, Toolbar, useMediaQuery } from '@mui/material'
 import Breadcrumbs from '../../ui-component/extended/Breadcrumbs';
 import Header from './Header';
 import Loadable from '../../ui-component/Loadable';
+import Footer from './Footer';
 
 // assets
 import { IconChevronRight } from '@tabler/icons-react';
@@ -58,7 +59,7 @@ const MainLayout = () => {
       </Main>
 
       {/* footer */}
-      {/* <Footer /> */}
+      <Footer />
     </Box>
   );
 };

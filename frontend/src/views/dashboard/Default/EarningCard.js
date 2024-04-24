@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useContext  } from 'react';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
@@ -8,6 +8,7 @@ import { Avatar, Box, Grid, Menu, MenuItem, Typography } from '@mui/material';
 // project imports
 import MainCard from '../../../ui-component/cards/MainCard';
 import SkeletonEarningCard from '../../../ui-component/cards/Skeleton/EarningCard';
+import DashboardContext from "../../../context/DashboardContext";
 
 // assets
 import EarningIcon from '../../../assets/images/icons/earning.svg';
@@ -23,6 +24,10 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
   color: '#fff',
   overflow: 'hidden',
   position: 'relative',
+  '&>div': {
+    position: 'relative',
+    zIndex: 5
+  },
   '&:after': {
     content: '""',
     position: 'absolute',
@@ -58,6 +63,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 const EarningCard = ({ isLoading }) => {
   const theme = useTheme();
+  const {dashboardData, setError} = useContext(DashboardContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -78,7 +84,7 @@ const EarningCard = ({ isLoading }) => {
           <Box sx={{ p: 2.25 }}>
             <Grid container direction="column">
               <Grid item>
-                <Grid container justifyContent="space-between">
+                <Grid container  alignItems="center">
                   <Grid item>
                     <Avatar
                       variant="rounded"
@@ -93,6 +99,9 @@ const EarningCard = ({ isLoading }) => {
                     </Avatar>
                   </Grid>
                   <Grid item>
+                    <Typography sx={{ fontSize: '2rem', fontWeight: 500, ml: 1, mt: 1.75, mb: 0.75, zIndex: 1}}>Company Info</Typography>
+                  </Grid>
+                  {/* <Grid item>
                     <Avatar
                       variant="rounded"
                       sx={{
@@ -137,38 +146,26 @@ const EarningCard = ({ isLoading }) => {
                         <ArchiveTwoToneIcon sx={{ mr: 1.75 }} /> Archive File
                       </MenuItem>
                     </Menu>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Grid>
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                    <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$500.00</Typography>
+                  <Grid container  justifyContent="space-between" alignItems="center">
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mt: 1.75, mb: 0.4 }}>Ticker: </Typography>
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.secondary[200], mr: 1, mt: 1.75, mb: 0.4 }}>{dashboardData["Stock info"] ? dashboardData["Stock info"]["Symbol"]: null} </Typography>
                   </Grid>
-                  <Grid item>
-                    <Avatar
-                      sx={{
-                        cursor: 'pointer',
-                        ...theme.typography.smallAvatar,
-                        backgroundColor: theme.palette.secondary[200],
-                        color: theme.palette.secondary.dark
-                      }}
-                    >
-                      <ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} />
-                    </Avatar>
+                  <Grid container  justifyContent="space-between"  alignItems="center">
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mb: 0.4 }}>Industry: </Typography>
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.secondary[200], mr: 1, mb: 0.4}}>{dashboardData["Stock info"] ?  dashboardData["Stock info"]["Industry"]: null} </Typography>
+                  </Grid>
+                  <Grid container  justifyContent="space-between"  alignItems="center">
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mb: 0.75 }}>Country: </Typography>
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.secondary[200], mr: 1, mb: 0.75 }}>{dashboardData["Stock info"] ? dashboardData["Stock info"]["Country"]: null}</Typography>
+                  </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-              <Grid item sx={{ mb: 1.25 }}>
-                <Typography
-                  sx={{
-                    fontSize: '1rem',
-                    fontWeight: 500,
-                    color: theme.palette.secondary[200]
-                  }}
-                >
-                  Total Earning
-                </Typography>
               </Grid>
             </Grid>
           </Box>

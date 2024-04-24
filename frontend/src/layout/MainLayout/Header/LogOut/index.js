@@ -10,7 +10,6 @@ export default function LogOutButtons() {
     const theme = useTheme();
 
     let {logoutUser} = useContext(AuthContext);
-    const navigate = useNavigate();
 
 
     const handleLogout = () => {
