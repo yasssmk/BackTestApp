@@ -1,11 +1,12 @@
 import React from 'react';
-
+import { useTheme } from '@mui/material/styles';
 // ==============================|| Footer Style||============================== //
 const footerStyles = {
     borderTop: '1px solid #ddd',
     textAlign: 'center',
     padding: '10px 0',
-    margin: '10px'
+    margin: '10px',
+    backgroundColor: ''
   };
 
   const copyrightStyles = {
@@ -18,7 +19,6 @@ const footerStyles = {
 // ==============================|| Footer ||============================== //
 
 const Footer = () => {
-
 
   const footerCopyright = () =>{
     const currentYear = new Date().getFullYear()

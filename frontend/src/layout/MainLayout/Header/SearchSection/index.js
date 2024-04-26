@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 
 // material-ui
 import { useTheme, styled, useMediaQuery } from '@mui/material';
-import { Avatar, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper, Popover, Typography } from '@mui/material';
+import { Avatar, Alert, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper, Popover, Typography } from '@mui/material';
 
 // third-party
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
@@ -197,7 +197,7 @@ const SearchSection = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [value, setValue] = useState('');
-  const { handleChange, recommendations, runBacktest, setSelectedOption, selectedOption, addHistory, history, isLoading } =
+  const { handleChange, recommendations, runBacktest, setSelectedOption, selectedOption, addHistory, history, isLoading} =
     useContext(DashboardContext);
   const [showDropdown, setShowDropdown] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -232,6 +232,7 @@ const SearchSection = () => {
   };
 
   const searchClicked = () => {
+    setShowDropdown(false)
     if (selectedOption) {
       setShowDropdown(false);
       runBacktest(selectedOption.Symbol);
@@ -245,6 +246,13 @@ const SearchSection = () => {
     setShowDropdown(false);
   };
 
+  const handleClick = (event) =>{
+    if (recommendations.length > 0 && history.length>0 && !selectedOption){
+        setShowDropdown(true);
+}
+}
+
+
   return (
     <>
       {!isMobile && (
@@ -254,6 +262,7 @@ const SearchSection = () => {
             value={inputValue}
             onChange={handleInputChange}
             onKeyUp={handleKeyDown}
+            onClick = {handleClick}
             placeholder="Search"
             disabled={isLoading}
             startAdornment={

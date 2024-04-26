@@ -15,6 +15,7 @@ export const DataProvider = ({children}) => {
     const [selectedOption, setSelectedOption] = useState("")
     const [hasError, setError] = useState(false)
     const [history, setHistory] = useState([])
+    const [alertContent, setAlertContent] = useState('');
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -133,7 +134,6 @@ export const DataProvider = ({children}) => {
             } else {
                 setError(true)
                 setDashboardData([])
-
             }
         
 
@@ -161,7 +161,9 @@ export const DataProvider = ({children}) => {
         setError: setError,
         addHistory : addHistory,
         history: history,
-        clearStates: clearStates
+        clearStates: clearStates,
+        alertContent: alertContent,
+        setAlertContent: setAlertContent
     }
 
     return (

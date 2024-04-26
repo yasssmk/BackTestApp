@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
 // material-ui
 import { Grid } from '@mui/material';
@@ -9,17 +9,16 @@ import PopularCard from './PopularCard';
 import TotalOrderLineChartCard from './TotalOrderLineChartCard';
 import TotalIncomeDarkCard from './TotalIncomeDarkCard';
 import TotalIncomeLightCard from './TotalIncomeLightCard';
-import TotalGrowthBarChart from './TotalGrowthBarChart';
+import TotalGrowthBarChart from './TotalGrowthBarCharts';
+import DashboardContext from '../../../context/DashboardContext';
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const gridSpacing = 2 
 
 const Dashboard = () => {
-  const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    setLoading(false);
-  }, []);
+
+  const { isLoading } = useContext(DashboardContext)
 
   return (
     <Grid container spacing={gridSpacing}>

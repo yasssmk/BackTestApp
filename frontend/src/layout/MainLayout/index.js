@@ -1,14 +1,15 @@
-import { lazy } from 'react';
+import { lazy, useContext, useEffect } from 'react';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
-import { AppBar, Box, CssBaseline, Toolbar, useMediaQuery } from '@mui/material';
+import { AppBar, Alert, Box, CssBaseline, Toolbar, useMediaQuery } from '@mui/material';
 
 // project imports
 import Breadcrumbs from '../../ui-component/extended/Breadcrumbs';
 import Header from './Header';
 import Loadable from '../../ui-component/Loadable';
 import Footer from './Footer';
+import DashboardContext from '../../context/DashboardContext';
 
 // assets
 import { IconChevronRight } from '@tabler/icons-react';
@@ -28,8 +29,20 @@ const Main = styled('main')(({ theme }) => ({
 const MainLayout = () => {
   const theme = useTheme();
 
+  const {hasError, setError, setAlertContent, alertContent } = useContext(DashboardContext);
+
+  useEffect(() => {
+    if (hasError) {
+      setAlertContent('Oops, something went wrong with this stock! Please try with another one.')
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
+    }
+  }, [hasError, setError]);
+
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: theme.palette.grey[100], }}>
       <CssBaseline />
       {/* header */}
       <AppBar
@@ -49,8 +62,15 @@ const MainLayout = () => {
         }}>
           <Header />
         </Toolbar>
+        {hasError ? (
+                <Alert
+                  severity="warning"
+                  variant="filled"                  
+                >
+                {alertContent}
+                </Alert> 
+                ): null}
       </AppBar>
-
       {/* main content */}
       <Main>
         {/* breadcrumb */}
