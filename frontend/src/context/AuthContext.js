@@ -65,7 +65,14 @@ export const AuthProvider = ({children}) => {
             localStorage.setItem('authTokens', JSON.stringify(data))
             navigate("/dashboard")
         }else{
-            alert('Wrong LogIn')
+            setShowAlert(true);
+            setAlertContent('Email or Password is wrong');
+
+            setTimeout(() => {
+              setShowAlert(false);
+              setAlertContent('');
+              navigate("/")
+            }, 10000);
         }
     }
 
@@ -145,8 +152,7 @@ export const AuthProvider = ({children}) => {
                 console.log('User created')
                 setShowAlert(true);
                 setAlertContent('Your account has been created successfully.');
-                
-        
+
                 setTimeout(() => {
                   setShowAlert(false);
                   setAlertContent('');

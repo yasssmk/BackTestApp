@@ -52,7 +52,7 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => (
   background: theme.palette.secondary.light,
   color: theme.palette.secondary.dark,
   '&:hover': {
-    background: theme.palette.secondary.dark,
+    background: theme.palette.primary.dark,
     color: theme.palette.secondary.light
   }
 }));
@@ -268,8 +268,8 @@ const SearchSection = () => {
             startAdornment={
               <InputAdornment position="start">
                 <ButtonBase onClick={searchClicked}>
-                  <HeaderAvatarStyle variant="rounded">
-                    <IconSearch stroke={1.5} size="1rem" />
+                  <HeaderAvatarStyle variant="rounded" >
+                    <IconSearch stroke={selectedOption ? 3: 1.5} size="1rem" color= {selectedOption ? theme.palette.primary.main: theme.palette.grey[500] } />
                   </HeaderAvatarStyle>
                 </ButtonBase>
               </InputAdornment>

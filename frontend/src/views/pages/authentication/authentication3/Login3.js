@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Divider, Grid, Alert, Stack, Typography, useMediaQuery } from '@mui/material';
 
 // project imports
 import AuthWrapper1 from '../AuthWrapper1';
@@ -10,6 +11,7 @@ import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../auth-forms/AuthLogin';
 import Logo from '../../../../assets/images/logo/LogoVerde.png';
 import AuthFooter from '../../../../ui-component/cards/AuthFooter';
+import AuthContext from '../../../../context/AuthContext';
 
 // assets
 
@@ -19,6 +21,8 @@ const Login = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
+  const {showAlert, alertContent} = useContext(AuthContext);
+
   return (
     <AuthWrapper1>
       <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
@@ -26,6 +30,14 @@ const Login = () => {
           <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
             <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
               <AuthCardWrapper>
+              {showAlert && (
+                <Alert
+                  severity="error"
+                  sx={{ mt: 2 }}
+                >
+                  {alertContent}
+                </Alert> 
+                )}
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                   <Grid item sx={{ mb: 3 }}>
                     <Link to="#">
