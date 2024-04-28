@@ -153,7 +153,7 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
 
   useEffect(() => {
     if (dashboardData && dashboardData["Cash data"]) {
-      console.log(dashboardData["Cash data"])
+      console.log(dashboardData)
       const cashData = dashboardData["Cash data"]["Asset Sold"];
       const heldData = dashboardData["Cash data"]["Added value"];
       const dateData = dashboardData["Cash data"]["Date"];
