@@ -32,11 +32,14 @@ const PopularCard = ({ isLoading }) => {
   const [sellingDates, setSellingDates] = useState([])
   const [buyingPrices, setBuyingPrices] = useState([])
   const [sellingPrices, setSellingPrices] = useState([])
-  const [profits, setProfts] = useState(['0'])
-  const [returnYield, setReturn] = useState(['%0'])
+  const [profits, setProfts] = useState([])
+  const [returnYield, setReturn] = useState([])
+  const [returnTotalYield, setTotalReturn] = useState([])
+  const [compnayName, setName] = useState('')
 
   useEffect(() => {
     if (dashboardData && dashboardData["Investissement data"]) {
+      console.log(dashboardData)
       const investissementData = dashboardData["Investissement data"];
       const dataBuyingDates = investissementData["Buying Date"].map(date => {
         const formattedDate = new Date(date).toLocaleDateString('en-GB');
@@ -55,6 +58,12 @@ const PopularCard = ({ isLoading }) => {
         return Number.isNaN(numericProfit) ? 0 : parseFloat(numericProfit.toFixed(2));
       });
       const dataReturnYield = investissementData["Yield (%)"].map(Datayield => Math.round(parseFloat(Datayield)));
+
+      const returnData = dashboardData["Cash data"]["Return"]
+      const roundedReturn = returnData.map(num => Math.round(num))
+
+      const dataName = dashboardData['Stock info']['Company_Name']
+      console.log(dataName)
   
       // Set the state with the formatted data
       setBuyingDates(dataBuyingDates);
@@ -63,6 +72,17 @@ const PopularCard = ({ isLoading }) => {
       setSellingPrices(dataSellingPrices);
       setProfts(dataProfits);
       setReturn(dataReturnYield);
+      setTotalReturn(roundedReturn)
+      setName(dataName)
+    } else{
+      setBuyingDates([]);
+      setSellingDates([]);
+      setBuyingPrices([]);
+      setSellingPrices([]);
+      setProfts([]);
+      setReturn([]);
+      setTotalReturn([])
+      setName("") 
     }
   }, [dashboardData]);
 
@@ -124,7 +144,7 @@ const PopularCard = ({ isLoading }) => {
                 </Grid>
               </Grid>
               <Grid item xs={12} sx={{ pt: '16px !important' }}>
-                <BajajAreaChartCard />
+                <BajajAreaChartCard data={returnTotalYield} name={compnayName} />
               </Grid>
               <Grid item xs={12}>
                 {buyingDates.map((date, index) => (
