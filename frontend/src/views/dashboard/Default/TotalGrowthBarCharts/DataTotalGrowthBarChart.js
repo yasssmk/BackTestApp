@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import ApexCharts from 'apexcharts';
 import Chart from 'react-apexcharts';
 import DashboardContext from "../../../../context/DashboardContext";
@@ -20,6 +21,14 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
   const [cash, setCash] = useState([])
   const [held, setHeld] = useState([])
 
+
+  const sm = useMediaQuery(theme.breakpoints.down('sm'));
+  const md = useMediaQuery(theme.breakpoints.down('md'));
+  const lg = useMediaQuery(theme.breakpoints.up('lg'));
+  
+  const tickAmount = sm ? 8 : md ? 12 : lg ? 24 : 8;
+  const showLabels = dashboardData["Cash data"]? true : false
+
   const newChartData = {
     height: 480,
     type: 'bar',
@@ -31,7 +40,7 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
           show: true
         },
         zoom: {
-          enabled:true
+          enabled: true
         }
       },
       responsive: [
@@ -54,7 +63,14 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
       },
       xaxis: {
         type: 'category',
-        categories: date,
+        categories: date, // Show only every 3rd month
+        tickAmount: tickAmount,
+        labels: {
+          show: showLabels, // Ensure labels are shown
+          style: {
+            colors: [primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary]
+          }
+        }
       },
       legend: {
         show: true,
@@ -82,32 +98,23 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
         enabled: false
       },
       grid: {
-        show: true
+        show: true,
+        borderColor: grey200
       },
       colors: [secondaryMain, primary200, secondaryLight],
-      xaxis: {
-        labels: {
-          style: {
-            colors: [primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary]
-          }
-        }
-      },
       yaxis: [
         {
           labels: {
             formatter: function (value) {
               return '$' + Math.round(value);
             },
+            show: showLabels,
             style: {
               colors: [primary]
             }
           }
         },
       ],
-      
-      grid: {
-        borderColor: grey200
-      },
       tooltip: {
         theme: 'dark'
       },
@@ -139,7 +146,6 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
       const cashData = dashboardData["Cash data"]["Asset Sold"];
       const heldData = dashboardData["Cash data"]["Added value"];
       const dateData = dashboardData["Cash data"]["Date"];
-      const returnData = dashboardData["Cash data"]["Return"]
   
       const roundedCash = cashData.map(num => Math.round(num));
       const roundedHeld = heldData.map(num => Math.round(num));
