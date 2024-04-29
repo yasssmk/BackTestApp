@@ -59,8 +59,8 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
 
             <Divider sx={{ my: 1.5 }} />
             <Grid container direction="row" justifyContent="space-between" alignItems="center">
-            <Grid items>
-                <Grid container direction="column" justifyContent="center" alignItems="center" >
+            <Grid items >
+                <Grid container direction="column" justifyContent="flex-start" alignItems="center" >
                     <Grid item>
                         <Typography variant="subtitle1" color="inherit">
                             
@@ -74,8 +74,8 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item>
-                <Grid container direction="column" justifyContent="center" alignItems="center">
+            <Grid items >
+                <Grid container direction="column" justifyContent="flex-start" alignItems="center">
                     <Grid item>
                         <Typography variant="subtitle1" color="inherit">
                             $ {sellingPrice}
@@ -89,7 +89,7 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
                 </Grid>
             </Grid>
             <Grid item >
-                <Grid container direction="column" justifyContent="center" alignItems="center">
+                <Grid container direction="column" justifyContent="flex-start" alignItems="flex-start">
                     <Grid item>
                         <Grid container direction="row" justifyContent="center" alignItems="center">
                             <Grid item>
@@ -97,9 +97,9 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
                                 $ {profit}
                                 </Typography>
                             </Grid>
-                            <Grid item>
+                            {/* <Grid item>
                                 <ArrowAvatar profit={profit} />
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                     </Grid>
                     <Grid item>
@@ -108,6 +108,9 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
                         </Typography>
                     </Grid>
                 </Grid>
+            </Grid>
+            <Grid item justifyContent='flex-end' >
+            <ArrowAvatar profit={profit} />
             </Grid>
             </Grid>
             </>

@@ -28,10 +28,10 @@ const PopularCard = ({ isLoading }) => {
   const { dashboardData } = useContext(DashboardContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const [buyingDates, setBuyingDates] = useState(['Date'])
-  const [sellingDates, setSellingDates] = useState(['Date'])
-  const [buyingPrices, setBuyingPrices] = useState(['$0'])
-  const [sellingPrices, setSellingPrices] = useState(['$0'])
+  const [buyingDates, setBuyingDates] = useState([])
+  const [sellingDates, setSellingDates] = useState([])
+  const [buyingPrices, setBuyingPrices] = useState([])
+  const [sellingPrices, setSellingPrices] = useState([])
   const [profits, setProfts] = useState(['0'])
   const [returnYield, setReturn] = useState(['%0'])
 
@@ -63,8 +63,6 @@ const PopularCard = ({ isLoading }) => {
       setSellingPrices(dataSellingPrices);
       setProfts(dataProfits);
       setReturn(dataReturnYield);
-
-      console.log(typeof profits[0])
     }
   }, [dashboardData]);
 
@@ -143,12 +141,7 @@ const PopularCard = ({ isLoading }) => {
               </Grid>
             </Grid>
           </CardContent>
-          <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
-            <Button size="small" disableElevation>
-              View All
-              <ChevronRightOutlinedIcon />
-            </Button>
-          </CardActions>
+
         </MainCard>
       )}
     </>
