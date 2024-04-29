@@ -72,10 +72,10 @@ const MainLayout = () => {
                 ): null}
       </AppBar>
       {/* main content */}
-      <Main>
+      <Main >
         {/* breadcrumb */}
         <Breadcrumbs separator={IconChevronRight} icon title rightAlign />
-        <DashboardDefault />
+        <DashboardDefault sx = {{backgroundColor : theme.palette.error.dark}}/>
       </Main>
 
       {/* footer */}

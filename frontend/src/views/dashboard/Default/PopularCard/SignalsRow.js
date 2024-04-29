@@ -57,7 +57,7 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
     return (
         <>
 
-            <Divider sx={{ my: 1.5 }} />
+            <Divider sx={{ my: 1.5}} />
             <Grid container direction="row" justifyContent="space-between" alignItems="center">
             <Grid items >
                 <Grid container direction="column" justifyContent="flex-start" alignItems="center" >

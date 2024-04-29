@@ -3,7 +3,7 @@ import { useState, useContext, useEffect } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Button, CardActions, CardContent, Divider, Grid, Menu, MenuItem, Typography } from '@mui/material';
+import { Avatar, Box, CardActions, CardContent, Divider, Grid, Menu, MenuItem, Typography } from '@mui/material';
 
 // project imports
 import BajajAreaChartCard from './BajajAreaChartCard';
@@ -63,7 +63,9 @@ const PopularCard = ({ isLoading }) => {
       const roundedReturn = returnData.map(num => Math.round(num))
 
       const dataName = dashboardData['Stock info']['Company_Name']
-      console.log(dataName)
+      console.log(buyingDates)
+      console.log('Length of buyingDates:', buyingDates.length);
+      console.log('Length of sellingDates:', sellingDates.length);
   
 
       setBuyingDates(dataBuyingDates);
@@ -101,8 +103,10 @@ const PopularCard = ({ isLoading }) => {
       {isLoading ? (
         <SkeletonPopularCard />
       ) : (
-        <MainCard content={false}>
+
+        <MainCard content={false} sx = {{height:'100%'}}>
           <CardContent>
+          <Box  component="div" sx={{ height: '550px', overflow: "auto", overflowY: "scroll", pr: 1}}>
             <Grid container spacing={gridSpacing}>
               <Grid item xs={12}>
                 <Grid container alignContent="center" justifyContent="space-between">
@@ -115,7 +119,9 @@ const PopularCard = ({ isLoading }) => {
                 <BajajAreaChartCard data={returnTotalYield} name={compnayName} />
               </Grid>
               <Grid item xs={12}>
+              
                 {buyingDates.map((date, index) => (
+                  
                   <SignalRow
                     key={index}
                     buyingDate={date}
@@ -126,8 +132,9 @@ const PopularCard = ({ isLoading }) => {
                     transactionYield={returnYield[index]}
                   />
                 ))}
+              
               </Grid>
-            </Grid>
+            </Grid></Box>
           </CardContent>
 
         </MainCard>

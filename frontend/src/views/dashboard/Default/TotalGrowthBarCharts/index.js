@@ -27,7 +27,7 @@ const TotalGrowthBarChart = ({ isLoading }) => {
       {isLoading ? (
         <SkeletonTotalGrowthBarChart />
       ) : (
-        <MainCard>
+        <MainCard sx = {{height:'100%'}}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
               <Grid container alignItems="center" justifyContent="space-between">

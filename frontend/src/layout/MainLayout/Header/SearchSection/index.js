@@ -4,6 +4,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 // material-ui
 import { useTheme, styled, useMediaQuery } from '@mui/material';
 import { Avatar, Alert, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper, Popover, Typography } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress'
 
 // third-party
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
@@ -274,6 +275,11 @@ const SearchSection = () => {
                 </ButtonBase>
               </InputAdornment>
             }
+            endAdornment={isLoading &&
+            <InputAdornment position="end">
+              <CircularProgress size="1rem"/>
+            </InputAdornment>
+          }
             aria-describedby="search-helper-text"
             inputProps={{ 'aria-label': 'weight' }}
           />
