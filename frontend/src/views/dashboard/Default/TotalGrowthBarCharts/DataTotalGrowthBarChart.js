@@ -19,11 +19,10 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
   const [date, setDate] = useState([])
   const [cash, setCash] = useState([])
   const [held, setHeld] = useState([])
-  const [returnYield, setReturn] = useState([])
 
   const newChartData = {
     height: 480,
-    type: 'line',
+    type: 'bar',
     options: {
       chart: {
         id: 'bar-chart',
@@ -104,17 +103,6 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
             }
           }
         },
-        {
-          labels: {
-            formatter: function (value) {
-              return value + '%';
-            },
-            style: {
-              colors: [primary]
-            }
-          },
-          opposite: true, // align the secondary y-axis on the right side
-        }
       ],
       
       grid: {
@@ -142,12 +130,7 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
         data: date.map((date, index) => ({ x: date, y: held[index] })),
         yAxis: 0
       },
-      {
-        name: 'Returns',
-        type: 'line',
-        data: date.map((date, index) => ({ x: date, y: returnYield[index] })),
-        yAxis: 1 
-    },
+     
     ]
   };
 
@@ -160,12 +143,10 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
   
       const roundedCash = cashData.map(num => Math.round(num));
       const roundedHeld = heldData.map(num => Math.round(num));
-      const roundedReturn = returnData.map(num => Math.round(num))
 
       setDate(dateData);
       setCash(roundedCash);
       setHeld(roundedHeld);
-      setReturn(roundedReturn)
     } 
     if (!isLoading) {
       ApexCharts.exec(`bar-chart`, 'updateOptions', newChartData);

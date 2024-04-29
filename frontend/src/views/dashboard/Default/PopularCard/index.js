@@ -65,7 +65,7 @@ const PopularCard = ({ isLoading }) => {
       const dataName = dashboardData['Stock info']['Company_Name']
       console.log(dataName)
   
-      // Set the state with the formatted data
+
       setBuyingDates(dataBuyingDates);
       setSellingDates(dataSellingDates);
       setBuyingPrices(dataBuyingPrices);
@@ -108,38 +108,6 @@ const PopularCard = ({ isLoading }) => {
                 <Grid container alignContent="center" justifyContent="space-between">
                   <Grid item>
                     <Typography variant="h4">Buying/Selling Signals</Typography>
-                  </Grid>
-                  <Grid item>
-                    <MoreHorizOutlinedIcon
-                      fontSize="small"
-                      sx={{
-                        color: theme.palette.primary[200],
-                        cursor: 'pointer'
-                      }}
-                      aria-controls="menu-popular-card"
-                      aria-haspopup="true"
-                      onClick={handleClick}
-                    />
-                    <Menu
-                      id="menu-popular-card"
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={handleClose}
-                      variant="selectedMenu"
-                      anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right'
-                      }}
-                      transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right'
-                      }}
-                    >
-                      <MenuItem onClick={handleClose}> Today</MenuItem>
-                      <MenuItem onClick={handleClose}> This Month</MenuItem>
-                      <MenuItem onClick={handleClose}> This Year </MenuItem>
-                    </Menu>
                   </Grid>
                 </Grid>
               </Grid>
