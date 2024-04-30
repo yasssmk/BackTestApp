@@ -10,8 +10,6 @@ import SearchSection from './SearchSection';
 import LogOutButtons from './LogOut';
 
 
-// assets
-import { IconMenu2 } from '@tabler/icons-react';
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 

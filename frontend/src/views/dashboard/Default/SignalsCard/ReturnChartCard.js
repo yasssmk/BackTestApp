@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -132,7 +132,7 @@ const BajajAreaChartCard = ({ data, name }) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="subtitle2" sx={{ color: theme.palette.grey[800] }}>
+          <Typography variant="subtitle2" sx={{ color: theme.palette.grey[800], fontWeight: "bold" }}>
           {name}
           </Typography>
         </Grid>

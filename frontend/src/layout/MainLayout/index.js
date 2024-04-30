@@ -75,7 +75,7 @@ const MainLayout = () => {
       <Main >
         {/* breadcrumb */}
         <Breadcrumbs separator={IconChevronRight} icon title rightAlign />
-        <DashboardDefault sx = {{backgroundColor : theme.palette.error.dark}}/>
+        <DashboardDefault />
       </Main>
 
       {/* footer */}

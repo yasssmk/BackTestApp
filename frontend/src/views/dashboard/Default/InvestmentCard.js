@@ -3,22 +3,15 @@ import { useState,  useContext   } from 'react';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
-import { Avatar, Box, Button, Grid, Typography } from '@mui/material';
-
-// third-party
-import Chart from 'react-apexcharts';
+import { Avatar, Box, Grid, Typography } from '@mui/material';
 
 // project imports
 import MainCard from '../../../ui-component/cards/MainCard';
 import SkeletonTotalOrderCard from '../../../ui-component/cards/Skeleton/EarningCard';
 import DashboardContext from "../../../context/DashboardContext";
 
-import ChartDataMonth from './chart-data/total-order-month-line-chart';
-import ChartDataYear from './chart-data/total-order-year-line-chart';
-
 // assets
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   backgroundColor: theme.palette.primary.dark,
@@ -67,12 +60,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 const TotalOrderLineChartCard = ({ isLoading }) => {
   const theme = useTheme();
 
-  const [timeValue, setTimeValue] = useState(false);
-  const handleChangeTime = (event, newValue) => {
-    setTimeValue(newValue);
-  };
-
-  const {dashboardData, setError} = useContext(DashboardContext);
+  const {dashboardData} = useContext(DashboardContext);
 
   return (
     <>
@@ -101,26 +89,6 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                   <Grid item>
                     <Typography sx={{ fontSize: '2rem', fontWeight: 500, ml: 1, mt: 1.75, mb: 0.75, zIndex: 1}}>Investment Stats</Typography>
                   </Grid>
-                  {/* <Grid item>
-                    <Button
-                      disableElevation
-                      variant={timeValue ? 'contained' : 'text'}
-                      size="small"
-                      sx={{ color: 'inherit' }}
-                      onClick={(e) => handleChangeTime(e, true)}
-                    >
-                      Month
-                    </Button>
-                    <Button
-                      disableElevation
-                      variant={!timeValue ? 'contained' : 'text'}
-                      size="small"
-                      sx={{ color: 'inherit' }}
-                      onClick={(e) => handleChangeTime(e, false)}
-                    >
-                      Year
-                    </Button>
-                  </Grid> */}
                 </Grid>
               </Grid>
               <Grid item>

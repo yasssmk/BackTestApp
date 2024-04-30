@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 
 // material-ui
@@ -28,7 +28,7 @@ import { Formik } from 'formik';
 // project imports
 import useScriptRef from '../../../../hooks/useScriptRef';
 import AnimateButton from '../../../../ui-component/extended/AnimateButton';
-import GoogleLogin from '../../../../components/GoogleLoginButton';
+import GoogleLogin from '../GoogleButton';
 
 // Context
 
@@ -38,7 +38,7 @@ import AuthContext from "../../../../context/AuthContext"
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-// import Google from '../../../../assets/images/icons/social-google.svg';
+
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -61,16 +61,7 @@ const FirebaseLogin = ({ ...others }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate("/dashboard");
-  //   }
-  // }, [user, navigate]);
 
-
-  const googleHandler = async () => {
-    console.error('Login');
-  };
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {

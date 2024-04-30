@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect, useContext } from 'react';
+import { useState } from 'react';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
-import { Grid, MenuItem, TextField, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 // project imports
 import SkeletonTotalGrowthBarChart from '../../../../ui-component/cards/Skeleton/TotalGrowthBarChart';
@@ -20,7 +19,6 @@ const gridSpacing = 2
 // ==============================|| DASHBOARD DEFAULT - TOTAL GROWTH BAR CHART ||============================== //
 
 const TotalGrowthBarChart = ({ isLoading }) => {
-  const [value, setValue] = useState('today');
 
   return (
     <>

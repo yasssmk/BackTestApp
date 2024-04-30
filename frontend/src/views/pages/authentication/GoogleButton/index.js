@@ -1,44 +1,9 @@
-// import React, {useEffect, useContext }  from "react";
-// import AuthContext from "../context/AuthContext"
-
-
-
-// const GoogleLogin = () => {
-
-//     const {googleLogin} = useContext(AuthContext);
-
-//     function handleCallbackresponse(response){
-//         googleLogin(response.credential)
-//     }
-
-//     useEffect(() => {
-//         /* global google */
-
-//         google.accounts.id.initialize({
-//             client_id: process.env.REACT_APP_OATH_CLIENT_ID,
-//             callback: handleCallbackresponse
-//         });
-
-//         window.onload = google.accounts.id.renderButton(
-//             document.getElementById("signInDiv"),
-//             {theme: "filled_blue", size: "medium"}
-//         )
-
-//     }, [])
-
-//     return (
-//         <div id="signInDiv" ></div>
-//     )
-// }
-
-// export default GoogleLogin
-
 import React, { useEffect, useContext } from "react";
 import { Button, Box, useMediaQuery } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
-import AnimateButton  from '../ui-component/extended/AnimateButton';
-import AuthContext from "../context/AuthContext";
-import GoogleIcon from "../assets/images/icons/GoogleIcon.svg"
+import AnimateButton  from '../../../../ui-component/extended/AnimateButton';
+import AuthContext from "../../../../context/AuthContext";
+import GoogleIcon from "../../../../assets/images/icons/GoogleIcon.svg"
 
 const GoogleLogin = () => {
     const { googleLogin } = useContext(AuthContext);

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 
 // material-ui
 import { useTheme, styled, useMediaQuery } from '@mui/material';
-import { Avatar, Alert, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper, Popover, Typography } from '@mui/material';
+import { Avatar, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress'
 
 // third-party
@@ -277,7 +277,7 @@ const SearchSection = () => {
             }
             endAdornment={isLoading &&
             <InputAdornment position="end">
-              <CircularProgress size="1rem"/>
+              <CircularProgress size="1.5 rem"/>
             </InputAdornment>
           }
             aria-describedby="search-helper-text"

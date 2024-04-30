@@ -63,10 +63,10 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
       },
       xaxis: {
         type: 'category',
-        categories: date, // Show only every 3rd month
+        categories: date, 
         tickAmount: tickAmount,
         labels: {
-          show: showLabels, // Ensure labels are shown
+          show: showLabels, 
           style: {
             colors: [primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary]
           }

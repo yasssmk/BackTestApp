@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from '@mui/material/styles';
+
 // ==============================|| Footer Style||============================== //
 const footerStyles = {
     borderTop: '1px solid #ddd',

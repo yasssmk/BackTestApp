@@ -2,9 +2,8 @@ import * as React from 'react';
 import { useContext } from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { useTheme, styled, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material';
 import AuthContext from "../../../../context/AuthContext";
-import  { useNavigate  } from 'react-router-dom'
 
 export default function LogOutButtons() {
     const theme = useTheme();

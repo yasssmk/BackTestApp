@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { lazy } from 'react';
 import MainLayout from '../layout/MainLayout';
@@ -31,30 +31,3 @@ export default function ThemeRoutes() {
 
   );
 }
-
-
-  // return (
-  //   <div className="App">
-  //    <StyledEngineProvider injectFirst>
-  //    <CssBaseline />
-  //     <Router>
-  //       <DataProvider>
-  //       <AuthProvider>
-  //         <Header/>
-  //         <Routes>
-  //           <Route element={<PrivateRoutes />} >
-  //             <Route element={<HomePage />} path="/" exact />
-  //             <Route element={<Dashboard/>} path="/dashboard" />
-  //           </Route>
-  //           <Route element={<LoginPage />} path="/login"  />
-  //           <Route element={<SigninPage />} path="/signup"  />
-  //         </Routes>
-  //         <footer>
-  //           <Footer />
-  //         </footer>
-  //       </AuthProvider>
-  //       </DataProvider>
-  //     </Router>
-  //     </StyledEngineProvider>
-  //   </div>
-  // );

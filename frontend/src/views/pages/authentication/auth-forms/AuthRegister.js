@@ -1,22 +1,18 @@
-import { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useContext } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Button,
-  Checkbox,
   Divider,
   FormControl,
-  FormControlLabel,
   FormHelperText,
   Grid,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  TextField,
   Typography,
   useMediaQuery
 } from '@mui/material';

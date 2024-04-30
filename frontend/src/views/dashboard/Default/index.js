@@ -1,15 +1,13 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 
 // material-ui
-import { Grid, Box } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { Grid } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 // project imports
-import EarningCard from './EarningCard';
-import PopularCard from './PopularCard/index';
-import TotalOrderLineChartCard from './TotalOrderLineChartCard';
-import TotalIncomeDarkCard from './TotalIncomeDarkCard';
-import TotalIncomeLightCard from './TotalIncomeLightCard';
+import InfoCard from './CompanyInfoCard';
+import SignalsCard from './SignalsCard/index';
+import InvestmentCard from './InvestmentCard';
 import TotalGrowthBarChart from './TotalGrowthBarCharts';
 import DashboardContext from '../../../context/DashboardContext';
 
@@ -30,10 +28,10 @@ const Dashboard = () => {
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item lg={6} md={6} sm={6} xs={12}>
-            <EarningCard isLoading={isLoading} />
+            <InfoCard isLoading={isLoading} />
           </Grid>
           <Grid item lg={6} md={6} sm={6} xs={12}>
-            <TotalOrderLineChartCard isLoading={isLoading} />
+            <InvestmentCard isLoading={isLoading} />
           </Grid>
         </Grid>
       </Grid>
@@ -43,7 +41,7 @@ const Dashboard = () => {
             <TotalGrowthBarChart isLoading={isLoading} />
           </Grid>
           <Grid item xs={12} md={4} sx={{ height: '600px',}} >
-              <PopularCard isLoading={isLoading} />
+              <SignalsCard isLoading={isLoading} />
           </Grid>
         </Grid>
       </Grid>

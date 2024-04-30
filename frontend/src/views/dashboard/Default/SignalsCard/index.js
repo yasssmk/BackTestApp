@@ -3,21 +3,15 @@ import { useState, useContext, useEffect } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Box, CardActions, CardContent, Divider, Grid, Menu, MenuItem, Typography } from '@mui/material';
+import { Box, CardContent, Grid, Typography } from '@mui/material';
 
 // project imports
-import BajajAreaChartCard from './BajajAreaChartCard';
+import ReturnChartCard from './ReturnChartCard';
 import MainCard from '../../../../ui-component/cards/MainCard'
 import SkeletonPopularCard from '../../../../ui-component/cards/Skeleton/PopularCard';
 import DashboardContext from '../../../../context/DashboardContext';
 import SignalRow from './SignalsRow';
 
-
-// assets
-import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 
 // ==============================|| DASHBOARD DEFAULT - POPULAR CARD ||============================== //
 
@@ -26,7 +20,6 @@ const gridSpacing = 2
 const PopularCard = ({ isLoading }) => {
   const theme = useTheme();
   const { dashboardData } = useContext(DashboardContext);
-  const [anchorEl, setAnchorEl] = useState(null);
 
   const [buyingDates, setBuyingDates] = useState([])
   const [sellingDates, setSellingDates] = useState([])
@@ -89,15 +82,6 @@ const PopularCard = ({ isLoading }) => {
   }, [dashboardData]);
 
 
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <>
       {isLoading ? (
@@ -116,7 +100,7 @@ const PopularCard = ({ isLoading }) => {
                 </Grid>
               </Grid>
               <Grid item xs={12} sx={{ pt: '16px !important' }}>
-                <BajajAreaChartCard data={returnTotalYield} name={compnayName} />
+                <ReturnChartCard data={returnTotalYield} name={compnayName} />
               </Grid>
               <Grid item xs={12}>
               

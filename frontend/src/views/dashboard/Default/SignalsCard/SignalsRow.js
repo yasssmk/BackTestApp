@@ -1,7 +1,5 @@
-import { useEffect, useContext } from 'react';
-
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Button, CardActions, CardContent, Divider, Grid, Menu, MenuItem, Typography } from '@mui/material';
+import { Avatar, Divider, Grid, Typography } from '@mui/material';
 
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
@@ -11,7 +9,6 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
     const theme = useTheme();
 
     const ArrowAvatar = (profit) => {
-        // Extracting the profit value
         const profitValue = profit.profit;    
       
         if (profitValue > 0) {
@@ -97,9 +94,6 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
                                 $ {profit}
                                 </Typography>
                             </Grid>
-                            {/* <Grid item>
-                                <ArrowAvatar profit={profit} />
-                            </Grid> */}
                         </Grid>
                     </Grid>
                     <Grid item>
