@@ -3,8 +3,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 
 // material-ui
 import { useTheme, styled, useMediaQuery } from '@mui/material';
-import { Avatar, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper, Typography } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress'
+import { Avatar, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Popper, Typography, CircularProgress } from '@mui/material';
 
 // third-party
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
@@ -275,9 +274,11 @@ const SearchSection = () => {
                 </ButtonBase>
               </InputAdornment>
             }
-            endAdornment={isLoading &&
+            endAdornment={ isLoading &&
             <InputAdornment position="end">
-              <CircularProgress size="1.5 rem"/>
+              <Box sx={{ display: 'flex' }}>
+                  <CircularProgress size='1.5rem' />
+              </Box>
             </InputAdornment>
           }
             aria-describedby="search-helper-text"

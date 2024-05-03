@@ -4,7 +4,7 @@ import { DataProvider } from './context/DashboardContext';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
 import Routes from './routes';
-import theme, { customization } from './themes';
+import theme from './themes';
 import NavigationScroll from './layout/NavigationScroll';
 
 

@@ -1,6 +1,6 @@
 
 // material-ui
-import { Box, useMediaQuery, useTheme,  } from '@mui/material';
+import { Box,Button, useMediaQuery, useTheme,  } from '@mui/material';
 
 // project imports
 
@@ -21,9 +21,9 @@ const LogoSection = () => {
           <img src={LogoSmall} alt="Logo" width='100%' />
         </Box>
       ) : (
-        <Box display="flex" alignItems="center">
-          <img src={LogoFull} alt="Logo" width="100%" />
-        </Box>
+        <Button  href="http://localhost:3000/dashboard" display="flex" alignItems="center">
+        <img src={LogoFull} alt="Logo" width="100%" />
+        </Button> 
       )}
     </>
   );
