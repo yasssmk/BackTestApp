@@ -10,7 +10,7 @@ jobs:
     environment:
       name: prod
     env:
-      DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
+      DATABASE_HOSTNAME: ${{secrets.DB_HOSTNAME}}
       DATABASE_PORT: ${{secrets.DATABASE_PORT}}
       DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
       DATABASE_NAME: ${{secrets.DATABASE_NAME}}
@@ -43,19 +43,10 @@ jobs:
           cd frontend
           npm install
         
-      - name: Print Database Secrets
+      - name: Apply Django Migrations
         run: |
-          echo "DATABASE_HOSTNAME: $DATABASE_HOSTNAME"
-          echo "DATABASE_PORT: $DATABASE_PORT"
-          echo "DATABASE_PASSWORD: $DATABASE_PASSWORD"
-          echo "DATABASE_NAME: $DATABASE_NAME"
-          echo "DATABASE_USERNAME: $DATABASE_USERNAME"
-          echo "SECRET_KEY: $SECRET_KEY"
-
-      # - name: Apply Django Migrations
-      #   run: |
-      #     cd backend
-      #     python manage.py migrate
+          cd backend
+          python manage.py migrate
       
 
   # Deploy:
