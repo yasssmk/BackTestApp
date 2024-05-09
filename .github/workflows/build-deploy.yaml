@@ -45,8 +45,8 @@ jobs:
 
       - name: Apply Django Migrations
         run: |
-        cd backend
-        python manage.py migrate
+          cd backend
+          python manage.py migrate
       
 
   # Deploy:
