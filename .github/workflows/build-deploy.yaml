@@ -44,7 +44,9 @@ jobs:
           npm install
 
       - name: Apply Django Migrations
-        run: python manage.py migrate
+        run: |
+          cd backend
+          python manage.py migrate
       
 
   # Deploy:
