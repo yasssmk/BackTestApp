@@ -42,11 +42,20 @@ jobs:
         run: |
           cd frontend
           npm install
-
-      - name: Apply Django Migrations
+        
+      - name: Print Database Secrets
         run: |
-          cd backend
-          python manage.py migrate
+          echo "DATABASE_HOSTNAME: $DATABASE_HOSTNAME"
+          echo "DATABASE_PORT: $DATABASE_PORT"
+          echo "DATABASE_PASSWORD: $DATABASE_PASSWORD"
+          echo "DATABASE_NAME: $DATABASE_NAME"
+          echo "DATABASE_USERNAME: $DATABASE_USERNAME"
+          echo "SECRET_KEY: $SECRET_KEY"
+
+      # - name: Apply Django Migrations
+      #   run: |
+      #     cd backend
+      #     python manage.py migrate
       
 
   # Deploy:
