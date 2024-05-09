@@ -42,6 +42,11 @@ jobs:
         run: |
           cd frontend
           npm install
+
+      - name: Apply Django Migrations
+        run: |
+        cd backend
+        python manage.py migrate
       
 
   # Deploy:
