@@ -85,7 +85,7 @@ const EarningCard = ({ isLoading }) => {
                     </Avatar>
                   </Grid>
                   <Grid item>
-                    <Typography sx={{ fontSize: '2rem', fontWeight: 500, ml: 1, mt: 1.75, mb: 0.75, zIndex: 1}}>Company Info</Typography>
+                    <Typography sx={{ fontSize: '2rem', fontWeight: 500, ml: 1, mt: 1.75, mb: 0.75, zIndex: 1}}>Company Info!</Typography>
                   </Grid>
                 </Grid>
               </Grid>
