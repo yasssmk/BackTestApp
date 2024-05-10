@@ -38,30 +38,23 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install Node.js dependencies
-        run: |
-          cd frontend
-          npm install
       
-      - name: Apply Django Migrations
-        run: |
-          cd backend
-          python manage.py migrate     
-
-  # Deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: [Build]
-  #   steps:
-  #     - name: executing remote ssh commands using password
-  #       uses: appleboy/ssh-action@v1.0.3
-  #       with:
-  #         host: ${{ secrets.PROD_HOST }}
-  #         username: ${{ secrets.PROD_USERNAME }}
-  #         password: ${{ secrets.PROD_PWD }}
-  #         script: |
-  #           cd backtestApp/src
-  #           git pull
-  #           echo ${{ secrets.SUDO_PWD }} | sudo -S systemctl restart  backtestAppFrontEnd
-  #           echo ${{ secrets.SUDO_PWD }} | sudo -S systemctl restart  backtestApp
+  Deploy:
+    environment:
+      name: prod
+    runs-on: ubuntu-latest
+    needs: [Build]
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          password: ${{ secrets.PROD_PWD }}
+          script: |
+            cd backtestApp/src
+            git pull
+            sudo -S systemctl restart  backtestAppFrontEnd.service
+            sudo -S systemctl restart  backtestApp.service
 
     
