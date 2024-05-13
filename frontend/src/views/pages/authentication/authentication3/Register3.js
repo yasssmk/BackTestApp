@@ -23,7 +23,7 @@ const Register = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
-  const {showAlert, alertContent} = useContext(AuthContext);
+  const {showAlert, alertContent, alertSeverity} = useContext(AuthContext);
 
   return (
     <AuthWrapper1>
@@ -32,15 +32,17 @@ const Register = () => {
           <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
             <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
               <AuthCardWrapper>
-              {showAlert && (
-                <Alert
-                  icon={<CheckIcon fontSize="inherit" />}
-                  severity="success"
-                  sx={{ mt: 2 }}
-                >
-                  {alertContent}
-                </Alert> 
-                )}
+                <Grid>
+                {showAlert ? (
+                    <Alert
+                      severity={alertSeverity}
+                      sx={{ mb: 2, height: '50px' }}
+                    >
+                      {alertContent}
+                    </Alert>) :
+                      <Grid sx={{height: '50px', mt: 2 }}></Grid>
+                    }
+                </Grid>
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                   <Grid item sx={{ mb: 3 }}>
                     <Link to="#">

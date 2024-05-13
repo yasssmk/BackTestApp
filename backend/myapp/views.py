@@ -32,6 +32,7 @@ class Register(APIView):
         
         serializer = UserSerializer(data = request.data)
         print(request.data)
+
         if serializer.is_valid():
             user = CustomUser.objects.create_user(email=email, password=password, last_name=last_name, first_name=first_name)
             serialized_user = UserSerializer(user)

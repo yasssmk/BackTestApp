@@ -30,14 +30,18 @@ const Login = () => {
           <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
             <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
               <AuthCardWrapper>
-              {showAlert && (
-                <Alert
-                  severity="error"
-                  sx={{ mt: 2 }}
-                >
-                  {alertContent}
-                </Alert> 
-                )}
+              <Grid>
+              {showAlert ? (
+                  <Alert
+                    severity="error"
+                    sx={{ mb: 2, height: '50px' }}
+                  >
+                    {alertContent}
+                  </Alert>) :
+                    <Grid sx={{height: '50px', mt: 2 }}></Grid>
+                  }
+                </Grid>
+
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                   <Grid item sx={{ mb: 3 }}>
                     <Link to="#">

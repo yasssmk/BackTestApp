@@ -16,6 +16,7 @@ export const AuthProvider = ({children}) => {
     let [loading, setLoading] = useState(true)
     const [showAlert, setShowAlert] = useState(false);
     const [alertContent, setAlertContent] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('')
 
     const navigate = useNavigate()
 
@@ -152,15 +153,36 @@ export const AuthProvider = ({children}) => {
                 console.log('User created')
                 setShowAlert(true);
                 setAlertContent('Your account has been created successfully.');
+                setAlertSeverity('success')
 
                 setTimeout(() => {
                   setShowAlert(false);
                   setAlertContent('');
                   navigate("/")
                 }, 2000);
+            
+            } else if (response.status === 409) {
 
+                console.log('User already exist.')
+                setShowAlert(true);
+                setAlertContent('This user already exist.');
+                setAlertSeverity('warning')
+
+                setTimeout(() => {
+                  setShowAlert(false);
+                  setAlertContent('');
+                }, 5000);
                 
             }else{
+                console.log('Error')
+                setShowAlert(true);
+                setAlertContent('An error occurred. Please try again later.');
+                setAlertSeverity('error')
+
+                setTimeout(() => {
+                  setShowAlert(false);
+                  setAlertContent('');
+                }, 5000);
                 throw new Error(response.status);
             }
 
@@ -206,7 +228,8 @@ export const AuthProvider = ({children}) => {
         signInUser: signInUser,
         googleLogin: googleLogin,
         showAlert: showAlert,
-        alertContent: alertContent
+        alertContent: alertContent,
+        alertSeverity: alertSeverity
     }
 
     return (

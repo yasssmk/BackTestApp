@@ -53,31 +53,12 @@ const FirebaseRegister = ({ ...others }) => {
   const {signInUser} = useContext(AuthContext);
 
     
-  const handleSubmit = async ({ email, password, lname, fname  }, { setErrors, setStatus, setSubmitting }) => {
+  const handleSubmit = async ({ email, password, fname , lname}) => {
     try {
-      await signInUser(email, password, lname, fname );
-      if (scriptedRef.current) {
-        setStatus({ success: true });
-        setSubmitting(false);
+      await signInUser(email, password,fname, lname );
 
-
-      }
     } catch (error) {
-      if (error.message === '409') {
-        setErrors({ submit: 'User already exists' });
-      } else if (error.message === '400') {
-        setErrors({ submit: 'An Error occured' });
-      } else if (error instanceof Yup.ValidationError) {
-        const validationErrors = {};
-        error.inner.forEach(err => {
-          validationErrors[err.path] = err.message;
-        });
-        setErrors(validationErrors);
-      } else {
-        setErrors({ submit: 'An error occurred. Please try again later.' });
-      }
-      setStatus({ success: false });
-      setSubmitting(false);
+      console.error(error);
     }
   };
 
