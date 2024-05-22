@@ -191,34 +191,42 @@ export const AuthProvider = ({children}) => {
     }
     };
 
-    const googleLogin = (googleToken) =>{
-     
-        setAuthToken(googleToken.credential)
-        let googleUser = jwtDecode(googleToken)
-        setUser(googleUser);
-        localStorage.setItem('authTokens', JSON.stringify(googleToken))
-        navigate("/dashboard")
-
-        let e = {
-            "email": googleUser.email,
-            "password": googleUser.sub+googleUser.given_name
+    const googleLogin = async (response) => {
+        try {
+            let data = await response.json();
+    
+            if (response.status === 200) {
+                setAuthToken(data);
+                setUser(jwtDecode(data.access));
+                localStorage.setItem('authTokens', JSON.stringify(data));
+                navigate("/dashboard");
+            } else {
+                setShowAlert(true);
+                setAlertContent('Error: Please try again or Sign In with Email');
+                setAlertSeverity('error')
+    
+                setTimeout(() => {
+                    setShowAlert(false);
+                    setAlertContent('');
+                    setAlertSeverity('')
+                    navigate("/");
+                }, 10000);
+            }
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            setShowAlert(true);
+            setAlertSeverity('error')
+            setAlertContent('Error: Please try again or Sign In with Email');
+    
+            setTimeout(() => {
+                setShowAlert(false);
+                setAlertContent('');
+                setAlertSeverity('')
+                navigate("/");
+            }, 10000);
         }
+    };
 
-        try{
-
-            fetch('http://localhost:8000/auth/register', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({'email': e.email, 'password': e.password})
-            });
-
-        }catch (error){
-
-            console.log(error);
-        }   
-       }
 
        
     let contextData = {

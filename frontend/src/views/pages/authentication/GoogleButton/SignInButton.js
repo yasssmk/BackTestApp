@@ -4,30 +4,42 @@ import { useTheme } from '@mui/material/styles';
 import AnimateButton  from '../../../../ui-component/extended/AnimateButton';
 import AuthContext from "../../../../context/AuthContext";
 import GoogleIcon from "../../../../assets/images/icons/GoogleIcon.svg"
+import { useGoogleLogin } from '@react-oauth/google';
 
-const GoogleLogin = () => {
+const GoogleSignIn = () => {
     const { googleLogin } = useContext(AuthContext);
     
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
-    function handleCallbackresponse(response) {
-        googleLogin(response.credential);
-    }
+    const handleGoogleLogin = useGoogleLogin({
+        flow: 'auth-code',
+        clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        // ux_mode: 'redirect',
+        // redirect_uri: 'http://localhost:3000/auth/google/callback',
+        onSuccess: async (response) => {
+            try {
+                const code = response.code; // Access the authorization code here
+                console.log('Google auth code:', code); // Log the code for debugging
+    
+                const res = await fetch('http://localhost:8000/auth/google-login/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ code }),
+                });
 
-    useEffect(() => {
-        /* global google */
+                googleLogin(res)
 
-        google.accounts.id.initialize({
-            client_id: process.env.REACT_APP_OATH_CLIENT_ID,
-            callback: handleCallbackresponse
-        });
+            } catch (error) {
 
-        window.onload = google.accounts.id.renderButton(
-            document.getElementById("signInDiv"),
-            { theme: "filled_blue", size: "medium" }
-        );
-    }, []);
+                googleLogin(error)
+            }
+        },
+    });
+
+
 
     return (
         <AnimateButton>
@@ -35,7 +47,7 @@ const GoogleLogin = () => {
               id = "signInDiv"
               variant="outlined"
               fullWidth
-            //   onClick={() => {google.accounts.id.prompt() }}
+              onClick={() => handleGoogleLogin()}
               size="large"
               sx={{
                 color: 'grey.700',
@@ -53,4 +65,4 @@ const GoogleLogin = () => {
     );
 };
 
-export default GoogleLogin;
+export default GoogleSignIn;

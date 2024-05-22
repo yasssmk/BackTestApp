@@ -24,11 +24,12 @@ import {
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import {  GoogleOAuthProvider } from '@react-oauth/google'
 
 // project imports
 import useScriptRef from '../../../../hooks/useScriptRef';
 import AnimateButton from '../../../../ui-component/extended/AnimateButton';
-import GoogleLogin from '../GoogleButton';
+import GoogleSignIn from '../GoogleButton/SignInButton';
 
 // Context
 
@@ -49,8 +50,8 @@ const FirebaseLogin = ({ ...others }) => {
   const [checked, setChecked] = useState(true);
 
 
-  const { googleLogin, user, loginUser } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { loginUser } = useContext(AuthContext);
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   
   const handleSubmit = async ({ email, password }) => {
     try {
@@ -74,9 +75,10 @@ const FirebaseLogin = ({ ...others }) => {
 
   return (
     <>
+    <GoogleOAuthProvider clientId={clientId}>
       <Grid container direction="column" justifyContent="center" spacing={2}>
         <Grid item xs={12}>
-          <GoogleLogin />
+          <GoogleSignIn />
         </Grid>
         <Grid item xs={12}>
           <Box
@@ -221,6 +223,7 @@ const FirebaseLogin = ({ ...others }) => {
           </form>
         )}
       </Formik>
+    </GoogleOAuthProvider>
     </>
   );
 };

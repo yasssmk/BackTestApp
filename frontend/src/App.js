@@ -8,7 +8,6 @@ import theme from './themes';
 import NavigationScroll from './layout/NavigationScroll';
 
 
-
 function App() {
 
   return (

@@ -8,8 +8,11 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import AccessToken
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from dj_rest_auth.registration.views import SocialLoginView
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.models import SocialApp
+import requests
 
 # Create your views here.
 
@@ -75,3 +78,80 @@ class Logout(APIView):
         except Exception as e:
             print(request.data)
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
+
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+
+    def post(self, request, *args, **kwargs):
+
+        code = request.data.get('code')
+        if not code:
+            return Response({'detail': 'Code is missing'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Retrieve the Google social app
+            app = SocialApp.objects.get(provider="google")
+
+            # Exchange the authorization code for an access token
+            token_url = "https://oauth2.googleapis.com/token"
+            token_data = {
+                "code": code,
+                "client_id": app.client_id,
+                "client_secret": app.secret,
+                "redirect_uri": "http://localhost:3000",  # Make sure this matches the redirect_uri in your frontend config
+                "grant_type": "authorization_code",
+            }
+            token_response = requests.post(token_url, data=token_data)
+            token_response_data = token_response.json()
+            access_token = token_response_data.get('access_token')
+
+            if not access_token:
+                return Response({'detail': 'Failed to obtain access token from Google'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Retrieve user info from Google
+            user_info_url = "https://www.googleapis.com/oauth2/v2/userinfo"
+            user_info_response = requests.get(user_info_url, headers={"Authorization": f"Bearer {access_token}"})
+            user_info = user_info_response.json()
+
+            # Extract user details
+            email = user_info.get('email')
+            first_name = user_info.get('given_name')
+            last_name = user_info.get('family_name')
+            password=user_info.get('id')+user_info.get('email')+user_info.get('locale')
+
+
+            if not email:
+                return Response({'detail': 'Failed to obtain user info from Google'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Create or get the user from your database
+            user_data = {
+                            'email': email,
+                            'password': password,
+                            'first_name': first_name,
+                            'last_name': last_name,
+                            
+                        }
+            print("User data to be serialized:", user_data)
+
+            if not CustomUser.objects.filter(email=email).exists():
+                serializer = UserSerializer(data=user_data)
+                if serializer.is_valid():
+                    user = CustomUser.objects.create_user(email=email, password=password, last_name=last_name, first_name=first_name)
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                user = CustomUser.objects.get(email=email)
+
+            # Generate JWT token using MyTokenObtainPairSerializer
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, status=status.HTTP_200_OK)
+
+        except SocialApp.DoesNotExist:
+            return Response({'detail': 'Google SocialApp configuration is missing.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
