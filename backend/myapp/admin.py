@@ -17,7 +17,7 @@ class CustomUserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
-        ('Important dates', {'fields': ('date_joined',)}),
+        ('Important dates', {'fields': ('date_joined', )}),
     )
 
     # Fields to be used when creating a user.
