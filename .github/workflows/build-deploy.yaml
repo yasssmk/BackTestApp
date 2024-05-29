@@ -54,6 +54,12 @@ jobs:
           script: |
             cd backtestApp/src
             git pull
+            cd backtestApp
+            source venv/bin/activate
+            pip install -r requirements.txt
+            cd backtestApp/src/backend
+            python manage.py migrate
+            python manage.py collectstatic --noinput
             sudo -S systemctl restart  backtestAppFrontEnd.service
             sudo -S systemctl restart  backtestApp.service
 
