@@ -32,7 +32,6 @@ const PopularCard = ({ isLoading }) => {
 
   useEffect(() => {
     if (dashboardData && dashboardData["Investissement data"]) {
-      console.log(dashboardData)
       const investissementData = dashboardData["Investissement data"];
       const dataBuyingDates = investissementData["Buying Date"].map(date => {
         const formattedDate = new Date(date).toLocaleDateString('en-GB');
@@ -56,9 +55,6 @@ const PopularCard = ({ isLoading }) => {
       const roundedReturn = returnData.map(num => Math.round(num))
 
       const dataName = dashboardData['Stock info']['Company_Name']
-      console.log(buyingDates)
-      console.log('Length of buyingDates:', buyingDates.length);
-      console.log('Length of sellingDates:', sellingDates.length);
   
 
       setBuyingDates(dataBuyingDates);

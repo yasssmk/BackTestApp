@@ -7,4 +7,4 @@ cd /home/ubuntu/backtestApp/src/frontend
 /usr/bin/npm run build
 
 # Serve the build directory
-/usr/bin/serve -s build -l 3000
+/usr/local/bin/serve -s build -l 3000

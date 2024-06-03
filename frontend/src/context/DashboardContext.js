@@ -141,7 +141,6 @@ export const DataProvider = ({children}) => {
             setError(true)
             setLoading(false)
             setDashboardData([])
-            console.error('Error running backtest:', error);
         } finally{
             setLoading(false)
         }
