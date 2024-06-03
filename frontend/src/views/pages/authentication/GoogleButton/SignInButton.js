@@ -19,8 +19,7 @@ const GoogleSignIn = () => {
         // redirect_uri: 'http://localhost:3000/auth/google/callback',
         onSuccess: async (response) => {
             try {
-                const code = response.code; // Access the authorization code here
-                console.log('Google auth code:', code); // Log the code for debugging
+                const code = response.code; 
     
                 const res = await fetch('http://localhost:8000/auth/google-login/', {
                     method: 'POST',

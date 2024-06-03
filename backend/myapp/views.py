@@ -100,7 +100,7 @@ class GoogleLogin(SocialLoginView):
                 "code": code,
                 "client_id": app.client_id,
                 "client_secret": app.secret,
-                "redirect_uri": "http://localhost:3000",  # Make sure this matches the redirect_uri in your frontend config
+                "redirect_uri": "http://localhost:3000",  
                 "grant_type": "authorization_code",
             }
             token_response = requests.post(token_url, data=token_data)

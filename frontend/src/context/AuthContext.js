@@ -213,7 +213,6 @@ export const AuthProvider = ({children}) => {
                 }, 10000);
             }
         } catch (error) {
-            console.error("Error parsing JSON:", error);
             setShowAlert(true);
             setAlertSeverity('error')
             setAlertContent('Error: Please try again or Sign In with Email');
