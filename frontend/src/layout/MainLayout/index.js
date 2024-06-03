@@ -33,7 +33,7 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (hasError) {
-      setAlertContent('Oops, something went wrong with this stock! Please try with another one.')
+      setAlertContent('Oops, something went wrong! Please try with another one.')
       setTimeout(() => {
         setError(false);
       }, 5000);

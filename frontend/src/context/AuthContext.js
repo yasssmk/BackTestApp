@@ -20,7 +20,8 @@ export const AuthProvider = ({children}) => {
 
     const navigate = useNavigate()
 
-    const {clearStates} = useContext(DashboardContext);
+    const {clearStates, setError} = useContext(DashboardContext);
+
 
     useEffect(() => {
 
@@ -102,7 +103,7 @@ export const AuthProvider = ({children}) => {
             if (response.status === 200){
                 resetUser()
             }else{
-                console.log('Wrong LogOut')
+                setError(true)
             }
         }else if (user.given_name){
             resetUser()
@@ -150,7 +151,6 @@ export const AuthProvider = ({children}) => {
             });
 
             if (response.status === 201){
-                console.log('User created')
                 setShowAlert(true);
                 setAlertContent('Your account has been created successfully.');
                 setAlertSeverity('success')
