@@ -28,8 +28,8 @@ const GoogleSignIn = () => {
                     },
                     body: JSON.stringify({ code }),
                 });
-
                 googleLogin(res)
+                
 
             } catch (error) {
 

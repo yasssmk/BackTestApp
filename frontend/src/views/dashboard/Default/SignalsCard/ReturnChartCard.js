@@ -109,7 +109,6 @@ const BajajAreaChartCard = ({ data, name }) => {
 
   useEffect(() => {
 
-    console.log(data)
     ApexCharts.exec(`support-chart`, 'updateOptions', newSupportChart);
     
   }, [data, orangeDark]);
