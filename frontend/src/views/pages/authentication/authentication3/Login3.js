@@ -10,7 +10,7 @@ import AuthWrapper1 from '../AuthWrapper1';
 import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../auth-forms/AuthLogin';
 import Logo from '../../../../assets/images/logo/LogoVerde.png';
-import AuthFooter from '../../../../ui-component/cards/AuthFooter';
+import AuthFooter from '../../../../layout/MainLayout/Footer';
 import AuthContext from '../../../../context/AuthContext';
 
 // assets

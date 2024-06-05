@@ -37,7 +37,7 @@ export const DataProvider = ({children}) => {
     const getStockList = async() =>{
 
         try{
-            const response = await fetch('http://localhost:8000/dashboard/reco', {
+            const response = await fetch('http://localhost:8000/dash/reco', {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ export const DataProvider = ({children}) => {
             //     setLoading(false)
             // } else {
 
-            const response = await fetch('http://localhost:8000/dashboard/rundashboard', {
+            const response = await fetch('http://localhost:8000/dash/rundashboard', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

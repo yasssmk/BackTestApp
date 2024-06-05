@@ -7,9 +7,9 @@ import MainCard from '../MainCard';
 // ===========================|| SKELETON TOTAL GROWTH BAR CHART ||=========================== //
 
 const ProductPlaceholder = () => (
-  <MainCard content={false} boxShadow>
-    <Skeleton variant="rectangular" height={220} />
-    <CardContent sx={{ p: 2 }}>
+  <MainCard content={false}  boxShadow>
+    <Skeleton variant="rectangular" height={220}  />
+    <CardContent sx={{ p: 2  }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Skeleton variant="rectangular" height={20} />
@@ -33,7 +33,7 @@ const ProductPlaceholder = () => (
                 <Skeleton variant="rectangular" height={17} width={20} />
               </Grid>
             </Grid>
-            <Skeleton variant="rectangular" height={32} width={47} />
+            <Skeleton variant="rectangular" height={320} width={47} />
           </Stack>
         </Grid>
       </Grid>

@@ -5,12 +5,12 @@ import Skeleton from '@mui/material/Skeleton';
 
 
 // ==============================|| SKELETON TOTAL GROWTH BAR CHART ||============================== //
-const gridSpacing = 12
+const gridSpacing = 2
 
 const TotalGrowthBarChart = () => (
   <Card>
     <CardContent>
-      <Grid container spacing={gridSpacing} sx={{height:'600px'}}>
+      <Grid container spacing={gridSpacing} sx={{height:'550px'}}>
         <Grid item xs={12}>
           <Grid container alignItems="center" justifyContent="space-between" spacing={gridSpacing}>
             <Grid item xs zeroMinWidth>
@@ -23,13 +23,13 @@ const TotalGrowthBarChart = () => (
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item>
+            <Grid item> 
               <Skeleton variant="rectangular" height={50} width={80} />
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Skeleton variant="rectangular" height={480} />
+          <Skeleton variant="rectangular" height={430} />
         </Grid>
       </Grid>
     </CardContent>

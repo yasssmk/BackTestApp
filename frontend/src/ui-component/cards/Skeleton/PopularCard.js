@@ -9,7 +9,7 @@ const gridSpacing = 2
 const PopularCard = () => (
   <Card>
     <CardContent>
-      <Grid container spacing={gridSpacing} sx={{height:'600px'}}>
+      <Grid container spacing={gridSpacing} sx={{height:'550px'}}>
         <Grid item xs={12}>
           <Grid container alignItems="center" justifyContent="space-between" spacing={gridSpacing}>
             <Grid item xs zeroMinWidth>

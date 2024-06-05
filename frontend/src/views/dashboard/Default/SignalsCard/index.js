@@ -17,7 +17,7 @@ import SignalRow from './SignalsRow';
 
 const gridSpacing = 2
 
-const PopularCard = ({ isLoading }) => {
+const PopularCard = ({ isLoading }) => {  
   const theme = useTheme();
   const { dashboardData } = useContext(DashboardContext);
 

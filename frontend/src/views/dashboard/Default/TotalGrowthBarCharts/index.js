@@ -22,6 +22,7 @@ const TotalGrowthBarChart = ({ isLoading }) => {
 
   return (
     <>
+
       {isLoading ? (
         <SkeletonTotalGrowthBarChart />
       ) : (
