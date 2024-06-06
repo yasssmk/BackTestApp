@@ -11,10 +11,10 @@ import SkeletonTotalOrderCard from '../../../ui-component/cards/Skeleton/Earning
 import DashboardContext from "../../../context/DashboardContext";
 
 // assets
-import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';;
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.dark,
+  backgroundColor: theme.palette.primary[800],
   color: '#fff',
   overflow: 'hidden',
   position: 'relative',
@@ -27,7 +27,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
     position: 'absolute',
     width: 210,
     height: 210,
-    background: theme.palette.primary[800],
+    background: theme.palette.primary.dark,
     borderRadius: '50%',
     zIndex: 1,
     top: -85,
@@ -43,7 +43,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
     zIndex: 1,
     width: 210,
     height: 210,
-    background: theme.palette.primary[800],
+    background: theme.palette.primary.dark,
     borderRadius: '50%',
     top: -125,
     right: -15,
@@ -78,37 +78,37 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                       sx={{
                         ...theme.typography.commonAvatar,
                         ...theme.typography.largeAvatar,
-                        backgroundColor: theme.palette.primary[800],
+                        backgroundColor: theme.palette.primary.dark,
                         color: '#fff',
                         mt: 1
                       }}
                     >
-                      <LocalMallOutlinedIcon fontSize="inherit" />
+                      <TrendingUpOutlinedIcon height='30' width='30' />
                     </Avatar>
                   </Grid>
                   <Grid item>
-                    <Typography sx={{ fontSize: '2rem', fontWeight: 500, ml: 1, mt: 1.75, mb: 0.75, zIndex: 1}}>Investment Stats</Typography>
+                    <Typography sx={{ ...theme.typography.h2, color: theme.palette.secondary.light, ml: 1, mt: 1.75, mb: 0.75, zIndex: 1 }}>Investment data</Typography>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                  <Grid container  justifyContent="space-between" alignItems="center">
-                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mt: 1.75, mb: 0.4 }}>Monthly av. growth: </Typography>
-                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.success.light, mr: 1, mt: 1.75, mb: 0.4 }}>{dashboardData["Stats"] ? dashboardData["Stats"]["Monthly average Asset growth"]: null} </Typography>
+                  <Grid container  justifyContent="flex-start" alignItems="center">
+                    <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary[200],  color: theme.palette.primary[200], mr: 1, mt: 1.75, mb: 0.4 }}>Monthly av. growth: </Typography>
+                    <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary.light, mr: 1, mt: 1.75, mb: 0.4 }}>{dashboardData["Stats"] ? dashboardData["Stats"]["Monthly average Asset growth"]: null} </Typography>
                   </Grid>
-                  <Grid container  justifyContent="space-between"  alignItems="center">
-                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mb: 0.4 }}>Total money invested: </Typography>
-                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.success.light, mr: 1, mb: 0.4}}>{dashboardData["Stats"] ?  dashboardData["Stats"]["Total money invested"]: null} </Typography>
+                  <Grid container  justifyContent="flex-start"  alignItems="center">
+                    <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary[200],  color: theme.palette.primary[200], mr: 1, mb: 0.4 }}>Total money invested: </Typography>
+                    <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary.light,  mr: 1, mb: 0.4}}>{dashboardData["Stats"] ?  dashboardData["Stats"]["Total money invested"]: null} </Typography>
                   </Grid>
-                  <Grid container  justifyContent="space-between"  alignItems="center">
-                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mb: 0.4}}>Total money made: </Typography>
-                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.success.light, mr: 1, mb: 0.4 }}>{dashboardData["Stats"] ? dashboardData["Stats"]["Total"]: null}</Typography>
+                  <Grid container  justifyContent="flex-start"  alignItems="center">
+                    <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary[200],  color: theme.palette.primary[200], mr: 1, mb: 0.4}}>Total money made: </Typography>
+                    <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary.light, mr: 1, mb: 0.4 }}>{dashboardData["Stats"] ? dashboardData["Stats"]["Total"]: null}</Typography>
                   </Grid>
-                  <Grid container  justifyContent="space-between"  alignItems="center">
-                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500,  mr: 1, mb: 0.75 }}>Total net: </Typography>
-                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 500, color: theme.palette.success.light, mr: 1, mb: 0.75 }}>{dashboardData["Stats"] ? dashboardData["Stats"]["Total net"]: null}</Typography>
+                  <Grid container  justifyContent="flex-start"  alignItems="center">
+                    <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary[200],  color: theme.palette.primary[200], mr: 1, mb: 0.75 }}>Total net: </Typography>
+                    <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary.light, mr: 1, mb: 0.75 }}>{dashboardData["Stats"] ? dashboardData["Stats"]["Total net"]: null}</Typography>
                   </Grid>
                   </Grid>
                 </Grid>

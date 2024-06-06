@@ -119,21 +119,16 @@ const BajajAreaChartCard = ({ data, name }) => {
         <Grid item xs={12}>
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
-              <Typography variant="subtitle1" sx={{ color: theme.palette.secondary.dark }}>
-                Return On Investment
-              </Typography>
+              <Typography sx={{ ...theme.typography.body1, color: theme.palette.secondary[800], fontWeight:'bold'}}>
+              {name}
+            </Typography>
             </Grid>
-            <Grid item>
-              <Typography variant="h4" sx={{ color: theme.palette.grey[800] }}>
-              {data.length > 0 ? `${data[data.length - 1]}%` : '-'}
-              </Typography>
-            </Grid>
+              <Grid >
+                <Typography sx={{...theme.typography.body1, color: theme.palette.secondary[800], fontWeight:'bold'}}>
+                  ROI  : {data.length > 0 ? `${data[data.length - 1]}%` : '-'}
+                </Typography>
+              </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="subtitle2" sx={{ color: theme.palette.grey[800], fontWeight: "bold" }}>
-          {name}
-          </Typography>
         </Grid>
       </Grid>
       <Chart {...newSupportChart} />

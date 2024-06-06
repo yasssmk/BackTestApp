@@ -88,7 +88,7 @@ export const AuthProvider = ({children}) => {
             navigate("/");
         }
 
-        if (!user.given_name){
+        try{
 
             let response = await fetch('http://localhost:8000/auth/logout', {
                 method: 'POST',
@@ -100,12 +100,10 @@ export const AuthProvider = ({children}) => {
                 body: JSON.stringify({refresh_token: authTokens.refresh })
             });
         
-            if (response.status === 200){
-                resetUser()
-            }else{
-                setError(true)
-            }
-        }else if (user.given_name){
+
+            resetUser()
+        }catch {
+
             resetUser()
         }     
     }

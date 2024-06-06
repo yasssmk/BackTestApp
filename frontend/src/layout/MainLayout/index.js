@@ -33,7 +33,7 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (hasError) {
-      setAlertContent('Oops, something went wrong! Please try with another one.')
+      setAlertContent('Oops, something went wrong! Please try again.')
       setTimeout(() => {
         setError(false);
       }, 5000);
@@ -52,13 +52,16 @@ const MainLayout = () => {
         elevation={0}
         sx={{
           bgcolor: theme.palette.background.default,
+
         }}
       >
         <Toolbar
         sx={{
           [theme.breakpoints.down('md')]: {
             paddingInline: '24px'
-          }
+            
+          },
+          bgcolor: theme.palette.background.default,
         }}>
           <Header />
         </Toolbar>

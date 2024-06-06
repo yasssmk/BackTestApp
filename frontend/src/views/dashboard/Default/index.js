@@ -27,10 +27,10 @@ const Dashboard = () => {
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
-          <Grid item lg={6} md={6} sm={6} xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <InfoCard isLoading={isLoading} />
           </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <InvestmentCard isLoading={isLoading} />
           </Grid>
         </Grid>

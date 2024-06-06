@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 // material-ui
 import { Grid, Typography } from '@mui/material';
-
+import { useTheme } from '@mui/material/styles';
 // project imports
 import SkeletonTotalGrowthBarChart from '../../../../ui-component/cards/Skeleton/TotalGrowthBarChart';
 import MainCard from '../../../../ui-component/cards/MainCard';
@@ -19,6 +19,7 @@ const gridSpacing = 2
 // ==============================|| DASHBOARD DEFAULT - TOTAL GROWTH BAR CHART ||============================== //
 
 const TotalGrowthBarChart = ({ isLoading }) => {
+  const theme = useTheme();
 
   return (
     <>
@@ -33,7 +34,7 @@ const TotalGrowthBarChart = ({ isLoading }) => {
                 <Grid item>
                   <Grid container direction="column" spacing={1}>
                     <Grid item>
-                      <Typography variant="h4">Value Growth ($)</Typography>
+                      <Typography sx={{...theme.typography.h2, color: theme.palette.secondary[800]}}>Value Growth ($)</Typography>
                     </Grid>
                   </Grid>
                 </Grid>

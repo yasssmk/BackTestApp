@@ -17,7 +17,18 @@ export default function LogOutButtons() {
 
     return (
         <Stack direction="row" spacing={2}>
-        <Button variant="contained" onClick={handleLogout} sx={{backgroundColor: theme.palette.primary.dark}}>LOGOUT</Button>
+        <Button
+            variant="contained"
+            onClick={handleLogout}
+            sx={{
+                backgroundColor: theme.palette.secondary.dark,
+                '&:hover': {
+                backgroundColor: theme.palette.secondary[200],
+                color: theme.palette.secondary.dark,
+                },
+            }}>
+        LOGOUT
+        </Button>
         </Stack>
     );
-    }
+    } 

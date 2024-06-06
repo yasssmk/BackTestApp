@@ -4,7 +4,7 @@ import { Box,Button, useMediaQuery, useTheme,  } from '@mui/material';
 
 // project imports
 
-import LogoFull from '../../../assets/images/logo/OwizerLogoLight.png';
+import LogoFull from '../../../assets/images/logo/logoAzul.png';
 import LogoSmall from '../../../assets/images/logo/LogoVerde.png'
 
 

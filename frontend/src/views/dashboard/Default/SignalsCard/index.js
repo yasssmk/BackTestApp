@@ -91,7 +91,7 @@ const PopularCard = ({ isLoading }) => {
               <Grid item xs={12}>
                 <Grid container alignContent="center" justifyContent="space-between">
                   <Grid item>
-                    <Typography variant="h4">Buying/Selling Signals</Typography>
+                    <Typography sx={{...theme.typography.h2, color: theme.palette.secondary[800]}}>Transactions Signals</Typography>
                   </Grid>
                 </Grid>
               </Grid>
@@ -99,19 +99,45 @@ const PopularCard = ({ isLoading }) => {
                 <ReturnChartCard data={returnTotalYield} name={compnayName} />
               </Grid>
               <Grid item xs={12}>
-              
-                {buyingDates.map((date, index) => (
-                  
-                  <SignalRow
-                    key={index}
-                    buyingDate={date}
-                    sellingDate={sellingDates[index]}
-                    buyingPrice={buyingPrices[index]}
-                    sellingPrice={sellingPrices[index]}
-                    profit={profits[index]}
-                    transactionYield={returnYield[index]}
-                  />
-                ))}
+                <Grid item>
+                  <Grid container direction="row" justifyContent="space-between" alignItems="center">
+                    <Grid items justifyContent="flex-start" alignItems="center" >
+                            <Typography sx={{ ...theme.typography.body1, color: theme.palette.secondary.main, fontWeight: 'bold' }}> 
+                                Buy
+                            </Typography>
+                    </Grid>
+                    <Grid items >
+                            <Typography sx={{ ...theme.typography.body1, color: theme.palette.secondary.main, fontWeight: 'bold' }}> 
+                                Sell
+                            </Typography>
+                    </Grid>
+                    <Grid items >
+                            <Typography sx={{ ...theme.typography.body1, color: theme.palette.secondary.main, fontWeight: 'bold' }}> 
+                                Return
+                            </Typography>
+                    </Grid>
+                    <Grid items >
+                            <Typography sx={{ ...theme.typography.body1, color: theme.palette.secondary.main }}> 
+                                
+                            </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+                <Grid item>
+                  {buyingDates.map((date, index) => (
+                    
+                    <SignalRow
+                      key={index}
+                      buyingDate={date}
+                      sellingDate={sellingDates[index]}
+                      buyingPrice={buyingPrices[index]}
+                      sellingPrice={sellingPrices[index]}
+                      profit={profits[index]}
+                      transactionYield={returnYield[index]}
+                    />
+                  ))}
+                </Grid>
               
               </Grid>
             </Grid></Box>

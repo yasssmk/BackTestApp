@@ -59,13 +59,13 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
             <Grid items >
                 <Grid container direction="column" justifyContent="flex-start" alignItems="center" >
                     <Grid item>
-                        <Typography variant="subtitle1" color="inherit">
+                        <Typography sx={{ ...theme.typography.body1, color: theme.palette.secondary.main }}>
                             
                             $ {buyingPrice}
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="subtitle2" sx={{ color: theme.palette.secondary.dark }}>
+                        <Typography sx={{ ...theme.typography.subtitle2, color: theme.palette.secondary[800] }}>
                             {buyingDate}
                         </Typography>
                     </Grid>
@@ -73,13 +73,14 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
             </Grid>
             <Grid items >
                 <Grid container direction="column" justifyContent="flex-start" alignItems="center">
+
                     <Grid item>
-                        <Typography variant="subtitle1" color="inherit">
+                        <Typography sx={{ ...theme.typography.body1, color: theme.palette.secondary.main }}>
                             $ {sellingPrice}
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="subtitle2" sx={{ color: theme.palette.secondary.dark }}>
+                        <Typography sx={{ ...theme.typography.subtitle2, color: theme.palette.secondary[800] }}>
                             {sellingDate}
                         </Typography>
                     </Grid>
@@ -90,14 +91,14 @@ const SignalRow = ({ buyingDate, sellingDate, buyingPrice, sellingPrice, profit,
                     <Grid item>
                         <Grid container direction="row" justifyContent="center" alignItems="center">
                             <Grid item>
-                                <Typography variant="subtitle1" color="inherit">
+                                <Typography sx={{ ...theme.typography.body1, color: theme.palette.secondary.main }}>
                                 $ {profit}
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid item>
-                        <Typography variant="subtitle2" sx={{ color: theme.palette.secondary.dark }}>
+                        <Typography sx={{ ...theme.typography.subtitle2, color: theme.palette.secondary[800]}}>
                             {transactionYield}%
                         </Typography>
                     </Grid>

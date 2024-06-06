@@ -22,17 +22,17 @@ const Header = ({ handleLeftDrawerToggle }) => {
       {/* logo & toggler button */}
       <Box
         sx={{
-          width: 228,
+          width: 180,
           paddingRight: 1,
           display: 'flex',
           alignItems: 'center',
           [theme.breakpoints.down('md')]: {
-            width: '60px',
+            width: 50,
             padding: '4px'
           }
         }}
       >
-       <Box component="span" sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+       <Box component="span" sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, }}>
           <LogoSection />
         </Box>
       </Box>

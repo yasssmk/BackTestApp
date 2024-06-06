@@ -16,6 +16,8 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
   const primaryDark = theme.palette.primary.dark;
   const secondaryMain = theme.palette.secondary.main;
   const secondaryLight = theme.palette.secondary.light;
+  const secondary800 = theme.palette.secondary[800]
+  const smallAvatar = theme.typography.smallAvatar
 
   const [date, setDate] = useState([])
   const [cash, setCash] = useState([])
@@ -68,18 +70,19 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
         labels: {
           show: showLabels, 
           style: {
-            colors: [primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary]
+            colors: secondaryMain
           }
         }
       },
       legend: {
         show: true,
-        fontSize: '14px',
-        fontFamily: `'Roboto', sans-serif`,
+        fontSize: smallAvatar.fontSize,
+        fontFamily: smallAvatar.fontFamily,
         position: 'bottom',
         offsetX: 20,
         labels: {
-          useSeriesColors: false
+          useSeriesColors: false,
+          colors: secondaryMain
         },
         markers: {
           width: 16,
@@ -99,7 +102,7 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
       },
       grid: {
         show: true,
-        borderColor: grey200
+        borderColor: secondaryLight
       },
       colors: [secondaryMain, primary200, secondaryLight],
       yaxis: [
@@ -110,7 +113,7 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
             },
             show: showLabels,
             style: {
-              colors: [primary]
+              colors: secondary800
             }
           }
         },
@@ -120,7 +123,8 @@ const DataTotalGrowthBarChart = ({ isLoading }) => {
       },
       legend: {
         labels: {
-          colors: grey500
+          colors: secondaryMain,
+
         }
       }
     },
