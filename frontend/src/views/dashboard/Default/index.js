@@ -13,7 +13,7 @@ import DashboardContext from '../../../context/DashboardContext';
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
-const gridSpacing = 2 
+const gridSpacing = 1 
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -21,7 +21,7 @@ const Dashboard = () => {
 
   const md = useMediaQuery(theme.breakpoints.down('md'));
 
-  const chartCardSize = md ? '1200px' : '600px'
+  const chartCardSize = md ? '1150px' : '575px'
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -37,10 +37,10 @@ const Dashboard = () => {
       </Grid>
       <Grid item xs={12} sx={{height: chartCardSize}}>
         <Grid container spacing={gridSpacing}>
-          <Grid item xs={12} md={8} sx={{ height: '600px',}}>
+          <Grid item xs={12} md={8} sx={{ height: '575px',}}>
             <TotalGrowthBarChart isLoading={isLoading} />
           </Grid>
-          <Grid item xs={12} md={4} sx={{ height: '600px',}} >
+          <Grid item xs={12} md={4} sx={{ height: '575px',}} >
               <SignalsCard isLoading={isLoading} />
           </Grid>
         </Grid>

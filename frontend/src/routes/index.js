@@ -25,7 +25,7 @@ export default function ThemeRoutes() {
         <Route path="/" element={<AuthLogin3 />} />
         <Route path="/pages/register/register3" element={<Register />} />
         <Route element={<PrivateRoutes />} >
-          <Route path="/dashboard" element={<MainLayout><DashboardDefault /></MainLayout>} />
+          <Route path="/dashboard" element={<MainLayout />} />
         </Route>
       </Routes>
 

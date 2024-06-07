@@ -4,9 +4,9 @@ import React from 'react';
 const footerStyles = {
     borderTop: '1px solid #ddd',
     textAlign: 'center',
-    padding: '10px 0',
-    margin: '10px',
-    backgroundColor: ''
+    padding: '5px 0',
+    backgroundColor: '',
+    minHeight: 'auto',
   };
 
   const copyrightStyles = {

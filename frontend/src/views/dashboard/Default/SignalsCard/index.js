@@ -86,7 +86,7 @@ const PopularCard = ({ isLoading }) => {
 
         <MainCard content={false} sx = {{height:'100%'}}>
           <CardContent>
-          <Box  component="div" sx={{ height: '550px', overflow: "auto", overflowY: "scroll", pr: 1}}>
+          <Box  component="div" sx={{ height: '530px', overflow: "auto", overflowY: "scroll", pr: 1}}>
             <Grid container spacing={gridSpacing}>
               <Grid item xs={12}>
                 <Grid container alignContent="center" justifyContent="space-between">

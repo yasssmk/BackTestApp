@@ -94,7 +94,7 @@ const EarningCard = ({ isLoading }) => {
                 <Grid container alignItems="center" >
                   <Grid item >
                     <Grid container justifyContent="flex-start"  alignItems="center" >
-                      <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary[200], mr: 1, mt: 1.75, mb: 0.4 }}>Ticker: </Typography>
+                      <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary[200], mr: 1, mt: 1.75, mb: 0.4 }}>Ticker  : </Typography>
                       <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary.light,  mr: 1, mt: 1.75, mb: 0.4 }}>{dashboardData["Stock info"] ? dashboardData["Stock info"]["Symbol"]: null} </Typography>
                     </Grid>
                     <Grid container  justifyContent="flex-start"  alignItems="center">
@@ -102,7 +102,7 @@ const EarningCard = ({ isLoading }) => {
                       <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary.light, mr: 1, mb: 0.4}}>{dashboardData["Stock info"] ?  dashboardData["Stock info"]["Industry"]: null} </Typography>
                     </Grid>
                     <Grid container  justifyContent="flex-start"  alignItems="center">
-                      <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary[200],  mr: 1, mb: 4.3 }}>Country: </Typography>
+                      <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary[200],  mr: 1, mb: 4.3 }}>Country:</Typography>
                       <Typography sx={{ ...theme.typography.h3, color: theme.palette.secondary.light, mr: 1, mb: 4.3  }}>{dashboardData["Stock info"] ? dashboardData["Stock info"]["Country"]: null}</Typography>
                     </Grid>
                   </Grid>

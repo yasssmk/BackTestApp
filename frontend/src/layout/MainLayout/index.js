@@ -21,7 +21,8 @@ const Main = styled('main')(({ theme }) => ({
   ...theme.typography.mainContent,
   width: '100%',
   flexGrow: 1,
-  padding: theme.spacing(3),
+  padding: theme.spacing(2),
+  minHeight: 'auto',  // Ensure height adjusts to content
 }));
 
 // ==============================|| MAIN LAYOUT ||============================== //
@@ -42,7 +43,7 @@ const MainLayout = () => {
 
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: theme.palette.grey[100], }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: theme.palette.grey[100], }}>
       <CssBaseline />
       {/* header */}
       <AppBar
