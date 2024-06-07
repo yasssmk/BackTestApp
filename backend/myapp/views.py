@@ -87,6 +87,7 @@ class GoogleLogin(SocialLoginView):
     def post(self, request, *args, **kwargs):
 
         code = request.data.get('code')
+        
         if not code:
             return Response({'detail': 'Code is missing'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -106,6 +107,7 @@ class GoogleLogin(SocialLoginView):
             token_response = requests.post(token_url, data=token_data)
             token_response_data = token_response.json()
             access_token = token_response_data.get('access_token')
+            print(token_response_data)
 
             if not access_token:
                 return Response({'detail': 'Failed to obtain access token from Google'}, status=status.HTTP_400_BAD_REQUEST)
@@ -114,12 +116,14 @@ class GoogleLogin(SocialLoginView):
             user_info_url = "https://www.googleapis.com/oauth2/v2/userinfo"
             user_info_response = requests.get(user_info_url, headers={"Authorization": f"Bearer {access_token}"})
             user_info = user_info_response.json()
+            print(user_info)
 
             # Extract user details
-            email = user_info.get('email')
-            first_name = user_info.get('given_name')
-            last_name = user_info.get('family_name')
-            password=user_info.get('id')+user_info.get('email')+user_info.get('locale')
+            email = user_info['email']
+            first_name = user_info['given_name']
+            last_name = user_info['family_name']
+            password=user_info['id']+user_info['email']
+
 
 
             if not email:
@@ -133,7 +137,6 @@ class GoogleLogin(SocialLoginView):
                             'last_name': last_name,
                             
                         }
-            print("User data to be serialized:", user_data)
 
             if not CustomUser.objects.filter(email=email).exists():
                 serializer = UserSerializer(data=user_data)
