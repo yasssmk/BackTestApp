@@ -21,9 +21,9 @@ const LogoSection = () => {
           <img src={LogoSmall} alt="Logo" width='100%' />
         </Box>
       ) : (
-        <Button  href="http://localhost:3000/dashboard" display="flex" alignItems="center">
+        <Box alignItems="center">
         <img src={LogoFull} alt="Logo" width="100%" />
-        </Button> 
+        </Box> 
       )}
     </>
   );

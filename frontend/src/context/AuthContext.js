@@ -28,7 +28,7 @@ export const AuthProvider = ({children}) => {
         let minutes = 1000 * 60 
         let currentLocalStorage = localStorage.getItem('authTokens');
         
-        if (currentLocalStorage && !user.given_name) {
+        if (currentLocalStorage ) {
 
             const currentTokens = JSON.parse(currentLocalStorage);
             const refreshToken = currentTokens.refresh;
@@ -42,12 +42,12 @@ export const AuthProvider = ({children}) => {
             return () => clearInterval(interval);
 
         } else {
-            // navigate("/login");
+            logoutUser();
             return;
         }
 
 
-    }, [authTokens, loading, navigate]);
+    }, [authTokens, loading]);
 
 
     const loginUser = async (email, password )=>{
